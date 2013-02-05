@@ -1,8 +1,10 @@
 
+
 public class Contact {
 	
 	private int id;
 	private String nom, prenom, numero;
+	
 	
 	public Contact(int id, String nom, String prenom, String numero) {
 		this.id = id;
