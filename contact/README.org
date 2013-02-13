@@ -155,11 +155,9 @@
     follows (~groupId~ defined the package and ~arctifactId~ defined
     the project name):
 
-    #+BEGIN_SRC example
-    mvn archetype:generate \
-      -DgroupId=fr.emn.ose.contact \
-      -DartifactId=jaxrs-contact \
-      -Dversion=1.0-SNAPSHOT
+    #+BEGIN_SRC bash
+    mvn archetype:generate -DgroupId=fr.emn.ose.contact
+    -DartifactId=jaxrs-contact  -Dversion=1.0-SNAPSHOT
     #+END_SRC
 
     Then, in the list of potential archetype, chose
