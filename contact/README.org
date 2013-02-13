@@ -155,7 +155,7 @@
     follows (~groupId~ defined the package and ~arctifactId~ defined
     the project name):
 
-    #+BEGIN_SRC bash
+    #+BEGIN_SRC example
     mvn archetype:generate \
       -DgroupId=fr.emn.ose.contact \
       -DartifactId=jaxrs-contact \
@@ -165,8 +165,9 @@
     Then, in the list of potential archetype, chose
     ~org.apache.cxf.archetype:cxf-jaxrs-service~. On my computer, it's
     222 number. Choosing archetype
-    ~org.apache.cxf.archetype:cxf-jaxrs-service~ imports required
-    libraries and generates boilerplate for a JAX-RS webapp.
+    ~org.apache.cxf.archetype:cxf-jaxrs-service~ will automatically
+    import required libraries and generate boilerplate for a JAX-RS
+    webapp.
 
 *** Launch
     To launch the application just tell to maven to deploy it on a
