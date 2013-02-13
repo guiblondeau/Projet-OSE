@@ -2,7 +2,7 @@
 #+Description: Learns basis of Architecture Components using RESTFul.
 
 * Contacts Project
-  Contact project is a really simple project to learn the basis
+  Contact project is a really simple project to learn the basis of
   Architecture Components. The project proposes a RESTful architecture
   to manage our contacts.
 
