@@ -123,7 +123,7 @@
      [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
 
 *** Deleting contacts
-    To delete a contact, send a ~DELETE ~request to the contact's edit
+    To delete a contact, send a ~DELETE~ request to the contact's edit
     URL. Upon success, the server responds with an HTTP 200 OK status
     code.
 
