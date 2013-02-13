@@ -55,10 +55,10 @@
     #+END_SRC
 
 *** Creating contacts
-    To create a new contact, send a ~POST~ request with, in the
+    To create a new contact, send a ~POST~ request with in the
     payload, the new contact. Upon success, the server responds with
     an ~HTTP 201 Created~ status code and the created contact entry
-    with ~id~ that is set by the server.
+    with ~id~ set by the server.
 
     Request:
     #+BEGIN_SRC example
