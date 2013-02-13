@@ -1,0 +1,184 @@
+#+Title: Contacts Project
+#+Description: Learns basis of Architecture Components using RESTFul.
+
+* Contacts Project
+  Contact project is a really simple project to learn the basis
+  Architecture Components. The project proposes a RESTful architecture
+  to manage our contacts.
+
+  The rest of this document describes API, implementations and
+  installation.
+
+** API - working with contacts
+
+*** Contact Entry
+    The Contact API allows manipulation of Contact Entry. The format
+    of a Contact Entry is the following:
+    #+BEGIN_SRC json
+    {
+      "id" :    "Contact identifier",
+      "nom":    "Last name",
+      "prenom": "First name",
+      "numero": "Phone number"
+    }
+    #+END_SRC
+
+*** Retrieving all contacts
+    To retrieve all of user's contacts, send a ~GET~ request. Upon
+    success, the server responds with a ~HTTP 200 OK~ status code and
+    the requested contacts set.
+
+    Request
+    #+BEGIN_SRC example
+    GET contacts/getAll
+    #+END_SRC
+
+    Response:
+    #+BEGIN_SRC json
+    HTTP/1.1 200 OK
+    ...
+
+    [
+      {
+        "id":     "01",
+        "nom":    "Wayne",
+        "prenom": "Bruce",
+        "numero": "11-222-331"
+      },
+      {
+        "id":     "02",
+        "nom":    "Kyle",
+        "prenom": "Selina",
+        "numero": "11-222-332"
+      }
+    ]
+    #+END_SRC
+
+*** Creating contacts
+    To create a new contact, send a ~POST~ request with, in the
+    payload, the new contact. Upon success, the server responds with
+    an ~HTTP 201 Created~ status code and the created contact entry
+    with ~id~ that is set by the server.
+
+    Request:
+    #+BEGIN_SRC example
+    POST contacts/addContact
+    ...
+
+    {
+      "id":     "",
+      "nom":    "Gordon",
+      "prenom": "James",
+      "numero": "11-222-333"
+    }
+    #+END_SRC
+
+    Response:
+    #+BEGIN_SRC example
+    HTTP/1.1 201 Created
+    ...
+
+    {
+      "id":     "03",
+      "nom":    "Gordon",
+      "prenom": "James",
+      "numero": "11-222-333"
+    }
+    #+END_SRC
+
+*** Updating contacts
+    To update a contact, first retrieve the contact entry, modify the
+    data and send a ~PUT~ request to the contact's edit URL with the
+    modified contact entry in the body. Upon success, the server
+    responds with an ~HTTP 200 OK~ status code and the updated contact
+    entry.
+
+    Request:
+    #+BEGIN_SRC example
+    PUT contacts/editContact/{contactID}
+    ...
+
+    {
+      "id":     "03",
+      "nom":    "GORDON",
+      "prenom": "JAMES",
+      "numero": "22-333-444"
+    }
+    #+END_SRC
+
+    Response:
+    #+BEGIN_SRC example
+    HTTP/1.1 200 OK
+    ...
+
+    {
+      "id":     "03",
+      "nom":    "GORDON",
+      "prenom": "JAMES",
+      "numero": "22-333-444"
+    }
+    #+END_SRC
+
+**** TODO See more about ETag on updating contacts
+     [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
+
+*** Deleting contacts
+    To delete a contact, send a ~DELETE ~request to the contact's edit
+    URL. Upon success, the server responds with an HTTP 200 OK status
+    code.
+
+    Request:
+    #+BEGIN_SRC example
+    DELETE contacts/editContact/{contactID}
+    #+END_SRC
+
+    Response:
+    #+BEGIN_SRC example
+    HTTP/1.1 200 OK
+    #+END_SRC
+
+**** TODO See more about ETag on updating contacts
+     [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
+
+** JAVA/JAX-RS implementation
+
+*** JAX-RS Technology
+    #+BEGIN_QUOTE
+    "JAX-RS: Java API for RESTful Web Services is a Java programming
+    language API that provides support in creating web services
+    according to the REST architectural style." [[http://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services][Wikipedia]]
+    #+END_QUOTE
+
+*** Initialization and Boilerplating
+    With maven, generate a Simple CXF JAX-RS webapp service using
+    Spring configuration. To do so, launch the archetype:generation as
+    follows (~groupId~ defined the package and ~arctifactId~ defined
+    the project name):
+
+    #+BEGIN_SRC bash
+    mvn archetype:generate \
+      -DgroupId=fr.emn.ose.contact \
+      -DartifactId=rest-contact \
+      -Dversion=1.0-SNAPSHOT
+    #+END_SRC
+
+    Then, in the list of potential archetype, chose
+    ~org.apache.cxf.archetype:cxf-jaxrs-service~. On my computer, it's
+    222 number. Choosing archetype
+    ~org.apache.cxf.archetype:cxf-jaxrs-service~ imports required
+    libraries and generates boilerplate for a JAX-RS webapp.
+
+*** Launch
+    To launch the application just tell to maven to deploy it on a
+    tomcat infrastructure:
+    #+BEGIN_SRC bash
+    mvn clean install tomcat:run-war
+    #+END_SRC
+
+    Now the application is accessible at
+    [[http://locahost:8080/rest-contact/]]. For more information about
+    tomcat cycle in maven, refer to the [[http://maven.apache.org/][maven general documentation]].
+
+** TODO Node.js/restify implementation
+** TODO Backbone.js client
+** DELEGATED Twitter/Flight client
