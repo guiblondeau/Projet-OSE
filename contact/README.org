@@ -158,7 +158,7 @@
     #+BEGIN_SRC bash
     mvn archetype:generate \
       -DgroupId=fr.emn.ose.contact \
-      -DartifactId=rest-contact \
+      -DartifactId=jaxrs-contact \
       -Dversion=1.0-SNAPSHOT
     #+END_SRC
 
