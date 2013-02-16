@@ -124,8 +124,8 @@
 
 *** Deleting contacts
     To delete a contact, send a ~DELETE~ request to the contact's edit
-    URL. Upon success, the server responds with an HTTP 200 OK status
-    code.
+    URL. Upon success, the server responds with an ~HTTP 200 OK~
+    status code.
 
     Request:
     #+BEGIN_SRC example

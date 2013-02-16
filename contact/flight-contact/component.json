@@ -1,0 +1,9 @@
+{
+  "name": "flight-contact",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap.css": "~2.1.1",
+    "flight": "~1.0.1",
+    "requirejs": "~2.1.4"
+  }
+}
