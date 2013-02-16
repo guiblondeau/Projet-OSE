@@ -2,8 +2,8 @@
   "name": "flight-contact",
   "version": "0.0.1",
   "dependencies": {
-    "bootstrap.css": "~2.1.1",
-    "flight": "~1.0.1",
-    "requirejs": "~2.1.4"
+    "bootstrap.css": "git://github.com/bowerjs/bootstrap.git#~2.1.1",
+    "flight": "git://github.com/twitter/flight#~1.0.2",
+    "requirejs": "git://github.com/jrburke/requirejs#~2.1.4"
   }
 }
