@@ -5,24 +5,79 @@
     <title>Flight Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap.css">
-    <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap-responsive.css">
+
+    <style type="text/css">
+      body { padding: 0px; padding-top: 40px; }
+      .container { width: 360px; }
+
+      /* ContactsList */
+      .navbar-fixed-top, .navbar-form { width: 360px; right: auto; left: auto; }
+      #search { margin-left: 15px; width: 200px; }
+      #contactsList { height: 600px;  overflow: auto; }
+      #contactsList td.item { width: 20px; color: #999999; }
+      #contactsList td.img { width: 64px; }
+      #contactsList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
+
+      /* ContactEdit */
+      #contactEdit { height: 600px; overflow: auto; }
+      #contactEdit .img { widht: 100px; }
+      #contactEdit .name { padding-left:10px;font-size:31.5px;line-height:40px;font-weight:bold; }
+      #contactEdit .mailLabel { padding-top:10px;text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
+      #contactEdit .mail { padding-top: 10px; padding-left: 10px; }
+      #contactEdit .numLabel { text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
+      #contactEdit .num { padding-left: 10px; }
+      #contactEdit #delete { position:absolute; bottom:10px; width:360px; }
+    </style>
   </head>
 
   <body>
     <div class="container">
-    <div class="row">
-    <div class="span6 offset4">
-    <!---------------------------------------------------------------------------
-     ! ContactApp
-     !-------------------------------------------------------------------------->
-    <div class="row">
+     <!---------------------------------------------------------------------------
+      ! ContactEdit
+      !-------------------------------------------------------------------------->
+     <div id="contactEdit">
+       <table>
+           <tbody>
+               <tr>
+                   <td class="img">
+                       <img src="http://lorempixel.com/100/100/people/2" class="img-polaroid"/>
+                   </td>
+                   <td class="name">
+                     Lorem Ipsum
+                   </td>
+               </tr>
+               <tr>
+                   <td class="mailLabel">
+                     Mail
+                   </td>
+                   <td class="mail">
+                     LoremIpsum@loremipsum.com
+                   </td>
+               </tr>
+               <tr>
+                   <td class="numLabel">
+                     Tel
+                   </td>
+                   <td class="num">
+                     1234567891
+                   </td>
+               </tr>
+           </tbody>
+       </table>
+
+       <button id="delete" class="btn btn-large btn-block btn-danger"
+               type="button">Delete</button>
+     </div>
+
+     <!---------------------------------------------------------------------------
+      ! ContactsList
+      !-------------------------------------------------------------------------->
       <!-- Header: Search/Add -->
-      <div class="navbar navbar-static-top" style="margin: -1px -1px 0;">
+      <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-          <div class="container" style="width: auto; padding: 0 20px;">
-            <a class="brand" href="#">Contacts</a>
-            <form class="navbar-form pull-right">
-              <input type="text" class="search-query" style="width:50%" placeholder="Search">
+          <div class="container" >
+            <form class="navbar-form">
+              <input id="search" type="text" class="search-query" placeholder="Search">
               <button type="button" class="btn"><i class="icon-plus"></i></button>
               <button type="button" class="btn btn-success"><i class="icon-ok"></i></button>
             </form>
@@ -31,42 +86,85 @@
       </div>
 
       <!-- Contact List -->
-      <div>
-        <table class="table table-hover">
-          <thead style="display: none" >
-            <tr>
-              <th>Letter</th>
-              <th>Images</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>A</td>
-              <td><img src="http://lorempixel.com/64/64" class="img-polaroid"/></td>
-              <td>Lorem Ipsum</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><img src="http://lorempixel.com/64/64" class="img-polaroid"/></td>
-              <td>Lorem Ipsum</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><img src="http://lorempixel.com/64/64" class="img-polaroid"/></td>
-              <td>Lorem Ipsum</td>
-            </tr>
-            <tr>
-              <td>B</td>
-              <td><img src="http://lorempixel.com/64/64" class="img-polaroid"/></td>
-              <td>Lorem Ipsum</td>
-            </tr>
-          </tbody>
+      <div id="contactsList">
+        <table id="contactsTable" class="table table-hover">
+            <tbody>
+                <tr>
+                    <td class="item">
+                      A
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/1" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/2" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                     B
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/4" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/5" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/6" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                      E
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/7" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item">
+                    </td>
+                    <td class="img">
+                        <img src="http://lorempixel.com/64/64/people/8" class="img-polaroid"/>
+                    </td>
+                    <td class="name">
+                      Lorem Ipsum
+                    </td>
+                </tr>
+            </tbody>
         </table>
       </div>
-    </div>
-    </div>
-    </div>
     </div>
 
     <script src="components/jquery/jquery.js"></script>
