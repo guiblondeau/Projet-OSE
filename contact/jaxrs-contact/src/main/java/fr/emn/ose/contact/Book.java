@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/book")
@@ -41,10 +38,17 @@ public class Book {
         return aRet;
     }
 
-    @POST()
+    @PUT()
     @Path("/editContact")
     @Consumes({MediaType.APPLICATION_JSON})
     public void editContact(Contact c){
         contacts.put(c.getId(), c);
+    }
+
+    @DELETE()
+    @Path("/delete")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void deleteContact(Contact contact){
+        this.contacts.remove(contact.getId());
     }
 }
