@@ -4,3 +4,5 @@ idea/
 *.jar
 *.war
 *.ear
+=======
+target/
