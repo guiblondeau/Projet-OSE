@@ -12,11 +12,11 @@
 
       /* ContactsList */
       .navbar-fixed-top, .navbar-form { width: 360px; right: auto; left: auto; }
-      #search { margin-left: 15px; width: 200px; }
-      #contactsList { height: 600px;  overflow: auto; }
-      #contactsList td.item { width: 20px; color: #999999; }
-      #contactsList td.img { width: 64px; }
-      #contactsList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
+      #searchContact { margin-left: 15px; width: 200px; }
+      #contactList { height: 600px;  overflow: auto; }
+      #contactList td.item { width: 20px; color: #999999; }
+      #contactList td.img { width: 64px; }
+      #contactList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
 
       /* ContactEdit */
       #contactEdit { height: 600px; overflow: auto; }
@@ -26,12 +26,12 @@
       #contactEdit .mail { padding-top: 10px; padding-left: 10px; }
       #contactEdit .numLabel { text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
       #contactEdit .num { padding-left: 10px; }
-      #contactEdit .delete { position:absolute; bottom:10px; width:360px; }
+      #contactEdit #deleteContact { position:absolute; bottom:10px; width:360px; }
     </style>
   </head>
 
   <body>
-    <div class="container">
+    <div id="app" class="container">
       <!-- Mustache Template -->
     </div>
 
@@ -41,5 +41,26 @@
     <script src="components/es5-shim/es5-sham.js"></script>
     <script src="components/mustache/mustache.js"></script>
     <script data-main="requireMain.js" src="components/requirejs/require.js"></script>
+
+    <script>
+      require(
+        [
+        'components/flight/lib/compose',
+        'components/flight/lib/registry',
+        'components/flight/lib/advice',
+        'components/flight/lib/logger',
+        'components/flight/tools/debug/debug'
+        ],
+
+        function(compose, registry, advice, withLogging, debug) {
+          debug.enable(true);
+          compose.mixin(registry, [advice.withAdvice, withLogging]);
+          require(['app/boot/page'], function(initialize) {
+            initialize();
+          });
+        }
+      );
+    </script>
+
   </body>
 </html>
