@@ -3,13 +3,17 @@
 define(
 
   [
+    'app/uiContactItems',
+    'app/uiContactItem',
     'app/uiTools'
   ],
 
 
-  function(UiTools) {
+  function(UiContactItems, UiContactItem, UiTools) {
 
     function initialize() {
+      UiContactItems.attachTo(document);
+      UiContactItem.attachTo(document);
       UiTools.attachTo(document);
       /*
       MailItemsData.attachTo(document);

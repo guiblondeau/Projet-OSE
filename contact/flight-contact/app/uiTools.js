@@ -1,8 +1,7 @@
-//
 // * **Component:** UiTools
 // * **Date:** 2013-02-19
 // * **Version:** 0.1
-// * **Breif:** Manage tools on ui.
+// * **Brief:** Manages tools on ui.
 //
 // **UiTools** is a ui tools manager enabeling each tool to generate
 // events. Events represent the user action on ui and defiition is
@@ -17,49 +16,37 @@ define(
   ],
 
   function(defineComponent, Mustache, templates)  {
-
     return defineComponent(uiTools);
 
     function uiTools() {
-      // DEBUG
-      var contactList = [
-        {
-          "id": "01",
-          "nom": "Wayne",
-          "prenom": "Bruce",
-          "numero": "11-222-331"
-        },
-        {
-          "id": "02",
-          "nom": "Kyle",
-          "prenom": "Selina",
-          "numero": "11-222-332"
-        },
-        {
-          "id": "03",
-          "nom": "Gordon",
-          "prenom": "James",
-          "numero": "11-222-333"
-        }
-      ];
-
       this.defaultAttrs({
-        // Debug
-        appSelector: '#app',
-
         // Selector
         searchSelector: '#searchContact',
         resyncSelector: '#resyncContact',
         addSelector: '#addContact',
         deleteSelector: '#deleteContact',
+        editSelector: '#editContact'
       });
 
-      // ## <a id="events"></a> Events' list.
-      var ASK_SEARCH_CONTACT = 'uiSearchContact';
-      var ASK_ADD_CONTACT = 'uiAddContact';
-      var ASK_REFRESH_CONTACT = 'uiRefreshContact';
-      var ASK_DELETE_CONTACT = 'uiDeleteContact';
+      // ## Events' list <a id="events"></a>.
 
+      // * Asks to refine contacts' list using a name filter. The
+      //   filter is specified in the event body:
+      //    {
+      //      query: "Wayne"
+      //    }
+      var ASK_SEARCH_CONTACT = 'uiSearchContact';
+      // * Ask to display the ui view for adding a new contact.
+      var ASK_ADD_CONTACT = 'uiAddContact';
+      // * Ask to refresh the contacts' list.
+      var ASK_RESYNC_CONTACT = 'resyncContact';
+      // * Ask to delete a particular contact. The event gives the id
+      //   to delete in its body.
+      //    {
+      //      id: "01"
+      //    }
+      var ASK_DELETE_CONTACT = 'uiDeleteContact';
+      var ASK_EDIT_CONTACT = 'editContact';
       // #### Ask for searching a specific contact.
       //
       // Trigger an event on texte input and only if there is, at
@@ -80,9 +67,33 @@ define(
       // #### Ask for resynchronize contacts' list.
       //
       // Tigger an event ASK_RESYNC_CONTACT, asking to resynchronize
-      // the contacts' list.
+      // the contacts' list. This event modify the resyncSelector
+      // button to display a rotating refresh icon.
       this.resyncContact = function(evt, data) {
         this.trigger(ASK_RESYNC_CONTACT);
+
+        // Change ok-icon to resync-icone
+        // TODO: Set class name with constante to template.
+        jQuery(data.el).find('i').
+            removeClass('icon-ok icon-remove').addClass('icon-refresh');
+      }
+
+      // #### Ask to edit an existing contact.
+      //
+      // Trigger an event ASK_EDIT_CONTACT, asking to display the
+      // formulaire in order to edit an existing contact. The event
+      // object throwing durring trigger is the contact:
+      //
+      //    {
+      //      id: "01",
+      //      nom: "Wayne",
+      //      prenom: "Bruce",
+      //      numero: "000-000-000"
+      //    }
+      this.editContact = function(evt, data) {
+        var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
+
+        this.trigger(ASK_EDIT_CONTACT, contactData);
       }
 
       // #### Ask to a add a new contact.
@@ -109,26 +120,40 @@ define(
       }
 
       // ## Initialization.
-      //
+
       // Binding tools with tool events trigerring.
       this.after('initialize', function() {
         // Bind tools and events.
         this.on('click', {
           resyncSelector: this.resyncContact,
           addSelector: this.addContact,
-          deleteSelector: this.deleteContact
+          deleteSelector: this.deleteContact,
+          editSelector: this.editContact
         });
         this.on('keyup', { searchSelector: this.searchContact });
 
-        // DEBUG
-        this.select('appSelector').html(Mustache.render(templates.contactListTemplate,
-                                               {"contactList":contactList,
-                                                 "name": function() {
-                                                 return this.prenom + " " + this.nom;
-                                                 },
-                                                 "img": function() {
-                                                 return parseInt(this.id)
-                                                 }}));
+        // If resync is OK, set success button with ok-icon.
+        this.on('resyncContactOk', function() {
+          this.select('resyncSelector').
+              removeClass('btn-danger').addClass('btn-success').
+              find('i').
+              removeClass('icon-refresh').addClass('icon-ok');
+       });
+
+        // If resync is not Ok, set danger button with remove icon.
+        this.on('resyncContactNotOk', function() {
+          this.select('resyncSelector').
+              removeClass('btn-success').addClass('btn-danger').
+              find('i').
+              removeClass('icon-refresh').addClass('icon-remove');
+        });
+
+        // If ask add contact, the current list contact his droped and
+        // change with the the add contact form.
+        this.on('uiAddContact', function() {
+          this.select('appSelector').slideTo(
+            Mustache.render(templates.contactAddTemplate));
+        });
       });
     }
   }

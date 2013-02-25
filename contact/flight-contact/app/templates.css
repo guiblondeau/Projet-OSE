@@ -1,0 +1,227 @@
+/*******************************************************************************
+ * General Part
+ ******************************************************************************/
+body {
+    padding: 0px;
+    padding-top: 40px;
+}
+
+#app, #menu {
+    width: 360px;
+    max-height: 640px;
+}
+
+.appContent {
+    max-height: 600px;
+    overflow: auto;
+    padding-top: 10px;
+}
+
+/*******************************************************************************
+ * ContactListTemplate
+ ******************************************************************************/
+
+/* Menu */
+#searchContact {
+    width: 230px;
+}
+
+/* Content */
+#contactList {
+    padding-top: 0;
+}
+
+#contactList td.item {
+    width: 20px;
+    color: #999999;
+}
+
+#contactList td.img {
+    width: 64px;
+}
+
+#contactList td.name {
+    vertical-align: middle;
+    font-size:17.5px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+/*******************************************************************************
+ * ContactPrintTemplate
+ ******************************************************************************/
+
+/* Content */
+#contactPrint > table {
+    width: 100%;
+    line-height: 40px;
+}
+
+#contactPrint .img {
+    text-align: right;
+}
+
+#contactPrint .name {
+    padding-left: 10px;
+    font-size: 31.5px;
+    font-weight: bold;
+}
+
+#contactPrint .inputLabel {
+    text-align: right;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+#contactPrint .inputValue {
+    padding-left: 10px;
+}
+
+/*******************************************************************************
+ * ContactEditTemplate
+ ******************************************************************************/
+
+/* Content */
+#contactEdit > table {
+    width: 100%;
+    line-height: 40px;
+}
+
+#contactEdit .img {
+    text-align: right;
+}
+
+#contactEdit .name {
+    padding-left: 10px;
+    font-size: 31.5px;
+    font-weight: bold;
+}
+
+#contactEdit .inputLabel {
+    text-align: right;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+#contactEdit .inputValue {
+    padding-left: 10px;
+}
+
+#contactEdit #deleteContact {
+    position:absolute;
+    bottom:10px;
+    width:360px;
+}
+
+/*******************************************************************************
+ * ContactAddTemplate
+ ******************************************************************************/
+
+/* Content */
+#contactAdd > table {
+    width: 100%;
+    line-height: 40px;
+}
+
+#contactAdd .img {
+    text-align: right;
+}
+
+#contactAdd .inputLabel {
+    text-align: right;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+#contactAdd .inputValue {
+    padding-left: 10px;
+}
+
+/*******************************************************************************
+ * Rotate Refresh Icon
+ ******************************************************************************/
+.icon-refresh {
+    -webkit-animation-name: rotateThis;
+    -moz-animation-name: rotateThis;
+    -ms-animation-name: rotateThis;
+    -o-animation-name: rotateThis;
+    animation-name: rotateThis;
+
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    -o-animation-duration: .5s;
+    animation-duration: .5s;
+
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    -o-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@keyframes "rotateThis" {
+    from {
+        -webkit-transform: scale( 1 ) rotate( 0deg );
+        -moz-transform: scale( 1 ) rotate( 0deg );
+        -o-transform: scale( 1 ) rotate( 0deg );
+        -ms-transform: scale( 1 ) rotate( 0deg );
+        transform: scale( 1 ) rotate( 0deg );
+    }
+    to {
+        -webkit-transform: scale( 1 ) rotate( 360deg );
+        -moz-transform: scale( 1 ) rotate( 360deg );
+        -o-transform: scale( 1 ) rotate( 360deg );
+        -ms-transform: scale( 1 ) rotate( 360deg );
+        transform: scale( 1 ) rotate( 360deg );
+    }
+}
+
+@-moz-keyframes rotateThis {
+    from {
+        -moz-transform: scale( 1 ) rotate( 0deg );
+        transform: scale( 1 ) rotate( 0deg );
+    }
+    to {
+        -moz-transform: scale( 1 ) rotate( 360deg );
+        transform: scale( 1 ) rotate( 360deg );
+    }
+}
+
+@-webkit-keyframes "rotateThis" {
+    from {
+        -webkit-transform: scale( 1 ) rotate( 0deg );
+        transform: scale( 1 ) rotate( 0deg );
+    }
+    to {
+        -webkit-transform: scale( 1 ) rotate( 360deg );
+        transform: scale( 1 ) rotate( 360deg );
+    }
+}
+
+@-ms-keyframes "rotateThis" {
+    from {
+        -ms-transform: scale( 1 ) rotate( 0deg );
+        transform: scale( 1 ) rotate( 0deg );
+    }
+    to {
+        -ms-transform: scale( 1 ) rotate( 360deg );
+        transform: scale( 1 ) rotate( 360deg );
+    }
+}
+
+@-o-keyframes "rotateThis" {
+    from {
+        -o-transform: scale( 1 ) rotate( 0deg );
+        transform: scale( 1 ) rotate( 0deg );
+    }
+    to {
+        -o-transform: scale( 1 ) rotate( 360deg );
+        transform: scale( 1 ) rotate( 360deg );
+    }
+}

@@ -5,115 +5,7 @@
     <title>Flight Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap.css">
-
-    <style type="text/css">
-      body { padding: 0px; padding-top: 40px; }
-      .container { width: 360px; }
-
-      /* ContactsList */
-      .navbar-inner > .container {width: 306px }
-      .navbar-form { width: 360px; right: auto; left: auto; }
-      #searchContact { width: 180px; }
-      #contactList { height: 600px;  overflow: auto; }
-      #contactList td.item { width: 20px; color: #999999; }
-      #contactList td.img { width: 64px; }
-      #contactList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
-
-      /* ContactEdit */
-      #contactEdit { height: 600px; overflow: auto; }
-      #contactEdit .inputLabel { text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
-      #contactEdit .img { widht: 100px; }
-      #contactEdit .name { padding-left:10px;font-size:31.5px;line-height:40px;font-weight:bold; }
-      #contactEdit .inputValue { padding-top: 10px; padding-left: 10px; }
-      #contactEdit #deleteContact { position:absolute; bottom:10px; width:360px; }
-
-      .icon-refresh {
-        -webkit-animation-name: rotateThis;
-        -moz-animation-name: rotateThis;
-        -ms-animation-name: rotateThis;
-        -o-animation-name: rotateThis;
-        animation-name: rotateThis;
-
-        -webkit-animation-duration: .5s;
-        -moz-animation-duration: .5s;
-        -o-animation-duration: .5s;
-        animation-duration: .5s;
-
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-iteration-count: infinite;
-        -ms-animation-iteration-count: infinite;
-        -o-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
-
-        -webkit-animation-timing-function: linear;
-        -moz-animation-timing-function: linear;
-        -ms-animation-timing-function: linear;
-        -o-animation-timing-function: linear;
-        animation-timing-function: linear;
-      }
-
-      @keyframes "rotateThis" {
-        from {
-          -webkit-transform: scale( 1 ) rotate( 0deg );
-              -moz-transform: scale( 1 ) rotate( 0deg );
-              -o-transform: scale( 1 ) rotate( 0deg );
-              -ms-transform: scale( 1 ) rotate( 0deg );
-              transform: scale( 1 ) rotate( 0deg );
-        }
-        to {
-          -webkit-transform: scale( 1 ) rotate( 360deg );
-              -moz-transform: scale( 1 ) rotate( 360deg );
-              -o-transform: scale( 1 ) rotate( 360deg );
-              -ms-transform: scale( 1 ) rotate( 360deg );
-              transform: scale( 1 ) rotate( 360deg );
-        }
-      }
-
-      @-moz-keyframes rotateThis {
-        from {
-          -moz-transform: scale( 1 ) rotate( 0deg );
-          transform: scale( 1 ) rotate( 0deg );
-        }
-        to {
-          -moz-transform: scale( 1 ) rotate( 360deg );
-          transform: scale( 1 ) rotate( 360deg );
-        }
-      }
-
-      @-webkit-keyframes "rotateThis" {
-        from {
-          -webkit-transform: scale( 1 ) rotate( 0deg );
-          transform: scale( 1 ) rotate( 0deg );
-        }
-        to {
-          -webkit-transform: scale( 1 ) rotate( 360deg );
-          transform: scale( 1 ) rotate( 360deg );
-        }
-      }
-
-      @-ms-keyframes "rotateThis" {
-        from {
-          -ms-transform: scale( 1 ) rotate( 0deg );
-          transform: scale( 1 ) rotate( 0deg );
-        }
-        to {
-          -ms-transform: scale( 1 ) rotate( 360deg );
-          transform: scale( 1 ) rotate( 360deg );
-        }
-      }
-
-      @-o-keyframes "rotateThis" {
-        from {
-          -o-transform: scale( 1 ) rotate( 0deg );
-          transform: scale( 1 ) rotate( 0deg );
-        }
-        to {
-          -o-transform: scale( 1 ) rotate( 360deg );
-          transform: scale( 1 ) rotate( 360deg );
-        }
-      }
-
-    </style>
+    <link rel="stylesheet" href="app/templates.css">
   </head>
 
   <body>
@@ -148,6 +40,19 @@
           });
         }
       );
+
+      $.fn.slideTo = function(data) {
+    var width = parseInt($('#app').css('width'));
+    var transfer = $('<div class="transfer"></div>').css({ 'width': (2 * width) + 'px' });
+    var current = $('<div class="current"></div>').css({ 'width': width + 'px', 'left': '0', 'float': 'left' }).html($('#app').html());
+    var next = $('<div class="next"></div>').css({ 'width': width + 'px', 'left': width + 'px', 'float': 'left' }).html(data);
+    transfer.append(current).append(next);
+    $('#app').html('').append(transfer);
+    transfer.animate({ 'margin-left': '-' + width + 'px' }, 300, function () {
+        $('#app').html(data);
+    });
+}
+
     </script>
 
   </body>
