@@ -114,15 +114,15 @@ define(
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue"><input type="text" placeholder="{{prenom}}" /></td>\
+               <td class="inputValue"><input id="prenom" type="text" placeholder="{{prenom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue"><input type="text" placeholder="{{nom}}" /></td>\
+               <td class="inputValue"><input id="nom" type="text" placeholder="{{nom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue"><input type="text" placeholder="{{numero}}" /</td>\
+               <td class="inputValue"><input id="numero" type="text" placeholder="{{numero}}" /</td>\
              </tr>\
            </tbody>\
          </table>\
@@ -161,15 +161,17 @@ define(
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue"><input type="text" placeholder="Bruce" /></td>\
+               <td class="inputValue"><input id="prenom" type="text" placeholder="Bruce" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue"><input type="text" placeholder="Wayne" /></td>\
+               <td class="inputValue"><input id="nom" type="text" placeholder="Wayne" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue"><input type="text" placeholder="000-000-000" /></td>\
+               <td class="inputValue">\
+                 <input id="numero" type="text" placeholder="000-000-000" />\
+               </td>\
              </tr>\
            </tbody>\
          </table>\

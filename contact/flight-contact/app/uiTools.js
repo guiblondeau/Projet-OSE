@@ -46,7 +46,6 @@ define(
         this.trigger('uiAskResyncContact');
 
         // Change ok-icon to resync-icone
-        // TODO: Set class name with constante to template.
         jQuery(data.el).find('i').
             removeClass('icon-ok icon-remove').addClass('icon-refresh');
       }
@@ -121,11 +120,47 @@ define(
       //      prenom: "BRUCE",
       //      numero: "000-000-000"
       //    }
-      this.validAddContact = function(evt, data) {
-        // TODO: Put contactData in Ok button.
+      this.validEditContact = function(evt, data) {
         var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
         this.trigger('uiValidEditContact', contactData);
       }
+
+      // ## AOP part.
+
+      // Befor validAddContact, set the contact object to add into
+      // contactData attribute.
+      //
+      // TODO: Error is case of bad contact object.
+      this.before('validAddContact', function(evt, data) {
+        var nom = jQuery("#nom").val();
+        var prenom = jQuery("#prenom").val();
+        var numero = jQuery("#numero").val();
+
+        jQuery(data.el).attr('contactData', JSON.stringify({
+          'id': '',
+          'nom': nom,
+          'prenom': prenom,
+          'numero': numero
+        }));
+      });
+
+      // Befor validEditContact, set the contact object to edit into
+      // contactData attribute.
+      //
+      // TODO: Error is case of bad contact object.
+      this.before('validEditContact', function(evt, data) {
+        var nom = jQuery("#nom").val();
+        var prenom = jQuery("#prenom").val();
+        var numero = jQuery("#numero").val();
+
+
+        jQuery(data.el).attr('contactData', JSON.stringify({
+          'id': '',
+          'nom': nom,
+          'prenom': prenom,
+          'numero': numero
+        }));
+      });
 
       // ## Initialization.
       this.defaultAttrs({

@@ -111,7 +111,6 @@ define(
             Mustache.render(templates.contactAddTemplate));
       }
 
-
       // ## Initialization
       this.defaultAttrs({
         appSelector: '#app',
