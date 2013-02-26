@@ -177,6 +177,19 @@
     [[http://locahost:8080/rest-contact/]]. For more information about
     tomcat cycle in maven, refer to the [[http://maven.apache.org/][maven general documentation]].
 
-** TODO Node.js/restify implementation
+** Node.js/restify implementation
+
+*** Restify technology
+#+BEGIN_QUOTE
+"restify is a node.js module built specifically to enable you to build correct REST web services." [[http://mcavage.github.com/node-restify/][API Restify]]
+#+END_QUOTE
+*** Initialization
+Restify has to be installed on the computer. You can refer to the Restify API.
+*** Launch
+To launch the application write in your bash : 
+#+BEGIN_SRC bash
+    node contact.js
+    #+END_SRC
+where contact.js is the file you want to launch
 ** TODO Backbone.js client
 ** DELEGATED Twitter/Flight client
