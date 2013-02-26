@@ -1,16 +1,16 @@
-// **Component:** UiConatctItem\\
+// **Component:** UiPrintItem\\
 // **Date:** 2013-02-24\\
-// **Brief:** Manages a contact item on ui.\\
+// **Brief:** Print contact items on ui.\\
 //
-// **UiContactItem** is a ui contact items manager enabeling:
+// **UiPrintItem** is a ui contact items printer enabeling:
 //  * Print all contacts.
 //  * Print a specific contact.
 //  * Print edition of a contact.
 //  * Print addition of a contact.
 //
-// **UiContactItem** manages contact items on ui, so that it's also of
-// ui events on contact items. The list of events and definition is
-// given in [events section](#events).
+// **UiPrintItem** manages contact items on ui so that it's also
+// responsible of ui events on contact items. The list of events and
+// definition is given in [events section](#events).
 'use_strict';
 
 define(
@@ -46,7 +46,7 @@ define(
 
       // #### Print all contacts.
       this.printAllContacts = function(evt) {
-        var UiContactItem = this;
+        var UiPrintItem = this;
         var href = '/contacts/getAll';
 
         jQuery.ajax({
@@ -55,10 +55,10 @@ define(
           dataType: 'json',
           success: function(data) {
             // Trigger resyncContactOk
-            UiContactItem.trigger('resyncContactOk');
+            UiPrintItem.trigger('resyncContactOk');
 
             // Render template
-            UiContactItem.select('appSelector').html(
+            UiPrintItem.select('appSelector').html(
               Mustache.render(templates.contactListTemplate, {
                 contactList: data,
                 data: function() {
@@ -71,7 +71,7 @@ define(
           },
           error: function(jqXHR, textStatus, errorThrown) {
             // Trigger resyncContactNotOk
-            UiContactItem.trigger('resyncContactNotOk');
+            UiPrintItem.trigger('resyncContactNotOk');
 
             // TODO: trigger event error
           }
