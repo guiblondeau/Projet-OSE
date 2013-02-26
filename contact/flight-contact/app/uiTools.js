@@ -1,76 +1,49 @@
-// * **Component:** UiTools
-// * **Date:** 2013-02-19
-// * **Version:** 0.1
-// * **Brief:** Manages tools on ui.
+// **Component:** UiTools\\
+// **Date:** 2013-02-19\\
+// **Brief:** Manages tools on ui.\\
 //
 // **UiTools** is a ui tools manager enabeling each tool to generate
-// events. Events represent the user action on ui and defiition is
-// given in [events section](#events).
+// events. Events represent the user action on ui. Definition of
+// events is given in [events section](#events).
 'use strict';
 
 define(
   [
-    'components/flight/lib/component',
-    'components/mustache/mustache',
-    'app/templates'
+    'components/flight/lib/component'
   ],
 
-  function(defineComponent, Mustache, templates)  {
+  function(defineComponent)  {
     return defineComponent(uiTools);
 
     function uiTools() {
-      this.defaultAttrs({
-        // Selector
-        searchSelector: '#searchContact',
-        resyncSelector: '#resyncContact',
-        addSelector: '#addContact',
-        deleteSelector: '#deleteContact',
-        editSelector: '#editContact'
-      });
-
       // ## Events' list <a id="events"></a>.
 
-      // * Asks to refine contacts' list using a name filter. The
-      //   filter is specified in the event body:
-      //    {
-      //      query: "Wayne"
-      //    }
-      var ASK_SEARCH_CONTACT = 'uiSearchContact';
-      // * Ask to display the ui view for adding a new contact.
-      var ASK_ADD_CONTACT = 'uiAddContact';
-      // * Ask to refresh the contacts' list.
-      var ASK_RESYNC_CONTACT = 'resyncContact';
-      // * Ask to delete a particular contact. The event gives the id
-      //   to delete in its body.
-      //    {
-      //      id: "01"
-      //    }
-      var ASK_DELETE_CONTACT = 'uiDeleteContact';
-      var ASK_EDIT_CONTACT = 'editContact';
+      // ### Print page events.
+
       // #### Ask for searching a specific contact.
       //
-      // Trigger an event on texte input and only if there is, at
-      // leats, two characters. The event is ASK_SEARCH_CONTACT and
-      // the event body is the form:
+      // Trigger an event 'uiAskSearchContact' on texte input and only
+      // if there is, at least, two characters. The event is
+      // 'uiSearchContact' and the event body is the form:
       //
       //    {
       //      query: "Wayne"
       //    }
-      this.searchContact = function(evt, data) {
+      this.askSearchContact = function(evt, data) {
         var searchString = data.el.value;
 
         if (searchString.length >= 2) {
-          this.trigger(ASK_SEARCH_CONTACT, { query: searchString });
+          this.trigger('uiAskSearchContact', { query: searchString });
         }
       }
 
       // #### Ask for resynchronize contacts' list.
       //
-      // Tigger an event ASK_RESYNC_CONTACT, asking to resynchronize
+      // Tigger an event 'uiAskResyncContact', asking to resynchronize
       // the contacts' list. This event modify the resyncSelector
       // button to display a rotating refresh icon.
-      this.resyncContact = function(evt, data) {
-        this.trigger(ASK_RESYNC_CONTACT);
+      this.askResyncContact = function(evt, data) {
+        this.trigger('uiAskResyncContact');
 
         // Change ok-icon to resync-icone
         // TODO: Set class name with constante to template.
@@ -80,7 +53,7 @@ define(
 
       // #### Ask to edit an existing contact.
       //
-      // Trigger an event ASK_EDIT_CONTACT, asking to display the
+      // Trigger an event 'uiAskEditContact', asking to display the
       // formulaire in order to edit an existing contact. The event
       // object throwing durring trigger is the contact:
       //
@@ -90,47 +63,95 @@ define(
       //      prenom: "Bruce",
       //      numero: "000-000-000"
       //    }
-      this.editContact = function(evt, data) {
+      this.askEditContact = function(evt, data) {
         var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
-
-        this.trigger(ASK_EDIT_CONTACT, contactData);
+        this.trigger('uiAskEditContact', contactData);
       }
 
-      // #### Ask to a add a new contact.
+      // #### Ask generate page to a add a new contact.
       //
-      // Trigger an event ASK_ADD_CONTACT, asking to display the
+      // Trigger an event 'uiAskAddContact', asking to display the
       // formulaire in order to add a new contact.
-      this.addContact = function(evt, data) {
-        this.trigger(ASK_ADD_CONTACT);
+      this.askAddContact = function() {
+        this.trigger('uiAskAddContact');
       }
 
-      // #### Ask to delete a contact.
+      // ### Action on contact events.
+
+      // #### Valid deletion of a contact.
       //
-      // Trigger an event on a clickable DOM element. The element must
-      // have the 'contactId' attribut with id of contact to delete.
-      // The event is ASK_DELETE_CONTACT, asking to delete an existing
-      // contact. The body of event containing the id of contact to
-      // delete. The form is the following:
+      // Trigger an event 'uiValidDeleteContact', validating the
+      // deletion of an existing contact. The body of event containing
+      // the id of contact to delete. The form is the following:
       //
       //    {
       //      id: "01"
       //    }
-      this.deleteContact = function(evt, data) {
-        this.trigger(ASK_DELETE_CONTACT, { id: data.el.contactId });
+      this.validDeleteContact = function(evt, data) {
+        var contactId = data.el.contactId;
+        this.trigger('uiValidDeleteContact', { id: contactId });
+      }
+
+      // #### Valid addition of a contact.
+      //
+      // Trigger an event 'uiValidAddContact', validating the addition
+      // of a contact. The body of event containing the contact to
+      // add. The form is the following:
+      //
+      //    {
+      //      id: "",
+      //      nom: "Wayne",
+      //      prenom: "Bruce",
+      //      numero: "000-000-000"
+      //    }
+      this.validAddContact = function(evt, data) {
+        var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
+        this.trigger('uiValidAddContact', contactData);
+      }
+
+      // #### Valid edition of an existing contact.
+      //
+      // Trigger an event 'uiValidEditContact', validating the edition
+      // of an existing contact. The body of event containing the
+      // contact to edit. The form is the following:
+      //
+      //    {
+      //      id: "01",
+      //      nom: "WAYNE",
+      //      prenom: "BRUCE",
+      //      numero: "000-000-000"
+      //    }
+      this.validAddContact = function(evt, data) {
+        // TODO: Put contactData in Ok button.
+        var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
+        this.trigger('uiValidEditContact', contactData);
       }
 
       // ## Initialization.
+      this.defaultAttrs({
+        searchSelector: '#searchContact',
+        resyncSelector: '#resyncContact',
+        addSelector: '#addContact',
+        editSelector: '#editContact',
+        previousPageSelector: '#previousPage',
+        validDeleteSelector: '#deleteContact',
+        validAddSelector: '#validAddContact',
+        validEditSelector: '#validEditContact'
+      });
 
-      // Binding tools with tool events trigerring.
+
+      // Binding ui tools with UiTools events.
       this.after('initialize', function() {
-        // Bind tools and events.
-        this.on('click', {
-          resyncSelector: this.resyncContact,
-          addSelector: this.addContact,
-          deleteSelector: this.deleteContact,
-          editSelector: this.editContact
-        });
         this.on('keyup', { searchSelector: this.searchContact });
+        this.on('click', {
+          resyncSelector: this.askResyncContact,
+          addSelector: this.askAddContact,
+          editSelector: this.askEditContact,
+          validDeleteSelector: this.validDeleteContact,
+          validAddSelector: this.validAddContact,
+          validEditSelector: this.validEditContact
+          // TODO: previousPageSelector
+        });
 
         // If resync is OK, set success button with ok-icon.
         this.on('resyncContactOk', function() {
@@ -146,13 +167,6 @@ define(
               removeClass('btn-success').addClass('btn-danger').
               find('i').
               removeClass('icon-refresh').addClass('icon-remove');
-        });
-
-        // If ask add contact, the current list contact his droped and
-        // change with the the add contact form.
-        this.on('uiAddContact', function() {
-          this.select('appSelector').slideTo(
-            Mustache.render(templates.contactAddTemplate));
         });
       });
     }

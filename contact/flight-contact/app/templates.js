@@ -46,7 +46,7 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previous" type="button" class="btn contactTool">\
+               <button id="previousPage" type="button" class="btn contactTool">\
                  <i class="icon-chevron-left"></i>\
                </button>\
                <button id="editContact" type="button" contactData="{{data}}"\
@@ -90,10 +90,10 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previous" type="button" class="btn contactTool">\
+               <button id="previousPage" type="button" class="btn contactTool">\
                  <i class="icon-chevron-left"></i>\
                </button>\
-               <button id="addConact" type="button"\
+               <button id="validEditContact" type="button"\
                     class="btn contactTool pull-right">\
                  OK\
                </button>\
@@ -138,10 +138,10 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previous" type="button" class="btn contactTool previous">\
+               <button id="previousPage" type="button" class="btn contactTool previous">\
                  <i class="icon-chevron-left"></i>\
                </button>\
-               <button id="addConact" type="button" class="btn contactTool pull-right">\
+               <button id="validAddContact" type="button" class="btn contactTool pull-right">\
                  OK\
                </button>\
              </form>\

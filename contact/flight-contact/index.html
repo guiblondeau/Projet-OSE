@@ -41,6 +41,17 @@
         }
       );
 
+$(window).bind('popstate', function (e) {
+      console.log(e.originalEvent);
+    if (e.originalEvent.state && e.originalEvent.state.path) {
+        $.get(e.originalEvent.state.path, function(data) {
+            $('#app').slideTo(data);
+        });
+        return false;
+    }
+    return true;
+});
+
       $.fn.slideTo = function(data) {
     var width = parseInt($('#app').css('width'));
     var transfer = $('<div class="transfer"></div>').css({ 'width': (2 * width) + 'px' });
