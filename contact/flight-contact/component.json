@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap.css": "git://github.com/bowerjs/bootstrap.git#~2.1.1",
     "flight": "git://github.com/twitter/flight#~1.0.2",
-    "requirejs": "git://github.com/jrburke/requirejs#~2.1.4"
+    "requirejs": "git://github.com/jrburke/requirejs#~2.1.4",
+    "mustache": "~0.7.2"
   }
 }

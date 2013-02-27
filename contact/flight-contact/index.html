@@ -12,11 +12,11 @@
 
       /* ContactsList */
       .navbar-fixed-top, .navbar-form { width: 360px; right: auto; left: auto; }
-      #search { margin-left: 15px; width: 200px; }
-      #contactsList { height: 600px;  overflow: auto; }
-      #contactsList td.item { width: 20px; color: #999999; }
-      #contactsList td.img { width: 64px; }
-      #contactsList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
+      #searchContact { margin-left: 15px; width: 200px; }
+      #contactList { height: 600px;  overflow: auto; }
+      #contactList td.item { width: 20px; color: #999999; }
+      #contactList td.img { width: 64px; }
+      #contactList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
 
       /* ContactEdit */
       #contactEdit { height: 600px; overflow: auto; }
@@ -26,151 +26,41 @@
       #contactEdit .mail { padding-top: 10px; padding-left: 10px; }
       #contactEdit .numLabel { text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
       #contactEdit .num { padding-left: 10px; }
-      #contactEdit #delete { position:absolute; bottom:10px; width:360px; }
+      #contactEdit #deleteContact { position:absolute; bottom:10px; width:360px; }
     </style>
   </head>
 
   <body>
-    <div class="container">
-     <!---------------------------------------------------------------------------
-      ! ContactEdit
-      !-------------------------------------------------------------------------->
-     <div id="contactEdit">
-       <table>
-           <tbody>
-               <tr>
-                   <td class="img">
-                       <img src="http://lorempixel.com/100/100/people/2" class="img-polaroid"/>
-                   </td>
-                   <td class="name">
-                     Lorem Ipsum
-                   </td>
-               </tr>
-               <tr>
-                   <td class="mailLabel">
-                     Mail
-                   </td>
-                   <td class="mail">
-                     LoremIpsum@loremipsum.com
-                   </td>
-               </tr>
-               <tr>
-                   <td class="numLabel">
-                     Tel
-                   </td>
-                   <td class="num">
-                     1234567891
-                   </td>
-               </tr>
-           </tbody>
-       </table>
-
-       <button id="delete" class="btn btn-large btn-block btn-danger"
-               type="button">Delete</button>
-     </div>
-
-     <!---------------------------------------------------------------------------
-      ! ContactsList
-      !-------------------------------------------------------------------------->
-      <!-- Header: Search/Add -->
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-          <div class="container" >
-            <form class="navbar-form">
-              <input id="search" type="text" class="search-query" placeholder="Search">
-              <button type="button" class="btn"><i class="icon-plus"></i></button>
-              <button type="button" class="btn btn-success"><i class="icon-ok"></i></button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact List -->
-      <div id="contactsList">
-        <table id="contactsTable" class="table table-hover">
-            <tbody>
-                <tr>
-                    <td class="item">
-                      A
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/1" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/2" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                     B
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/4" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/5" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/6" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                      E
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/7" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-                <tr>
-                    <td class="item">
-                    </td>
-                    <td class="img">
-                        <img src="http://lorempixel.com/64/64/people/8" class="img-polaroid"/>
-                    </td>
-                    <td class="name">
-                      Lorem Ipsum
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
+    <div id="app" class="container">
+      <!-- Mustache Template -->
     </div>
 
     <script src="components/jquery/jquery.js"></script>
     <script src="components/bootstrap.css/js/bootstrap.js"></script>
     <script src="components/es5-shim/es5-shim.js"></script>
     <script src="components/es5-shim/es5-sham.js"></script>
+    <script src="components/mustache/mustache.js"></script>
     <script data-main="requireMain.js" src="components/requirejs/require.js"></script>
+
+    <script>
+      require(
+        [
+        'components/flight/lib/compose',
+        'components/flight/lib/registry',
+        'components/flight/lib/advice',
+        'components/flight/lib/logger',
+        'components/flight/tools/debug/debug'
+        ],
+
+        function(compose, registry, advice, withLogging, debug) {
+          debug.enable(true);
+          compose.mixin(registry, [advice.withAdvice, withLogging]);
+          require(['app/boot/page'], function(initialize) {
+            initialize();
+          });
+        }
+      );
+    </script>
+
   </body>
 </html>
