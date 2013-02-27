@@ -87,7 +87,7 @@ define(
       //      id: "01"
       //    }
       this.validDeleteContact = function(evt, data) {
-        var contactId = data.el.contactId;
+        var contactId = jQuery(data.el).attr('contactId');
         this.trigger('uiValidDeleteContact', { id: contactId });
       }
 
@@ -149,13 +149,14 @@ define(
       //
       // TODO: Error is case of bad contact object.
       this.before('validEditContact', function(evt, data) {
+        var id = jQuery("#contact").attr('contactId');
         var nom = jQuery("#nom").val();
         var prenom = jQuery("#prenom").val();
         var numero = jQuery("#numero").val();
 
 
         jQuery(data.el).attr('contactData', JSON.stringify({
-          'id': '',
+          'id': id,
           'nom': nom,
           'prenom': prenom,
           'numero': numero
@@ -163,6 +164,8 @@ define(
       });
 
       // ## Initialization.
+
+      // Attributes
       this.defaultAttrs({
         searchSelector: '#searchContact',
         resyncSelector: '#resyncContact',
@@ -173,7 +176,6 @@ define(
         validAddSelector: '#validAddContact',
         validEditSelector: '#validEditContact'
       });
-
 
       // Binding ui tools with UiTools events.
       this.after('initialize', function() {

@@ -70,10 +70,10 @@ define(
               }));
           },
           error: function(jqXHR, textStatus, errorThrown) {
-            // Trigger resyncContactNotOk
             UiPrintItem.trigger('resyncContactNotOk');
-
             // TODO: trigger event error
+            console.log(textStatus);
+            console.log(errorThrown);
           }
         });
       }
@@ -124,6 +124,9 @@ define(
 
         // Print all contacts
         this.on('uiAskResyncContact', this.printAllContacts);
+        this.on('addContactOK', this.printAllContacts);
+        this.on('deleteContactOK', this.printAllContacts);
+        this.on('updateContactOK', this.printAllContacts);
 
         // Print sepcific contact
         this.on('uiSelectedItemContact', this.printContact);

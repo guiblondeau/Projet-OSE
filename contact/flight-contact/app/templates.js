@@ -103,7 +103,7 @@ define(
        </div>\
 \
        <div id="contactEdit" class="appContent">\
-         <table>\
+         <table id="contact" contactId="{{id}}">\
            <tbody>\
              <tr>\
                <td class="img">\

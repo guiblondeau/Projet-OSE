@@ -35,6 +35,7 @@ var addContact = $.mockjax({
   statusText: 'Created',
   contentType: 'application/json',
   response: function() {
+    console.log("lalala");
     action = 'afterAdd';
     this.responseText = JSON.stringify({
       "id": "03",

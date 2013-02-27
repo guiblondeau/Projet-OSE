@@ -3,14 +3,16 @@
 define(
 
   [
+    'app/contacts.js',
     'app/uiPrintItem',
     'app/uiTools'
   ],
 
 
-  function(UiPrintItem, UiTools) {
+  function(Contacts, UiPrintItem, UiTools) {
 
     function initialize() {
+      Contacts.attachTo(document);
       UiPrintItem.attachTo(document);
       UiTools.attachTo(document);
       /*
