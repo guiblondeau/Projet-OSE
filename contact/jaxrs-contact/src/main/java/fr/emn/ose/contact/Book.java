@@ -92,8 +92,8 @@ public class Book {
 
 
     /**
-     *
-     * @param id
+     * Delete the contact corresponding to the id set in the parameter field
+     * @param id : the id corresponding to the contact to delete
      * @return
      */
     @DELETE()
