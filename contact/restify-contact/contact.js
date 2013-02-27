@@ -14,6 +14,9 @@ var cpt = 0; // donne la valeur de l'indentifiant
 var book = [];// stocke les contacts
 var affichage = [];// sert au renvoi des contacts (cf function getAll)
 
+/**
+Gives all the contacts present in the book
+*/
 function getAll(req, res, next){
     var compteur = 0;
     for (var id in book){
@@ -25,37 +28,47 @@ function getAll(req, res, next){
     res.send(affichage);
 }
 
+/**
+Edits a contacts already present in the book
+*/
 function editContact(req, res, next){
     var contact = new Contact();
     var param = req.params;
+    contact.id = param.identifiant;
     contact.nom = param.nom;
     contact.prenom = param.prenom;
-    contact.id = param.id;
     contact.numero = param.numero;
     res.send(req.params);
     book[param.identifiant] = contact;
 }
 
+/**
+Adds a new contact
+*/
 function addContact(req, res, next) {
-    //var contact = JSON.parse(req.params);
     console.log(req.params.nom);
-    
     var contact = new Contact();
     var param = req.params;
+    contact.id = cpt;
     contact.nom = param.nom;
     contact.prenom = param.prenom;
-    contact.id = cpt;
     contact.numero = param.numero;
     book[cpt] = contact;
     res.send(contact);
     cpt = cpt+1;
 }
 
+/**
+Deletes a contact
+*/
 function deleteContact(req, res, next){
     book[req.params.identifiant] = null;
     res.send ("OK");
 }
 
+/**
+Permits to erase an object in a tab
+*/
 
 server.post('/contacts/addContact', addContact);
 server.get('/contacts/getAll', getAll);

@@ -3,13 +3,15 @@
 define(
 
   [
+    'app/uiPrintItem',
     'app/uiTools'
   ],
 
 
-  function(UiTools) {
+  function(UiPrintItem, UiTools) {
 
     function initialize() {
+      UiPrintItem.attachTo(document);
       UiTools.attachTo(document);
       /*
       MailItemsData.attachTo(document);

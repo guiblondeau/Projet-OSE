@@ -5,29 +5,7 @@
     <title>Flight Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="components/bootstrap.css/css/bootstrap.css">
-
-    <style type="text/css">
-      body { padding: 0px; padding-top: 40px; }
-      .container { width: 360px; }
-
-      /* ContactsList */
-      .navbar-fixed-top, .navbar-form { width: 360px; right: auto; left: auto; }
-      #searchContact { margin-left: 15px; width: 200px; }
-      #contactList { height: 600px;  overflow: auto; }
-      #contactList td.item { width: 20px; color: #999999; }
-      #contactList td.img { width: 64px; }
-      #contactList td.name { vertical-align:middle;font-size:17.5px;font-weight:bold;line-height:20px; }
-
-      /* ContactEdit */
-      #contactEdit { height: 600px; overflow: auto; }
-      #contactEdit .img { widht: 100px; }
-      #contactEdit .name { padding-left:10px;font-size:31.5px;line-height:40px;font-weight:bold; }
-      #contactEdit .mailLabel { padding-top:10px;text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
-      #contactEdit .mail { padding-top: 10px; padding-left: 10px; }
-      #contactEdit .numLabel { text-align:right;font-size:17.5px;font-weight:bold;line-height:20px; }
-      #contactEdit .num { padding-left: 10px; }
-      #contactEdit #deleteContact { position:absolute; bottom:10px; width:360px; }
-    </style>
+    <link rel="stylesheet" href="app/templates.css">
   </head>
 
   <body>
@@ -40,6 +18,8 @@
     <script src="components/es5-shim/es5-shim.js"></script>
     <script src="components/es5-shim/es5-sham.js"></script>
     <script src="components/mustache/mustache.js"></script>
+    <script src="components/jquery-mockjax/jquery.mockjax.js"></script>
+    <script src="app/contactsMock.js"></script>
     <script data-main="requireMain.js" src="components/requirejs/require.js"></script>
 
     <script>
@@ -60,6 +40,30 @@
           });
         }
       );
+
+$(window).bind('popstate', function (e) {
+      console.log(e.originalEvent);
+    if (e.originalEvent.state && e.originalEvent.state.path) {
+        $.get(e.originalEvent.state.path, function(data) {
+            $('#app').slideTo(data);
+        });
+        return false;
+    }
+    return true;
+});
+
+      $.fn.slideTo = function(data) {
+    var width = parseInt($('#app').css('width'));
+    var transfer = $('<div class="transfer"></div>').css({ 'width': (2 * width) + 'px' });
+    var current = $('<div class="current"></div>').css({ 'width': width + 'px', 'left': '0', 'float': 'left' }).html($('#app').html());
+    var next = $('<div class="next"></div>').css({ 'width': width + 'px', 'left': width + 'px', 'float': 'left' }).html(data);
+    transfer.append(current).append(next);
+    $('#app').html('').append(transfer);
+    transfer.animate({ 'margin-left': '-' + width + 'px' }, 300, function () {
+        $('#app').html(data);
+    });
+}
+
     </script>
 
   </body>
