@@ -4,16 +4,16 @@ define(
 
   [
     'app/contacts.js',
-    'app/uiPrintItem',
+    'app/templateRender',
     'app/uiTools'
   ],
 
 
-  function(Contacts, UiPrintItem, UiTools) {
+  function(Contacts, TemplateRender, UiTools) {
 
     function initialize() {
       Contacts.attachTo(document);
-      UiPrintItem.attachTo(document);
+      TemplateRender.attachTo(document);
       UiTools.attachTo(document);
       /*
       MailItemsData.attachTo(document);

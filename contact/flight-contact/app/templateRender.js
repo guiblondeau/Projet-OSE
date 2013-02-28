@@ -1,16 +1,12 @@
-// **Component:** UiPrintItem\\
+// **Component:** TemplateRender\\
 // **Date:** 2013-02-24\\
-// **Brief:** Print contact items on ui.\\
+// **Brief:** Rendering templates for ui.\\
 //
-// **UiPrintItem** is a ui contact items printer enabeling:
-//  * Print all contacts.
-//  * Print a specific contact.
-//  * Print edition of a contact.
-//  * Print addition of a contact.
-//
-// **UiPrintItem** manages contact items on ui so that it's also
-// responsible of ui events on contact items. The list of events and
-// definition is given in [events section](#events).
+// **Template Render** is a ui template render enabeling:
+//  * Render all contacts.
+//  * Render a specific contact.
+//  * Render edition of a contact.
+//  * Render addition of a contact.
 'use_strict';
 
 define(
@@ -21,9 +17,9 @@ define(
   ],
 
   function(defineComponent, Mustache, templates) {
-    return defineComponent(uiContactItem);
+    return defineComponent(TemplateRender);
 
-    function uiContactItem() {
+    function TemplateRender() {
       // ## Event's list <a id="events"></a>
 
       // #### Say a contact is selected.
