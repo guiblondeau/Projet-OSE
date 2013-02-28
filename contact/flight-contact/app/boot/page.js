@@ -5,16 +5,16 @@ define(
   [
     'app/contacts.js',
     'app/templateRender',
-    'app/uiTools'
+    'app/uiInteraction'
   ],
 
 
-  function(Contacts, TemplateRender, UiTools) {
+  function(Contacts, TemplateRender, UiInteraction) {
 
     function initialize() {
       Contacts.attachTo(document);
       TemplateRender.attachTo(document);
-      UiTools.attachTo(document);
+      UiInteraction.attachTo(document);
       /*
       MailItemsData.attachTo(document);
       ComposeBoxData.attachTo(document);

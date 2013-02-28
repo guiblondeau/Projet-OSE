@@ -22,22 +22,6 @@ define(
     function TemplateRender() {
       // ## Event's list <a id="events"></a>
 
-      // #### Say a contact is selected.
-      //
-      // Trigger an event 'uiSelectedItemContact', saying a contact is
-      // selected. The event body is the selected contact:
-      //
-      //    {
-      //      id: "01",
-      //      nom: "Wayne",
-      //      prenom: "Bruce",
-      //      num: "000-000-000"
-      //    }
-      this.itemSelected = function(evt, data) {
-        var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
-        this.trigger('uiSelectedItemContact', contactData);
-      }
-
       // ## Print function
 
       // #### Print all contacts.
@@ -110,14 +94,9 @@ define(
       // ## Initialization
       this.defaultAttrs({
         appSelector: '#app',
-        itemSelector: 'tr.contactItem'
       });
 
       this.after('initialize', function() {
-        this.on('click', {
-          itemSelector: this.itemSelected
-        });
-
         // Print all contacts
         this.on('uiAskResyncContact', this.printAllContacts);
         this.on('addContactOK', this.printAllContacts);

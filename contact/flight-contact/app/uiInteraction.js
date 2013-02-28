@@ -1,10 +1,11 @@
-// **Component:** UiTools\\
+// **Component:** UiInteraction\\
 // **Date:** 2013-02-19\\
-// **Brief:** Manages tools on ui.\\
+// **Brief:** Manages user interactionon ui.\\
 //
-// **UiTools** is a ui tools manager enabeling each tool to generate
-// events. Events represent the user action on ui. Definition of
-// events is given in [events section](#events).
+// **UiInteraction** is a "user interaction with ui" manager enabeling
+// tool and elements to generate events. Events represent the user
+// action on ui. Definition of events is given in [events
+// section](#events).
 'use strict';
 
 define(
@@ -13,12 +14,28 @@ define(
   ],
 
   function(defineComponent)  {
-    return defineComponent(uiTools);
+    return defineComponent(UiInteraction);
 
-    function uiTools() {
+    function UiInteraction() {
       // ## Events' list <a id="events"></a>.
 
-      // ### Print page events.
+      // ### Events represented a user action (click, focus) on elements.
+
+      // #### Say a contact is selected.
+      //
+      // Trigger an event 'uiSelectedItemContact', saying a contact is
+      // selected. The event body is the selected contact:
+      //
+      //    {
+      //      id: "01",
+      //      nom: "Wayne",
+      //      prenom: "Bruce",
+      //      num: "000-000-000"
+      //    }
+      this.itemSelected = function(evt, data) {
+        var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
+        this.trigger('uiSelectedItemContact', contactData);
+      }
 
       // #### Ask for searching a specific contact.
       //
@@ -75,7 +92,7 @@ define(
         this.trigger('uiAskAddContact');
       }
 
-      // ### Action on contact events.
+      // ### Events for the validation of user actions.
 
       // #### Valid deletion of a contact.
       //
@@ -174,7 +191,8 @@ define(
         previousPageSelector: '#previousPage',
         validDeleteSelector: '#deleteContact',
         validAddSelector: '#validAddContact',
-        validEditSelector: '#validEditContact'
+        validEditSelector: '#validEditContact',
+        itemSelector: 'tr.contactItem'
       });
 
       // Binding ui tools with UiTools events.
@@ -186,7 +204,8 @@ define(
           editSelector: this.askEditContact,
           validDeleteSelector: this.validDeleteContact,
           validAddSelector: this.validAddContact,
-          validEditSelector: this.validEditContact
+          validEditSelector: this.validEditContact,
+          itemSelector: this.itemSelected
           // TODO: previousPageSelector
         });
 
