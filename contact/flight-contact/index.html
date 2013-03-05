@@ -42,7 +42,6 @@
       );
 
 $(window).bind('popstate', function (e) {
-      console.log(e.originalEvent);
     if (e.originalEvent.state && e.originalEvent.state.path) {
         $.get(e.originalEvent.state.path, function(data) {
             $('#app').slideTo(data);
@@ -51,18 +50,6 @@ $(window).bind('popstate', function (e) {
     }
     return true;
 });
-
-      $.fn.slideTo = function(data) {
-    var width = parseInt($('#app').css('width'));
-    var transfer = $('<div class="transfer"></div>').css({ 'width': (2 * width) + 'px' });
-    var current = $('<div class="current"></div>').css({ 'width': width + 'px', 'left': '0', 'float': 'left' }).html($('#app').html());
-    var next = $('<div class="next"></div>').css({ 'width': width + 'px', 'left': width + 'px', 'float': 'left' }).html(data);
-    transfer.append(current).append(next);
-    $('#app').html('').append(transfer);
-    transfer.animate({ 'margin-left': '-' + width + 'px' }, 300, function () {
-        $('#app').html(data);
-    });
-}
     </script>
 
   </body>

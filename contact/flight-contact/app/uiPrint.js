@@ -64,7 +64,6 @@ define(
         //    {
         //      html: "__to print code__"
         //    }
-
         this.on('print', this.print);
 
         // #### Event printForward
@@ -99,12 +98,71 @@ define(
 
       // #### Print html data with a forward slide effect.
       this.printForward = function(evt, data) {
-        this.select('printSelector').html(data.html);
+        var print = this.select('printSelector');
+        var width = parseInt(print.css('width'));
+
+        var transfer =  jQuery('<div></div>');
+        var current = jQuery('<div></div>');
+        var next = jQuery('<div></div>');
+
+        transfer.css({
+            'width': (2 * width) + 'px'
+        });
+        current.css({
+            'width': width + 'px',
+            'left': '0', 'float': 'left'
+        });
+        next.css({
+            'width': width + 'px',
+            'left': width + 'px',
+            'float': 'left'
+        });
+
+        current.html(print.html());
+        next.html(data.html);
+        transfer.append(current).append(next);
+
+        print.html('').append(transfer);
+
+        transfer.animate({'margin-left': '-' + width + 'px' }, 300, function() {
+          print.html(data.html);
+        });
       }
 
       // #### Print html data with a backward slide effect.
       this.printBackward = function(evt, data) {
-        this.select('printSelector').html(data.html);
+        var print = this.select('printSelector');
+        var width = parseInt(print.css('width'));
+
+        var transfer =  jQuery('<div></div>');
+        var current = jQuery('<div></div>');
+        var previous = jQuery('<div></div>');
+
+        transfer.css({
+            'width': (2 * width) + 'px'
+        });
+        current.css({
+            'width': width + 'px',
+            'position': 'relative',
+            'left': '-' + width + 'px',
+            'float': 'left'
+        });
+        previous.css({
+            'width': width + 'px',
+            'position': 'relative',
+            'left': '-' + width + 'px',
+            'float': 'left'
+        });
+
+        current.html(print.html());
+        previous.html(data.html);
+        transfer.append(previous).append(current);
+
+        print.html('').append(transfer);
+
+        transfer.animate({'margin-left': width + 'px' }, 300, function() {
+          print.html(data.html);
+        });
       }
 
       // ### Attributes.
