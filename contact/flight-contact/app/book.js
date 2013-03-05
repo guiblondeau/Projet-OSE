@@ -38,6 +38,8 @@ define(
       var DEFAULT_PRINT = 'PRINT';
       var allContactPrint = DEFAULT_PRINT;
 
+      var Book;
+
       this.defaultAttrs({
         // Compiled templates.
         templateContacts: Mustache.compile(templates.contactListTemplate),
@@ -47,6 +49,7 @@ define(
       });
 
       this.after('initialize', function() {
+        Book = this;
 
         // ### Handlers.
 
@@ -64,16 +67,31 @@ define(
         // #### Print One Contact Page.
         this.on('oneContactPage', function(evt, data) {
           this.print(this.renderContact(data.contact), data.print);
+
+          this.pushHistory({
+              current: 'oneContactPage',
+              extraData: undefined
+          });
         });
 
         // #### Edit Contact Page.
         this.on('editContactPage', function(evt, data) {
           this.print(this.renderEdit(data.contact), data.print);
+
+          this.pushHistory({
+              current: 'editContactPage',
+              extraData: data.contact
+          });
         });
 
         // #### Add Contact Page.
         this.on('addContactPage', function(evt, data) {
           this.print(this.renderAdd(), data.print);
+
+          this.pushHistory({
+              current: 'addContactPage',
+              extraData: undefined
+          });
         });
 
         // ### Binding with UiInteraction.
@@ -182,6 +200,9 @@ define(
           });
         });
 
+        // ### It back button (browser).
+        window.onpopstate = this.popHistory;
+
         // ### Lauch app
         this.trigger('allContactPage', { print: allContactPrint });
       });
@@ -266,6 +287,31 @@ define(
         }
 
         this.trigger(type, { html: render });
+      }
+
+      // ## Manage history
+
+      // #### History it (save state)
+      this.pushHistory = function(eventData) {
+        var evt = {
+          type: 'uiPreviousPageSelected',
+          data: eventData
+        };
+        console.log("push History:");
+        console.log(evt);
+
+        history.pushState({event: evt}, eventData.current, 'index.html');
+      }
+
+      // #### Play History;
+      this.popHistory = function (evt) {
+        if (evt.state && evt.state.event) {
+          var event = evt.state.event;
+          Book.trigger(event.type, event.data);
+          return false;
+        }
+
+        return true;
       }
     }
   }
