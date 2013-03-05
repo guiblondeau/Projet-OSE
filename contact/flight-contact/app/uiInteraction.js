@@ -127,7 +127,7 @@ define(
       // #### Say a contact is selected.
       this.contactSelected = function(evt, data) {
         var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
-        this.trigger('uiContactSelected', { contact: contactData} );
+        this.trigger('uiContactSelected', contactData );
       }
 
       // #### Ask for filtering contacts' list.
@@ -147,7 +147,7 @@ define(
       // #### Ask to edit an existing contact.
       this.editContactSelected = function(evt, data) {
         var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
-        this.trigger('uiEditContactSelected', { contact: contactData });
+        this.trigger('uiEditContactSelected', contactData);
       }
 
       // #### Ask generate page to a add a new contact.
@@ -165,7 +165,7 @@ define(
         switch (page) {
         case 'editContactPage':
           var contactData = JSON.parse(btn.attr('contactData'));
-          extraData = { contact: contactData };
+          extraData = contactData;
           break;
         case 'addContactPage':
         case 'oneContactPage':
@@ -174,7 +174,7 @@ define(
         }
 
         this.trigger('uiPreviousPageSelected', {
-            'page': page,
+            'current': page,
             'extraData': extraData
         });
       }
@@ -194,33 +194,16 @@ define(
       // #### Valid addition of a contact.
       this.validAddContactSelected = function(evt, data) {
         var contactData = JSON.parse(jQuery(data.el).attr('contactData'));
-        this.trigger('uiValidEditContactSelected', contactData);
+        this.trigger('uiValidAddContactSelected', contactData);
       }
 
       // ## AOP part.
-
-      // Before validAddContact, set the contact object to add into
-      // contactData attribute.
-      //
-      // TODO: Error in case of bad contact object.
-      this.before('addContact', function(evt, data) {
-        var nom = jQuery("#nom").val();
-        var prenom = jQuery("#prenom").val();
-        var numero = jQuery("#numero").val();
-
-        jQuery(data.el).attr('contactData', JSON.stringify({
-          'id': '',
-          'nom': nom,
-          'prenom': prenom,
-          'numero': numero
-        }));
-      });
 
       // Before validEditContact, set the contact object to edit into
       // contactData attribute.
       //
       // TODO: Error in case of bad contact object.
-      this.before('editContact', function(evt, data) {
+      this.before('validEditContactSelected', function(evt, data) {
         var id = jQuery("#contact").attr('contactId');
         var nom = jQuery("#nom").val();
         var prenom = jQuery("#prenom").val();
@@ -229,6 +212,23 @@ define(
 
         jQuery(data.el).attr('contactData', JSON.stringify({
           'id': id,
+          'nom': nom,
+          'prenom': prenom,
+          'numero': numero
+        }));
+      });
+
+      // Before validAddContact, set the contact object to add into
+      // contactData attribute.
+      //
+      // TODO: Error in case of bad contact object.
+      this.before('validAddContactSelected', function(evt, data) {
+        var nom = jQuery("#nom").val();
+        var prenom = jQuery("#prenom").val();
+        var numero = jQuery("#numero").val();
+
+        jQuery(data.el).attr('contactData', JSON.stringify({
+          'id': '',
           'nom': nom,
           'prenom': prenom,
           'numero': numero

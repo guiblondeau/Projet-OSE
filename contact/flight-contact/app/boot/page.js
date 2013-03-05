@@ -4,19 +4,19 @@ define(
 
   [
     'app/contactManager.js',
-    'app/templateRender',
     'app/uiInteraction',
-    'app/uiPrint'
+    'app/uiPrint',
+    'app/book'
   ],
 
 
-  function(ContactManager, TemplateRender, UiInteraction, UiPrint) {
+  function(ContactManager, UiInteraction, UiPrint, Book) {
 
     function initialize() {
       ContactManager.attachTo(document);
-      TemplateRender.attachTo(document);
       UiInteraction.attachTo(document);
       UiPrint.attachTo(document, { printSelector: '#app' });
+      Book.attachTo(document);
     }
 
     return initialize;
