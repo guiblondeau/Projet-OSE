@@ -3,28 +3,20 @@
 define(
 
   [
-    'app/contacts.js',
+    'app/contactManager.js',
     'app/templateRender',
-    'app/uiInteraction'
+    'app/uiInteraction',
+    'app/uiPrint'
   ],
 
 
-  function(Contacts, TemplateRender, UiInteraction) {
+  function(ContactManager, TemplateRender, UiInteraction, UiPrint) {
 
     function initialize() {
-      Contacts.attachTo(document);
+      ContactManager.attachTo(document);
       TemplateRender.attachTo(document);
       UiInteraction.attachTo(document);
-      /*
-      MailItemsData.attachTo(document);
-      ComposeBoxData.attachTo(document);
-      MoveToData.attachTo(document);
-      MailItemsUI.attachTo('#mail_items', {itemContainerSelector: '#mail_items_TB'});
-      MailControlsUI.attachTo('#mail_controls');
-      ComposeBoxUI.attachTo('#compose_box');
-      FoldersUI.attachTo('#folders');
-      MoveToSelectorUI.attachTo('#move_to_selector', {moveActionSelector: '#move_mail'});
-      */
+      UiPrint.attachTo(document, { printSelector: '#app' });
     }
 
     return initialize;

@@ -15,7 +15,7 @@
 //
 // ## Handlers <a id="handlers"></a>
 //
-// #### Event: getAllContact.
+// #### On getAllContact.
 //
 // Try to get all contacts from persiatant layer.
 //
@@ -92,10 +92,11 @@ define(
   function(defineComponent)  {
     return defineComponent(ContactManager);
 
+    // ## ContactManager Code
     function ContactManager() {
 
       this.after('initialize', function() {
-        // ## Handlers <a id="handlers"></a>
+        // ### Handlers
 
         // #### Event: getAllContact.
         //
@@ -156,7 +157,7 @@ define(
       });
 
 
-      // ## Actions <a id="actions"></a>.
+      // ### Actions
 
       // #### Get all contacts.
       //
