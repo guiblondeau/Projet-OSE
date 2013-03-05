@@ -46,7 +46,7 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previousPage" type="button" class="btn contactTool">\
+               <button id="previousPage" type="button" class="btn contactTool" page="oneContactPage">\
                  <i class="icon-chevron-left"></i>\
                </button>\
                <button id="editContact" type="button" contactData="{{data}}"\
@@ -70,15 +70,15 @@ define(
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue">{{nom}}</td>\
+               <td class="inputValue">{{contact.nom}}</td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue">{{prenom}}</td>\
+               <td class="inputValue">{{contact.prenom}}</td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue">{{numero}}</td>\
+               <td class="inputValue">{{contact.numero}}</td>\
              </tr>\
            </tbody>\
          </table>\
@@ -90,7 +90,8 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previousPage" type="button" class="btn contactTool">\
+               <button id="previousPage" type="button" class="btn contactTool"\
+                  page="editContactPage" contactData="{{data}}" >\
                  <i class="icon-chevron-left"></i>\
                </button>\
                <button id="validEditContact" type="button"\
@@ -103,7 +104,7 @@ define(
        </div>\
 \
        <div id="contactEdit" class="appContent">\
-         <table id="contact" contactId="{{id}}">\
+         <table id="contact" contactId="{{contact.id}}">\
            <tbody>\
              <tr>\
                <td class="img">\
@@ -114,20 +115,20 @@ define(
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue"><input id="prenom" type="text" placeholder="{{prenom}}" /></td>\
+               <td class="inputValue"><input id="prenom" type="text" value="{{contact.prenom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue"><input id="nom" type="text" placeholder="{{nom}}" /></td>\
+               <td class="inputValue"><input id="nom" type="text" value="{{contact.nom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue"><input id="numero" type="text" placeholder="{{numero}}" /</td>\
+               <td class="inputValue"><input id="numero" type="text" value="{{contact.numero}}" /</td>\
              </tr>\
            </tbody>\
          </table>\
 \
-         <button id="deleteContact" contactId="{{id}}"\
+         <button id="deleteContact" contactId="{{contact.id}}"\
                  class="btn btn-large btn-block btn-danger contactTool"\
                  type="button">Delete</button>\
        </div>';
@@ -138,7 +139,8 @@ define(
          <div class="navbar-inner">\
            <div id="menu" class="container" >\
              <form class="navbar-form">\
-               <button id="previousPage" type="button" class="btn contactTool previous">\
+               <button id="previousPage" type="button" class="btn contactTool"\
+                   page="addContactPage">\
                  <i class="icon-chevron-left"></i>\
                </button>\
                <button id="validAddContact" type="button" class="btn contactTool pull-right">\
