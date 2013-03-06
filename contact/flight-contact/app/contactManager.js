@@ -166,7 +166,7 @@ define(
       // Else, the event 'getAllContactNOTOK' is triggered.
       this.getAllContact = function() {
         var that = this;
-        var href = '/contacts/getAll';
+        var href = this.attr.root + 'contacts/getAll';
 
         jQuery.ajax({
           url: href,
@@ -193,7 +193,7 @@ define(
       //  * contact:  The contact to add.
       this.addContact = function(evt, contact) {
         var that = this;
-        var href = '/contacts/addContact';
+        var href = this.attr.root + 'contacts/addContact';
 
         jQuery.ajax({
           url: href,
@@ -222,7 +222,7 @@ define(
       // * data: Object containig id of the contact to delete.
       this.deleteContact = function(evt, data) {
         var that = this;
-        var href = '/contacts/editContact/' + data.id;
+        var href = this.attr.root + 'contacts/editContact/' + data.id;
 
         jQuery.ajax({
           url: href,
@@ -250,7 +250,7 @@ define(
       // * contact: The contact with updatetd values.
       this.updateContact = function(evt, contact) {
         var that = this;
-        var href = '/contacts/editContact/' + contact.id;
+        var href = this.attr.root + 'contacts/editContact/' + contact.id;
 
         jQuery.ajax({
           url: href,
@@ -268,6 +268,13 @@ define(
           }
         });
       }
+
+      // ### Attributes.
+      this.defaultAttrs({
+        // Root url of persistant layer
+        root: '/'
+      });
     }
   }
 );
+
