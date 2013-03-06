@@ -25,6 +25,7 @@ function getAll(req, res, next){
 	    compteur++;
 	}
     }
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(affichage);
 }
 
@@ -38,6 +39,7 @@ function editContact(req, res, next){
     contact.nom = param.nom;
     contact.prenom = param.prenom;
     contact.numero = param.numero;
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(req.params);
     book[param.identifiant] = contact;
 }
@@ -54,6 +56,7 @@ function addContact(req, res, next) {
     contact.prenom = param.prenom;
     contact.numero = param.numero;
     book[cpt] = contact;
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(contact);
     cpt = cpt+1;
 }
@@ -63,6 +66,7 @@ Deletes a contact
 */
 function deleteContact(req, res, next){
     book[req.params.identifiant] = null;
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send ("OK");
 }
 
