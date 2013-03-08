@@ -1,0 +1,175 @@
+<!DOCTYPE html>  <html> <head>   <title>contactsMock.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="book.html">                 book.js               </a>                                           <a class="source" href="contactManager.html">                 contactManager.js               </a>                                           <a class="source" href="contactsMock.html">                 contactsMock.js               </a>                                           <a class="source" href="templates.html">                 templates.js               </a>                                           <a class="source" href="uiInteraction.html">                 uiInteraction.js               </a>                                           <a class="source" href="uiPrint.html">                 uiPrint.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               contactsMock.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Mock of the contacts' REST API. This mock the API in a very simple
+manner. Only the following scenario is supported :</p>
+
+<p>First, add a the new contact James Gordon:</p>
+
+<pre><code>{
+  "id": "",
+  "nom": "Gordon",
+  "prenom": "James",
+  "numero": "11-222-333"
+}
+</code></pre>
+
+<p>Next, update James Gordon to JAMES GORDON:</p>
+
+<pre><code>{
+  "id":     "03",
+  "nom":    "GORDON",
+  "prenom": "JAMES",
+  "numero": "22-333-444"
+}
+</code></pre>
+
+<p>Finally, Delete User with id "02"</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;start&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">getAll</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mockjax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/contacts/getAll&#39;</span><span class="p">,</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+  <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
+  <span class="nx">statusText</span><span class="o">:</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span>
+  <span class="nx">contentType</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+  <span class="nx">response</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">contacts</span><span class="p">;</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">&#39;afterAdd&#39;</span><span class="o">:</span>
+      <span class="nx">contacts</span> <span class="o">=</span> <span class="nx">contactsAfterAdd</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;afterUpdate&#39;</span><span class="o">:</span>
+      <span class="nx">contacts</span> <span class="o">=</span> <span class="nx">contactsAfterUpdate</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;afterDelete&#39;</span><span class="o">:</span>
+      <span class="nx">contacts</span> <span class="o">=</span> <span class="nx">contactsAfterDelete</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s1">&#39;start&#39;</span><span class="o">:</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="nx">contacts</span> <span class="o">=</span> <span class="nx">contactsStart</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">contacts</span><span class="p">);</span>
+ <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">addContact</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mockjax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/contacts/addContact&#39;</span><span class="p">,</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+  <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;201&#39;</span><span class="p">,</span>
+  <span class="nx">statusText</span><span class="o">:</span> <span class="s1">&#39;Created&#39;</span><span class="p">,</span>
+  <span class="nx">contentType</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+  <span class="nx">response</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ADD: &quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+    <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;afterAdd&#39;</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;03&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Gordon&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-333&quot;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">editContact</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mockjax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="sr">/^\/contacts\/editContact\/([\d]+)$/</span><span class="p">,</span>
+  <span class="nx">urlParams</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;contactID&#39;</span><span class="p">],</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span>
+  <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
+  <span class="nx">statusText</span><span class="o">:</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span>
+  <span class="nx">contentType</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+  <span class="nx">response</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;afterUpdate&#39;</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span>     <span class="s2">&quot;03&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;nom&quot;</span><span class="o">:</span>    <span class="s2">&quot;GORDON&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;JAMES&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;22-333-444&quot;</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">deleteContact</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">mockjax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="sr">/^\/contacts\/editContact\/([\d]+)$/</span><span class="p">,</span>
+  <span class="nx">urlParams</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;contactID&#39;</span><span class="p">],</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">,</span>
+  <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
+  <span class="nx">statusText</span><span class="o">:</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span>
+  <span class="nx">response</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">action</span> <span class="o">=</span> <span class="s1">&#39;afterDelete&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">contactsStart</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Wayne&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Bruce&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-331&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Kyle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Selina&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-332&quot;</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">contactsAfterAdd</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Wayne&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Bruce&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-331&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Kyle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Selina&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-332&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;03&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Gordon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-333&quot;</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">contactsAfterUpdate</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Wayne&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Bruce&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-331&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Kyle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Selina&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-332&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;03&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;GORDON&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;JAMES&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-333&quot;</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">contactsAfterDelete</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Wayne&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;Bruce&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-331&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;03&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span><span class="o">:</span> <span class="s2">&quot;Gordon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prenom&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numero&quot;</span><span class="o">:</span> <span class="s2">&quot;11-222-333&quot;</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

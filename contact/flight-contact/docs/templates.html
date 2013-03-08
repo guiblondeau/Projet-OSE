@@ -1,0 +1,185 @@
+<!DOCTYPE html>  <html> <head>   <title>templates.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="book.html">                 book.js               </a>                                           <a class="source" href="contactManager.html">                 contactManager.js               </a>                                           <a class="source" href="contactsMock.html">                 contactsMock.js               </a>                                           <a class="source" href="templates.html">                 templates.js               </a>                                           <a class="source" href="uiInteraction.html">                 uiInteraction.js               </a>                                           <a class="source" href="uiPrint.html">                 uiPrint.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               templates.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Mustache templates used by <a href="book.html">Book Component</a>.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">define</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Template for All Contact Page.</h2>             </td>             <td class="code">               <div class="highlight"><pre>     <span class="kd">var</span> <span class="nx">contactListTemplate</span> <span class="o">=</span>
+      <span class="s1">&#39;&lt;!-- Header: Search/Add/Resynch --&gt;\</span>
+<span class="s1">       &lt;div class=&quot;navbar navbar-fixed-top&quot;&gt;\</span>
+<span class="s1">         &lt;div class=&quot;navbar-inner&quot;&gt;\</span>
+<span class="s1">           &lt;div id=&quot;menu&quot; class=&quot;container&quot; &gt;\</span>
+<span class="s1">             &lt;form class=&quot;navbar-form&quot;&gt;\</span>
+<span class="s1">               &lt;input id=&quot;searchContact&quot; type=&quot;text&quot;\</span>
+<span class="s1">                      class=&quot;search-query contactTool&quot; placeholder=&quot;Search&quot;&gt;\</span>
+<span class="s1">               &lt;button id=&quot;addContact&quot; type=&quot;button&quot; class=&quot;btn contactTool&quot;&gt;\</span>
+<span class="s1">                 &lt;i class=&quot;icon-plus&quot;&gt;&lt;/i&gt;\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">               &lt;button id=&quot;resyncContact&quot; type=&quot;button&quot;\</span>
+<span class="s1">                       class=&quot;btn btn-success  contactTool&quot;&gt;\</span>
+<span class="s1">                 &lt;i class=&quot;icon-ok&quot;&gt;&lt;/i&gt;\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">             &lt;/form&gt;\</span>
+<span class="s1">           &lt;/div&gt;\</span>
+<span class="s1">         &lt;/div&gt;\</span>
+<span class="s1">       &lt;/div&gt;\</span>
+<span class="s1">\</span>
+<span class="s1">       &lt;!-- Contact List --&gt;\</span>
+<span class="s1">       &lt;div id=&quot;contactList&quot; class=&quot;appContent&quot;&gt;\</span>
+<span class="s1">         &lt;table id=&quot;contactsTable&quot; class=&quot;table table-hover&quot;&gt;\</span>
+<span class="s1">           &lt;tbody&gt;\</span>
+<span class="s1">             {{#contactList}}\</span>
+<span class="s1">             &lt;tr contactData=&quot;{{data}}&quot; class=&quot;contactItem&quot;&gt;\</span>
+<span class="s1">               &lt;td class=&quot;item&quot;&gt;{{label}}&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;img&quot;&gt;\</span>
+<span class="s1">                 &lt;img src=&quot;http://dummyimage.com/64/000/fff.jpg&amp;text={{name}}&quot;\</span>
+<span class="s1">                     class=&quot;img-polaroid&quot;/&gt;\</span>
+<span class="s1">               &lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;name&quot;&gt;{{name}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">           {{/contactList}}\</span>
+<span class="s1">           &lt;/tbody&gt;\</span>
+<span class="s1">         &lt;/table&gt;\</span>
+<span class="s1">       &lt;/div&gt;&#39;</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>Template for One Contact Page</h2>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">contactPrintTemplate</span> <span class="o">=</span>
+      <span class="s1">&#39;&lt;!-- Header: Prec  --&gt;\</span>
+<span class="s1">       &lt;div class=&quot;navbar navbar-fixed-top&quot;&gt;\</span>
+<span class="s1">         &lt;div class=&quot;navbar-inner&quot;&gt;\</span>
+<span class="s1">           &lt;div id=&quot;menu&quot; class=&quot;container&quot; &gt;\</span>
+<span class="s1">             &lt;form class=&quot;navbar-form&quot;&gt;\</span>
+<span class="s1">               &lt;button id=&quot;previousPage&quot; type=&quot;button&quot; class=&quot;btn contactTool&quot; page=&quot;oneContactPage&quot;&gt;\</span>
+<span class="s1">                 &lt;i class=&quot;icon-chevron-left&quot;&gt;&lt;/i&gt;\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">               &lt;button id=&quot;editContact&quot; type=&quot;button&quot; contactData=&quot;{{data}}&quot;\</span>
+<span class="s1">                   class=&quot;btn contactTool pull-right&quot;&gt;\</span>
+<span class="s1">                 Modify\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">             &lt;/form&gt;\</span>
+<span class="s1">           &lt;/div&gt;\</span>
+<span class="s1">         &lt;/div&gt;\</span>
+<span class="s1">       &lt;/div&gt;\</span>
+<span class="s1">\</span>
+<span class="s1">       &lt;div id=&quot;contactPrint&quot; class=&quot;appContent&quot;&gt;\</span>
+<span class="s1">         &lt;table&gt;\</span>
+<span class="s1">           &lt;tbody&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;img&quot;&gt;\</span>
+<span class="s1">                 &lt;img src=&quot;http://dummyimage.com/100/000/fff.jpg&amp;text={{name}}&quot;\</span>
+<span class="s1">                      class=&quot;img-polaroid&quot;/&gt;\</span>
+<span class="s1">               &lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;name&quot;&gt;{{name}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;First Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;{{contact.nom}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Last Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;{{contact.prenom}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Tel&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;{{contact.numero}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">           &lt;/tbody&gt;\</span>
+<span class="s1">         &lt;/table&gt;\</span>
+<span class="s1">       &lt;/div&gt;&#39;</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h2>Templae for Edit Contact Page.</h2>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">contactEditTemplate</span> <span class="o">=</span>
+      <span class="s1">&#39;&lt;!-- Header: Search/Add/Resynch --&gt;\</span>
+<span class="s1">       &lt;div class=&quot;navbar navbar-fixed-top&quot;&gt;\</span>
+<span class="s1">         &lt;div class=&quot;navbar-inner&quot;&gt;\</span>
+<span class="s1">           &lt;div id=&quot;menu&quot; class=&quot;container&quot; &gt;\</span>
+<span class="s1">             &lt;form class=&quot;navbar-form&quot;&gt;\</span>
+<span class="s1">               &lt;button id=&quot;previousPage&quot; type=&quot;button&quot; class=&quot;btn contactTool&quot;\</span>
+<span class="s1">                  page=&quot;editContactPage&quot; contactData=&quot;{{data}}&quot; &gt;\</span>
+<span class="s1">                 &lt;i class=&quot;icon-chevron-left&quot;&gt;&lt;/i&gt;\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">               &lt;button id=&quot;validEditContact&quot; type=&quot;button&quot;\</span>
+<span class="s1">                    class=&quot;btn contactTool pull-right&quot;&gt;\</span>
+<span class="s1">                 OK\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">             &lt;/form&gt;\</span>
+<span class="s1">           &lt;/div&gt;\</span>
+<span class="s1">         &lt;/div&gt;\</span>
+<span class="s1">       &lt;/div&gt;\</span>
+<span class="s1">\</span>
+<span class="s1">       &lt;div id=&quot;contactEdit&quot; class=&quot;appContent&quot;&gt;\</span>
+<span class="s1">         &lt;table id=&quot;contact&quot; contactId=&quot;{{contact.id}}&quot;&gt;\</span>
+<span class="s1">           &lt;tbody&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;img&quot;&gt;\</span>
+<span class="s1">                 &lt;img src=&quot;http://dummyimage.com/100/000/fff.jpg&quot;\</span>
+<span class="s1">                      class=&quot;img-polaroid&quot;/&gt;\</span>
+<span class="s1">               &lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;name&quot;&gt;{{name}}&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;First Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;&lt;input id=&quot;prenom&quot; type=&quot;text&quot; value=&quot;{{contact.prenom}}&quot; /&gt;&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Last Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;&lt;input id=&quot;nom&quot; type=&quot;text&quot; value=&quot;{{contact.nom}}&quot; /&gt;&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Tel&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;&lt;input id=&quot;numero&quot; type=&quot;text&quot; value=&quot;{{contact.numero}}&quot; /&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">           &lt;/tbody&gt;\</span>
+<span class="s1">         &lt;/table&gt;\</span>
+<span class="s1">\</span>
+<span class="s1">         &lt;button id=&quot;deleteContact&quot; contactId=&quot;{{contact.id}}&quot;\</span>
+<span class="s1">                 class=&quot;btn btn-large btn-block btn-danger contactTool&quot;\</span>
+<span class="s1">                 type=&quot;button&quot;&gt;Delete&lt;/button&gt;\</span>
+<span class="s1">       &lt;/div&gt;&#39;</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <h2>Template for Add Contact Page.</h2>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">contactAddTemplate</span> <span class="o">=</span>
+      <span class="s1">&#39;&lt;!-- Header: Search/Add/Resynch --&gt;\</span>
+<span class="s1">       &lt;div class=&quot;navbar navbar-fixed-top&quot;&gt;\</span>
+<span class="s1">         &lt;div class=&quot;navbar-inner&quot;&gt;\</span>
+<span class="s1">           &lt;div id=&quot;menu&quot; class=&quot;container&quot; &gt;\</span>
+<span class="s1">             &lt;form class=&quot;navbar-form&quot;&gt;\</span>
+<span class="s1">               &lt;button id=&quot;previousPage&quot; type=&quot;button&quot; class=&quot;btn contactTool&quot;\</span>
+<span class="s1">                   page=&quot;addContactPage&quot;&gt;\</span>
+<span class="s1">                 &lt;i class=&quot;icon-chevron-left&quot;&gt;&lt;/i&gt;\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">               &lt;button id=&quot;validAddContact&quot; type=&quot;button&quot; class=&quot;btn contactTool pull-right&quot;&gt;\</span>
+<span class="s1">                 OK\</span>
+<span class="s1">               &lt;/button&gt;\</span>
+<span class="s1">             &lt;/form&gt;\</span>
+<span class="s1">           &lt;/div&gt;\</span>
+<span class="s1">         &lt;/div&gt;\</span>
+<span class="s1">       &lt;/div&gt;\</span>
+<span class="s1">\</span>
+<span class="s1">       &lt;div id=&quot;contactAdd&quot; class=&quot;appContent&quot;&gt;\</span>
+<span class="s1">         &lt;table&gt;\</span>
+<span class="s1">           &lt;tbody&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;img&quot;&gt;\</span>
+<span class="s1">                 &lt;img src=&quot;http://dummyimage.com/100/000/fff.jpg&quot;\</span>
+<span class="s1">                      class=&quot;img-polaroid&quot;/&gt;\</span>
+<span class="s1">               &lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;name&quot;&gt;&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;First Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;&lt;input id=&quot;prenom&quot; type=&quot;text&quot; placeholder=&quot;Bruce&quot; /&gt;&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Last Name&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;&lt;input id=&quot;nom&quot; type=&quot;text&quot; placeholder=&quot;Wayne&quot; /&gt;&lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">             &lt;tr&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputLabel&quot;&gt;Tel&lt;/td&gt;\</span>
+<span class="s1">               &lt;td class=&quot;inputValue&quot;&gt;\</span>
+<span class="s1">                 &lt;input id=&quot;numero&quot; type=&quot;text&quot; placeholder=&quot;000-000-000&quot; /&gt;\</span>
+<span class="s1">               &lt;/td&gt;\</span>
+<span class="s1">             &lt;/tr&gt;\</span>
+<span class="s1">           &lt;/tbody&gt;\</span>
+<span class="s1">         &lt;/table&gt;\</span>
+<span class="s1">       &lt;/div&gt;&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">contactListTemplate</span><span class="o">:</span> <span class="nx">contactListTemplate</span><span class="p">,</span>
+      <span class="nx">contactPrintTemplate</span><span class="o">:</span> <span class="nx">contactPrintTemplate</span><span class="p">,</span>
+      <span class="nx">contactAddTemplate</span><span class="o">:</span> <span class="nx">contactAddTemplate</span><span class="p">,</span>
+      <span class="nx">contactEditTemplate</span><span class="o">:</span> <span class="nx">contactEditTemplate</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -1,0 +1,236 @@
+<!DOCTYPE html>  <html> <head>   <title>book.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="book.html">                 book.js               </a>                                           <a class="source" href="contactManager.html">                 contactManager.js               </a>                                           <a class="source" href="contactsMock.html">                 contactsMock.js               </a>                                           <a class="source" href="templates.html">                 templates.js               </a>                                           <a class="source" href="uiInteraction.html">                 uiInteraction.js               </a>                                           <a class="source" href="uiPrint.html">                 uiPrint.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               book.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p><strong>Component:</strong> Book</p>
+
+<p><strong>Date:</strong> 2013-03-05</p>
+
+<p><strong>Brief:</strong> Manage all application.</p>
+
+<p><strong>Book</strong> manages all the application. Book component is in charge
+of starting application, binding existing components with each
+others and coordinating events.</p>
+
+<p>The Book application offers four Pages :</p>
+
+<ul>
+<li><p>All Contact Page: to print all contact.</p></li>
+<li><p>One Contact Page: to print one specific contact.</p></li>
+<li><p>Edit Contact Page: to edit an existing contact.</p></li>
+<li><p>Add Contact Page: to add a new contact.</p></li>
+</ul>
+
+<p><strong>Book</strong> uses <strong>UiInteraction</strong> and <strong>ContactManager</strong> events to
+select wich page to print. It also uses the <strong>UiPrint</strong> to print
+rendered pages with a specific effect.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Book Code.</h2>             </td>             <td class="code">               <div class="highlight"><pre><span class="s1">&#39;use_strict&#39;</span><span class="p">;</span>
+
+<span class="nx">define</span><span class="p">(</span>
+  <span class="p">[</span>
+    <span class="s1">&#39;components/flight/lib/component&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;components/mustache/mustache&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;app/templates&#39;</span>
+  <span class="p">],</span>
+
+  <span class="kd">function</span><span class="p">(</span><span class="nx">defineComponent</span><span class="p">,</span> <span class="nx">Mustache</span><span class="p">,</span> <span class="nx">templates</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">defineComponent</span><span class="p">(</span><span class="nx">Book</span><span class="p">);</span>
+
+      <span class="kd">function</span> <span class="nx">Book</span><span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>Attributes.</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Print effect for <strong>UiPrint</strong> Component.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">var</span> <span class="nx">FORWARD_PRINT</span> <span class="o">=</span> <span class="s1">&#39;FORWARD&#39;</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">BACKWARD_PRINT</span> <span class="o">=</span> <span class="s1">&#39;BACKWARD&#39;</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">DEFAULT_PRINT</span> <span class="o">=</span> <span class="s1">&#39;PRINT&#39;</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">allContactPrint</span> <span class="o">=</span> <span class="nx">DEFAULT_PRINT</span><span class="p">;</span>
+
+      <span class="kd">var</span> <span class="nx">Book</span><span class="p">;</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">defaultAttrs</span><span class="p">({</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Compiled templates.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">templateContacts</span><span class="o">:</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">templates</span><span class="p">.</span><span class="nx">contactListTemplate</span><span class="p">),</span>
+        <span class="nx">templateContact</span><span class="o">:</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">templates</span><span class="p">.</span><span class="nx">contactPrintTemplate</span><span class="p">),</span>
+        <span class="nx">templateEdit</span><span class="o">:</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">templates</span><span class="p">.</span><span class="nx">contactEditTemplate</span><span class="p">),</span>
+        <span class="nx">templateAdd</span><span class="o">:</span> <span class="nx">Mustache</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">templates</span><span class="p">.</span><span class="nx">contactAddTemplate</span><span class="p">),</span>
+      <span class="p">});</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="s1">&#39;initialize&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">Book</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h3>Handlers.</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h4>Print All Contact Page.</h4>
+
+<p>Before Printing All Contact Page, the Book component
+launches a getAllContact event to get all contacts from
+<strong>ContactManager</strong>. Then, on event 'getAllContactOK', the
+All Contact page is print.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">allContactPrint</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">print</span><span class="p">;</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;getAllContact&#39;</span><span class="p">);</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h4>Print One Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;oneContactPage&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">print</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">renderContact</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">contact</span><span class="p">),</span> <span class="nx">data</span><span class="p">.</span><span class="nx">print</span><span class="p">);</span>
+
+          <span class="k">this</span><span class="p">.</span><span class="nx">pushHistory</span><span class="p">({</span>
+              <span class="nx">current</span><span class="o">:</span> <span class="s1">&#39;oneContactPage&#39;</span><span class="p">,</span>
+              <span class="nx">extraData</span><span class="o">:</span> <span class="kc">undefined</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <h4>Edit Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;editContactPage&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">print</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">renderEdit</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">contact</span><span class="p">),</span> <span class="nx">data</span><span class="p">.</span><span class="nx">print</span><span class="p">);</span>
+
+          <span class="k">this</span><span class="p">.</span><span class="nx">pushHistory</span><span class="p">({</span>
+              <span class="nx">current</span><span class="o">:</span> <span class="s1">&#39;editContactPage&#39;</span><span class="p">,</span>
+              <span class="nx">extraData</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">contact</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <h4>Add Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;addContactPage&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">print</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">renderAdd</span><span class="p">(),</span> <span class="nx">data</span><span class="p">.</span><span class="nx">print</span><span class="p">);</span>
+
+          <span class="k">this</span><span class="p">.</span><span class="nx">pushHistory</span><span class="p">({</span>
+              <span class="nx">current</span><span class="o">:</span> <span class="s1">&#39;addContactPage&#39;</span><span class="p">,</span>
+              <span class="nx">extraData</span><span class="o">:</span> <span class="kc">undefined</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h3>Binding with UiInteraction.</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h4>On Contact Selected, print One Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;oneContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">FORWARD_PRINT</span><span class="p">,</span>
+              <span class="nx">contact</span><span class="o">:</span> <span class="nx">data</span>
+          <span class="p">});</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiSearchContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>TODO: Implements search.</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">&#39;NOT IMPLEMENTED&#39;</span><span class="p">);</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <h4>On resync contact demand, print All Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiResyncContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">DEFAULT_PRINT</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h4>On edit contact demand, print Edit Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiEditContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;editContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">FORWARD_PRINT</span><span class="p">,</span>
+              <span class="nx">contact</span><span class="o">:</span> <span class="nx">data</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <h4>On add contact demand, print Add Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiAddContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;addContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">FORWARD_PRINT</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <h4>On previous page demand, print Previous Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiPreviousPageSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">switch</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">case</span> <span class="s1">&#39;oneContactPage&#39;</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span> <span class="p">});</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="k">case</span> <span class="s1">&#39;editContactPage&#39;</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;oneContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+                <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span><span class="p">,</span>
+                <span class="nx">contact</span><span class="o">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">extraData</span>
+            <span class="p">});</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="k">case</span> <span class="s1">&#39;addContactPage&#39;</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span> <span class="p">});</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="k">default</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">print</span><span class="o">:</span> <span class="nx">DEFAULT_PRINT</span> <span class="p">});</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <h4>On validation of delete contact, delete him from persis layer.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiValidDeleteContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;deleteContact&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiValidEditContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;updateContact&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;uiValidAddContactSelected&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;addContact&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <h3>Binding with ContactManager</h3>
+
+<p>What to do when persistant layer is updateted.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <h4>When all contacts are getting from persis layer, print them.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;getAllContactOK&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">print</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">renderContacts</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">contacts</span><span class="p">),</span> <span class="nx">allContactPrint</span><span class="p">);</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <h4>After a contact is successfuly added, print All Contact Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;addContactOK&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <h4>After a contact is successfuly deleted, print All Contacts Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;deleteContactOK&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <h4>After a contact is successfuly updatetd, print All Contacts Page.</h4>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;updateContactOK&#39;</span><span class="p">,</span>  <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span>
+              <span class="nx">print</span><span class="o">:</span> <span class="nx">BACKWARD_PRINT</span>
+          <span class="p">});</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <h3>It back button (browser).</h3>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nb">window</span><span class="p">.</span><span class="nx">onpopstate</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">popHistory</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <h3>Lauch app</h3>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;allContactPage&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">print</span><span class="o">:</span> <span class="nx">allContactPrint</span> <span class="p">});</span>
+      <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <h3>Rendering function</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <h4>Render page of all contacts.</h4>
+
+<p>Render the page of all contacts.</p>
+
+<ul>
+<li><em>contacts</em> The contacts' list</li>
+<li><em>return</em> Html page rendering from contacts' list.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">renderContacts</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contacts</span><span class="p">){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">.</span><span class="nx">templateContacts</span><span class="p">({</span>
+          <span class="nx">contactList</span><span class="o">:</span> <span class="nx">contacts</span><span class="p">,</span>
+          <span class="nx">data</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+          <span class="p">},</span>
+          <span class="nx">name</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">prenom</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">nom</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">});</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <h4>Render page of a specific contact.</h4>
+
+<p>Render the page of a specific contact.</p>
+
+<ul>
+<li><em>contact</em> The contact to render.</li>
+<li><em>return</em> Html page rendering from contact.</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">renderContact</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contact</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">.</span><span class="nx">templateContact</span><span class="p">({</span>
+            <span class="s1">&#39;contact&#39;</span><span class="o">:</span> <span class="nx">contact</span><span class="p">,</span>
+            <span class="nx">name</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">contact</span><span class="p">.</span><span class="nx">prenom</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">contact</span><span class="p">.</span><span class="nx">nom</span><span class="p">;</span>
+            <span class="p">},</span>
+            <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">contact</span><span class="p">)</span>
+        <span class="p">});</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <h4>Render page of edition of contact.</h4>
+
+<p>Render the page of edition of a contact.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">renderEdit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">contact</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">.</span><span class="nx">templateEdit</span><span class="p">({</span>
+            <span class="s1">&#39;contact&#39;</span><span class="o">:</span> <span class="nx">contact</span><span class="p">,</span>
+            <span class="nx">name</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+              <span class="k">this</span><span class="p">.</span><span class="nx">contact</span><span class="p">.</span><span class="nx">prenom</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">contact</span><span class="p">.</span><span class="nx">nom</span><span class="p">;</span>
+            <span class="p">},</span>
+            <span class="nx">data</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">contact</span><span class="p">)</span>
+        <span class="p">});</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <h4>Render page of addition of a contact</h4>
+
+<p>Render the page of addition of a contact.</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">renderAdd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">.</span><span class="nx">templateAdd</span><span class="p">();</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <h2>PrintEvent Launcher</h2>
+
+<p>Launch an event for <strong>UiPrint</strong> component.</p>
+
+<ul>
+<li><em>render</em> is the html data to send in payloads of event.</li>
+<li><em>print</em> is the type of effects (BACKWARD<em>PRINT/
+       FORWARD</em>PRINT/...)</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">print</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">render</span><span class="p">,</span> <span class="nx">print</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">type</span><span class="p">;</span>
+
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">print</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nx">FORWARD_PRINT</span><span class="o">:</span>
+          <span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;printForward&#39;</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nx">BACKWARD_PRINT</span><span class="o">:</span>
+          <span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;printBackward&#39;</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nx">DEFAULT_PRINT</span><span class="o">:</span>
+        <span class="k">default</span><span class="o">:</span>
+          <span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;print&#39;</span><span class="p">;</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="p">{</span> <span class="nx">html</span><span class="o">:</span> <span class="nx">render</span> <span class="p">});</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <h2>Manage history</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <h4>History it (save state)</h4>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">pushHistory</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventData</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">evt</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;uiPreviousPageSelected&#39;</span><span class="p">,</span>
+          <span class="nx">data</span><span class="o">:</span> <span class="nx">eventData</span>
+        <span class="p">};</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;push History:&quot;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">evt</span><span class="p">);</span>
+
+        <span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">({</span><span class="nx">event</span><span class="o">:</span> <span class="nx">evt</span><span class="p">},</span> <span class="nx">eventData</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="s1">&#39;index.html&#39;</span><span class="p">);</span>
+      <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <h4>Play History;</h4>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">this</span><span class="p">.</span><span class="nx">popHistory</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">state</span> <span class="o">&amp;&amp;</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">event</span><span class="p">;</span>
+          <span class="nx">Book</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
