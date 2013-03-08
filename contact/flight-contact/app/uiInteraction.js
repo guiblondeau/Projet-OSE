@@ -1,9 +1,11 @@
-// **Component:** UiInteraction\\
-// **Date:** 2013-02-19\\
+// **Component:** UiInteraction
+//
+// **Date:** 2013-02-19
+//
 // **Brief:** Manage user interactions.
 //
 // **UiInteraction** is a "user interaction with ui" manager enabling
-// tool and elements to generate events. Events represent the user
+// tools and elements to generate events. Events represent the user
 // action on ui. Definition of events is given in [Events'
 // section](#events).
 //
@@ -15,13 +17,13 @@
 // contact by the user. The event data containing the selected
 // contact.
 //
-//    data:
-//    {
-//      id: "01",
-//      nom: "Wayne",
-//      prenom: "Bruce",
-//      numero: "000-000-000"
-//    }
+//     data:
+//     {
+//       id: "01",
+//       nom: "Wayne",
+//       prenom: "Bruce",
+//       numero: "000-000-000"
+//     }
 //
 // #### Trigger uiSearchContactSelected.
 //
@@ -29,10 +31,10 @@
 // intention to filter the contacts' list. The event's data containing
 // the filter.
 //
-//    data:
-//    {
-//      query: "Wayne"
-//    }
+//     data:
+//     {
+//       query: "Wayne"
+//     }
 //
 // #### Trigger uiResyncContactSelected.
 //
@@ -45,13 +47,13 @@
 // to display the form in order to edit an existing contact. The
 // event object throwing during trigger is the contact to edit.
 //
-//    data:
-//    {
-//      id: "01",
-//      nom: "Wayne",
-//      prenom: "Bruce",
-//      numero: "000-000-000"
-//    }
+//     data:
+//     {
+//       id: "01",
+//       nom: "Wayne",
+//       prenom: "Bruce",
+//       numero: "000-000-000"
+//     }
 //
 // #### Trigger uiAddContactSelected
 //
@@ -64,11 +66,11 @@
 // intention to display the previous page. The content of data is the
 // current page where previousPage event is triggered and extra data.
 //
-//    data:
-//    {
-//      current: "Current Page Name",
-//      extraData: { ... }
-//    }
+//     data:
+//     {
+//       current: "Current Page Name",
+//       extraData: { ... }
+//     }
 //
 // ### Trigger uiValidDeleteContactSelected
 //
@@ -76,10 +78,10 @@
 // user intention to delete an existing contact. The body of event
 // containing the id of contact to delete.
 //
-//    data:
-//    {
-//      id: "01"
-//    }
+//     data:
+//     {
+//       id: "01"
+//     }
 //
 // #### Trigger uiValidEditContactSelected
 //
@@ -87,13 +89,13 @@
 // intention to edit an existing contact. The body of event containing
 // the contact to edit with updated values.
 //
-//    data:
-//    {
-//      id: "01",
-//      nom: "WAYNE",
-//      prenom: "BRUCE",
-//      numero: "000-000-000"
-//    }
+//     data:
+//     {
+//       id: "01",
+//       nom: "WAYNE",
+//       prenom: "BRUCE",
+//       numero: "000-000-000"
+//     }
 //
 // #### Trigger uiValidAddContactSelected
 //
@@ -101,13 +103,15 @@
 // intention to add a new contact. The body of event containing the
 // contact to add (__not that id is not setted__).
 //
-//    {
-//      id: "",
-//      nom: "Wayne",
-//      prenom: "Bruce",
-//      numero: "000-000-000"
-//    }
+//     {
+//       id: "",
+//       nom: "Wayne",
+//       prenom: "Bruce",
+//       numero: "000-000-000"
+//     }
 //
+
+// ## UiInteraction Code.
 
 'use strict';
 
@@ -119,7 +123,6 @@ define(
   function(defineComponent)  {
     return defineComponent(UiInteraction);
 
-    // ## UiInteraction Code.
     function UiInteraction() {
 
       // ### Actions

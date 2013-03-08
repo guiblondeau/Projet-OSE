@@ -1,8 +1,12 @@
+// Mustache templates used by [Book Component](book.html).
+
 'use strict';
 
 define(
   function() {
-    var contactListTemplate =
+
+    // ## Template for All Contact Page.
+     var contactListTemplate =
       '<!-- Header: Search/Add/Resynch -->\
        <div class="navbar navbar-fixed-top">\
          <div class="navbar-inner">\
@@ -40,6 +44,7 @@ define(
          </table>\
        </div>';
 
+    // ## Template for One Contact Page
     var contactPrintTemplate =
       '<!-- Header: Prec  -->\
        <div class="navbar navbar-fixed-top">\
@@ -84,6 +89,7 @@ define(
          </table>\
        </div>';
 
+    // ## Templae for Edit Contact Page.
     var contactEditTemplate =
       '<!-- Header: Search/Add/Resynch -->\
        <div class="navbar navbar-fixed-top">\
@@ -133,6 +139,7 @@ define(
                  type="button">Delete</button>\
        </div>';
 
+    // ## Template for Add Contact Page.
     var contactAddTemplate =
       '<!-- Header: Search/Add/Resynch -->\
        <div class="navbar navbar-fixed-top">\

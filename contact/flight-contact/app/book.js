@@ -1,5 +1,7 @@
-// **Component:** Book\\
-// **Date:** 2013-03-05\\
+// **Component:** Book
+//
+// **Date:** 2013-03-05
+//
 // **Brief:** Manage all application.
 //
 // **Book** manages all the application. Book component is in charge
@@ -7,14 +9,20 @@
 // others and coordinating events.
 //
 // The Book application offers four Pages :
-//  * All Contact Page: to print all contact.
-//  * One Contact Page: to print one specific contact.
-//  * Edit Contact Page: to edit an existing contact.
-//  * Add Contact Page: to add a new contact.
+//
+// * All Contact Page: to print all contact.
+//
+// * One Contact Page: to print one specific contact.
+//
+// * Edit Contact Page: to edit an existing contact.
+//
+// * Add Contact Page: to add a new contact.
 //
 // **Book** uses **UiInteraction** and **ContactManager** events to
 // select wich page to print. It also uses the **UiPrint** to print
 // rendered pages with a specific effect.
+
+// ## Book Code.
 
 'use_strict';
 
@@ -28,8 +36,7 @@ define(
   function(defineComponent, Mustache, templates) {
     return defineComponent(Book);
 
-    // ## Book Code.
-    function Book() {
+      function Book() {
       // ### Attributes.
 
       // Print effect for **UiPrint** Component.
@@ -152,8 +159,7 @@ define(
           }
         });
 
-        // #### On validation of delete contact, delete him from\
-        //      persis layer.
+        // #### On validation of delete contact, delete him from persis layer.
         this.on('uiValidDeleteContactSelected', function(evt, data) {
           this.trigger('deleteContact', data);
         });
@@ -170,30 +176,26 @@ define(
         //
         // What to do when persistant layer is updateted.
 
-        // #### When all contacts are getting from persis layer, print\
-        //      them.
+        // #### When all contacts are getting from persis layer, print them.
         this.on('getAllContactOK', function(evt, data) {
           this.print(this.renderContacts(data.contacts), allContactPrint);
         });
 
-        // #### After a contact is successfuly added, print All\
-        //      Contact Page.
+        // #### After a contact is successfuly added, print All Contact Page.
         this.on('addContactOK', function(evt, data) {
           this.trigger('allContactPage', {
               print: BACKWARD_PRINT
           });
         });
 
-        // #### After a contact is successfuly deleted, print All\
-        //      Contacts Page.
+        // #### After a contact is successfuly deleted, print All Contacts Page.
         this.on('deleteContactOK', function(evt, data) {
           this.trigger('allContactPage', {
               print: BACKWARD_PRINT
           });
         });
 
-        // #### After a contact is successfuly updatetd, print All\
-        //      Contacts Page.
+        // #### After a contact is successfuly updatetd, print All Contacts Page.
         this.on('updateContactOK',  function(evt, data) {
           this.trigger('allContactPage', {
               print: BACKWARD_PRINT
@@ -267,9 +269,10 @@ define(
       // ## PrintEvent Launcher
       //
       // Launch an event for **UiPrint** component.
+      //
       //  * *render* is the html data to send in payloads of event.
-      //  * *print* is the type of effects\
-      //            (BACKWARD_PRINT/FORWARD_PRINT/...)
+      //  * *print* is the type of effects (BACKWARD_PRINT/
+      //            FORWARD_PRINT/...)
       this.print = function(render, print) {
         var type;
 

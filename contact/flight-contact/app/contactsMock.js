@@ -1,3 +1,27 @@
+// Mock of the contacts' REST API. This mock the API in a very simple
+// manner. Only the following scenario is supported :
+//
+// First, add a the new contact James Gordon:
+//
+//     {
+//       "id": "",
+//       "nom": "Gordon",
+//       "prenom": "James",
+//       "numero": "11-222-333"
+//     }
+//
+//
+// Next, update James Gordon to JAMES GORDON:
+//
+//     {
+//       "id":     "03",
+//       "nom":    "GORDON",
+//       "prenom": "JAMES",
+//       "numero": "22-333-444"
+//     }
+//
+// Finally, Delete User with id "02"
+
 var action = 'start';
 
 var getAll = $.mockjax({
@@ -34,8 +58,10 @@ var addContact = $.mockjax({
   status: '201',
   statusText: 'Created',
   contentType: 'application/json',
-  response: function() {
+  response: function(settings) {
+    console.log("ADD: " + JSON.stringify(settings.data));
     action = 'afterAdd';
+
     this.responseText = JSON.stringify({
       "id": "03",
       "nom": "Gordon",
@@ -52,8 +78,9 @@ var editContact = $.mockjax({
   status: '200',
   statusText: 'OK',
   contentType: 'application/json',
-  response: function () {
+  response: function (settings) {
     action = 'afterUpdate';
+
     this.responseText = JSON.stringify({
       "id":     "03",
       "nom":    "GORDON",
@@ -69,7 +96,7 @@ var deleteContact = $.mockjax({
   type: 'DELETE',
   status: '200',
   statusText: 'OK',
-  response: function () {
+  response: function (settings) {
     action = 'afterDelete';
   }
 });
