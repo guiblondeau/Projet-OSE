@@ -1,2 +1,2 @@
-c1 = new Contact({id:"1", prenom:"Charles", nom:"de Gaulle", numero:"02"})
-c2 = new Contact({id:"2", prenom:"François", nom:"Miterrand", numero:"01"})
+book = new Book()
+c1 = new Contact({prenom:"John", nom:"Connor", numero:"9", id:"1"});

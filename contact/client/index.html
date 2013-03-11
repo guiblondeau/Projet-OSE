@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC>
 <html>
 <head>
-    <title>My Little Brain</title>
+    <title>Mon agenda de contacts</title>
 	<script src="js/vendor/zepto.min.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
     <script src="js/vendor/backbone-min.js"></script>
@@ -13,11 +13,17 @@
 </head>
  <body>
 
+ <div> This is the top of the page <div>
         <script type="text/template" id="contact-template">
-            <span><%= id %></span>
-            <span><%= nom %></span>
-            <span><%= prenom %></span>
-            <span><%= numero %></span>
+			{{#book}}
+            <ol> 
+				
+			
+			</ol>
+			{{/book}}
+			{{!book}}
+				no book!
+			{{/book}}
         </script>
 
 
