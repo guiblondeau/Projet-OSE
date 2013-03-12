@@ -48,8 +48,12 @@
 		localStorage : new Store("contact"),
 		
 		initialize : function(){
-			this.url = "jaxrs-service/book/getAll"
+			//this.url = "../getAll"
 			console.log('Book constructor');
+		},
+		
+		toJSON : function(){
+			return '{ \'book\': '+this.toJSON()+'}';
 		}
 		
 		
@@ -59,13 +63,14 @@
 	  window.BookView = Backbone.View.extend({
         el : $('#contact-container'),
         initialize : function() {
-			log("BookView constructor");
+			console.log("BookView constructor");
             this.template = $('#contact-template').html();
 			
 			
 			_.bindAll(this, 'render');
+			this.collection = new Book();
             this.collection.bind('change', this.render);
-            this.collection.bind('add', this.render);
+			this.collection.bind('add', this.render);
             this.collection.bind('remove', this.render);
         },
 
@@ -73,7 +78,9 @@
             var renderedContent = Mustache.to_html(this.template, this.collection.toJSON());
 			$(this.el).html(renderedContent);
             return this;
-        }
+        },
+		
+		
 
     });
 

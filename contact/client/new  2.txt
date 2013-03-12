@@ -1,2 +1,6 @@
-book = new Book()
+book = new Book();
 c1 = new Contact({prenom:"John", nom:"Connor", numero:"9", id:"1"});
+bookView = new BookView();
+bookView.collection.add(c1);
+
+

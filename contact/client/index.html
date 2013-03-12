@@ -6,6 +6,7 @@
     <script src="js/vendor/underscore-min.js"></script>
     <script src="js/vendor/backbone-min.js"></script>
 	<script src="js/vendor/backbone-localstorage.js"></script>
+	<script src = "js/vendor/mustache.js"></script>
 
 	
 
@@ -16,13 +17,13 @@
  <div> This is the top of the page <div>
         <script type="text/template" id="contact-template">
 			{{#book}}
-            <ol> 
+            <ul> 
 				
 			
-			</ol>
+			</ul>
 			{{/book}}
-			{{!book}}
-				no book!
+			{{^book}}
+				
 			{{/book}}
         </script>
 
