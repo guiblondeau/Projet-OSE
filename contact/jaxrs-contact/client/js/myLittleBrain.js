@@ -44,11 +44,11 @@
 
       window.Book = Backbone.Collection.extend({
 		model : Contact,
-		name : "book",
 		localStorage : new Store("contact"),
 		
 		initialize : function(){
 			//this.url = "../getAll"
+			this.book = true;
 			console.log('Book constructor');
 		},
 		
@@ -74,11 +74,18 @@
             this.collection.bind('remove', this.render);
         },
 
+		
+			
         render : function() {
+			
+			
             var renderedContent = Mustache.to_html(this.template, this.collection.toJSON());
+			
 			$(this.el).html(renderedContent);
             return this;
         },
+		
+		
 		
 		
 
