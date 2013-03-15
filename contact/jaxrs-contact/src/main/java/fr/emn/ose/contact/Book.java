@@ -5,6 +5,9 @@
 
 package fr.emn.ose.contact;
 
+
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-
+@CrossOriginResourceSharing(allowOrigins ={"*"})
 @Path("/contacts")
 public class Book {
 
@@ -100,6 +102,14 @@ public class Book {
     @Path("/editContact/{contact}")
     public Response deleteContact(@PathParam("contact") String id){
         this.contacts.remove(Integer.parseInt(id));
-        return Response.status(200).build();
+
+
+        Response.ResponseBuilder builder = Response.ok();
+        builder.header("Access-Control-Allow-Origin", "*");
+        //builder.header("Access-Control-Max-Age", "3600");
+        //builder.header("Access-Control-Allow-Methods", "DELETE");
+        //builder.header("Access-Control-Allow-Headers", "X-Requested-With,Host,User-Agent,Accept,Accept-Language,Accept-Encoding,Accept-Charset,Keep-Alive,Connection,Referer,Origin");
+
+        return builder.build();
     }
 }

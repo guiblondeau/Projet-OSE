@@ -1,5 +1,7 @@
 (function($) {
 
+		
+
 
         window.Contact = Backbone.Model.extend({
 
@@ -50,10 +52,6 @@
 			//this.url = "../getAll"
 			this.book = true;
 			console.log('Book constructor');
-		},
-		
-		toJSON : function(){
-			return '{ \'book\': '+this.toJSON()+'}';
 		}
 		
 		
@@ -77,13 +75,20 @@
 		
 			
         render : function() {
+			var val2 = {book : this.collection.toJSON(), prenomMaj:function(){return this.prenom.toUpperCase();}};
 			
-			
-            var renderedContent = Mustache.to_html(this.template, this.collection.toJSON());
+            var renderedContent = Mustache.render(this.template, val2);
 			
 			$(this.el).html(renderedContent);
             return this;
         },
+		
+		window.deleteContact = Backbone.Router.extends({
+			routes :{
+				"contacts/editContact"
+			
+			}
+		});
 		
 		
 		

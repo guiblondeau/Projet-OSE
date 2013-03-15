@@ -16,23 +16,55 @@
 
  <div> This is the top of the page <div>
         <script type="text/template" id="contact-template">
-		<ul>
-			{{#book}}
-             
-				<!-- <li> {{prenom}} {{nom}} ( {{numero}} ) <li> -->
-				rentré
-			
-			{{/book}}
-		</ul>
-			{{^book}}
-				no contact
-			{{/book}}
+	
+       <div class="navbar navbar-fixed-top">
+         <div class="navbar-inner">
+           <div id="menu" class="container" >
+             <form class="navbar-form">
+               <button id="previousPage" type="button" class="btn contactTool" page="oneContactPage">
+                 <i class="icon-chevron-left"></i>
+               </button>
+               <button id="editContact" type="button" contactData="{{data}}"
+                   class="btn contactTool pull-right">
+                 Modify
+               </button>
+             </form>
+           </div>
+         </div>
+       </div>
+
+       <div id="contactPrint" class="appContent">
+         <table>
+           <tbody>
+             <tr>
+               <td class="img">
+                 <img src="http://dummyimage.com/100/000/fff.jpg&text={{name}}"
+                      class="img-polaroid"/>
+               </td>
+               <td class="name">{{name}}</td>
+             </tr>
+             <tr>
+               <td class="inputLabel">First Name</td>
+               <td class="inputValue">{{contact.nom}}</td>
+             </tr>
+             <tr>
+               <td class="inputLabel">Last Name</td>
+               <td class="inputValue">{{contact.prenom}}</td>
+             </tr>
+             <tr>
+               <td class="inputLabel">Tel</td>
+               <td class="inputValue">{{contact.numero}}</td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
         </script>
 
 
         <div id='contact-container'></div>
 
     </body>
+	
     <script src="js/myLittleBrain.js"></script>
 
 </html>
