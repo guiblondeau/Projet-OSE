@@ -28,7 +28,7 @@ var ContactsView = Backbone.View.extend({
  		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template');
  		this.collection = new Contacts();
  		this.collection.fetch();
- 		console.log(this.collection);
+ 		console.log(this.collection.toJSON());
  		this.render();
  	},
  	
