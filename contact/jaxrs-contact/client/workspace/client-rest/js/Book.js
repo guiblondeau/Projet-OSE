@@ -1,9 +1,17 @@
 (function($) {
-
-		
-
-
-        window.Contact = Backbone.Model.extend({
+	
+			var BookJS = {};
+			window.BookJS = BookJS;
+			
+			var hashTemplate = {'contactList':window.contactList, 'contactEdit':window.contactEditTemplate, 'contactAdd':window.contactAddTemplate};
+			
+			 var template = function(name) {
+			    return Mustache.compile(hashTemplate[name]);
+			 };
+			
+			
+	        bookJS.Contact = Backbone.Model.extend({
+        
 
             defaults : {
                 id : "???",
@@ -32,7 +40,7 @@
 			
 			validate : function(attributes){
 				if(attributes.prenom ==='' ||attributes.nom === ''){
-					return "Le nom et le prenom ne peuvent être vides";
+					return "Le nom et le prenom ne peuvent ï¿½tre vides";
 				}
 			}
 			
@@ -44,13 +52,11 @@
 
         
 
-      window.Book = Backbone.Collection.extend({
+      BookJS.Book = Backbone.Collection.extend({
 		model : Contact,
-		localStorage : new Store("contact"),
 		
 		initialize : function(){
-			//this.url = "../getAll"
-			this.book = true;
+			//this.url = "../getAll";
 			console.log('Book constructor');
 		}
 		
@@ -58,11 +64,15 @@
 	  
 	  });
 	  
-	  window.BookView = Backbone.View.extend({
+	  BookJS.BookView = Backbone.View.extend({
         el : $('#contact-container'),
+        template : template('contactList'),
+        
+        
+        
         initialize : function() {
 			console.log("BookView constructor");
-            this.template = $('#contact-template').html();
+			
 			
 			
 			_.bindAll(this, 'render');
@@ -75,7 +85,7 @@
 		
 			
         render : function() {
-			var val2 = {book : this.collection.toJSON(), prenomMaj:function(){return this.prenom.toUpperCase();}};
+			var val2 = {contactList : this.collection.toJSON()};
 			
             var renderedContent = Mustache.render(this.template, val2);
 			
@@ -83,18 +93,29 @@
             return this;
         },
 		
-		window.deleteContact = Backbone.Router.extends({
-			routes :{
-				"contacts/editContact"
-			
-			}
-		});
 		
-		
-		
-		
-
     });
+    
+	    BookRouter = Backbone.Router.extend({
+	    initialize: function(options) {
+	      this.el = options.el
+	    },
+	    routes: {
+	      "": "index"
+	    },
+	    index: function() {
+	      var index = new BookJS.BookView();
+	      this.el.empty();
+	      this.el.append();
+	    }
+	  });
+    
+    BookJS.boot = function(container){
+		container = $(container);
+		var router = new BookRouter({el:container});    
+		Backbone.history.start();	
+    
+    }
 
 
     })(Zepto);
