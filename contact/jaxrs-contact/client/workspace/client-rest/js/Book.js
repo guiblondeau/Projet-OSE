@@ -3,18 +3,18 @@
 			var BookJS = {};
 			window.BookJS = BookJS;
 			
-			var hashTemplate = {'contactList':window.contactList, 'contactEdit':window.contactEditTemplate, 'contactAdd':window.contactAddTemplate};
+			var hashTemplate = {'contactList':window.contactListTemplate, 'contactEdit':window.contactEditTemplate, 'contactAdd':window.contactAddTemplate};
 			
 			 var template = function(name) {
 			    return Mustache.compile(hashTemplate[name]);
 			 };
 			
 			
-	        bookJS.Contact = Backbone.Model.extend({
+	        BookJS.Contact = Backbone.Model.extend({
         
 
             defaults : {
-                id : "???",
+                id :'',
 				prenom:"j'ai pas de nom",
 				nom:"j'ai pas de prenom",
                 numero:"911",
@@ -53,7 +53,9 @@
         
 
       BookJS.Book = Backbone.Collection.extend({
-		model : Contact,
+		model : BookJS.Contact,
+		localStorage: new Store("book"),
+		
 		
 		initialize : function(){
 			//this.url = "../getAll";
@@ -65,7 +67,6 @@
 	  });
 	  
 	  BookJS.BookView = Backbone.View.extend({
-        el : $('#contact-container'),
         template : template('contactList'),
         
         
@@ -75,26 +76,63 @@
 			
 			
 			
-			_.bindAll(this, 'render');
-			this.collection = new Book();
-            this.collection.bind('change', this.render);
-			this.collection.bind('add', this.render);
-            this.collection.bind('remove', this.render);
+			this.collection = new BookJS.Book();
+            this.collection.on('all', this.render, this);
+            this.collection.fetch();
+            
         },
 
 		
 			
         render : function() {
+
+        
 			var val2 = {contactList : this.collection.toJSON()};
 			
-            var renderedContent = Mustache.render(this.template, val2);
+			
+			
+            var renderedContent = this.template(val2); 
+			
+			if(this.collection.length ==1){
+				console.log(JSON.stringify(val2));
+			}
 			
 			$(this.el).html(renderedContent);
+			addForm = new BookJS.AddForm({collection:this.collection});
+			$(this.el).append(addForm.render().el);
             return this;
         },
 		
 		
     });
+    
+    
+    BookJS.AddForm = Backbone.View.extend({
+    template: template('contactAdd'),
+    events: {
+      'click button#validAddContact': 'add'
+    },
+    render: function() {
+      $(this.el).html(this.template);
+      return this;
+    },
+    add: function(event) {
+     event.preventDefault();
+     
+     this.collection.create({nom: $('#nom').val(), prenom:$('#prenom').val(), numero:$('#numero').val()})?console.log('success'):console.log('failure');
+   	window.kollec = this.collection;
+   	this.render();
+    
+    },
+    bidon:function(){
+    	console.log('ici ça passe');
+    }
+    
+  });
+  
+   
+   
+   
     
 	    BookRouter = Backbone.Router.extend({
 	    initialize: function(options) {
@@ -106,7 +144,7 @@
 	    index: function() {
 	      var index = new BookJS.BookView();
 	      this.el.empty();
-	      this.el.append();
+	      this.el.append(index.render().el);
 	    }
 	  });
     
@@ -116,6 +154,7 @@
 		Backbone.history.start();	
     
     }
-
+    
+  
 
     })(Zepto);

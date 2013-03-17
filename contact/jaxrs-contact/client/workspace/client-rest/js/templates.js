@@ -34,10 +34,10 @@
              <tr contactData="{{data}}" class="contactItem">\
                <td class="item">{{label}}</td>\
                <td class="img">\
-                 <img src="http://dummyimage.com/64/000/fff.jpg&text={{name}}"\
+                 <img src="http://dummyimage.com/64/000/fff.jpg&text={{prenom}}"\
                      class="img-polaroid"/>\
                </td>\
-               <td class="name">{{name}}</td>\
+               <td class="name">{{prenom}}</td>\
              </tr>\
            {{/contactList}}\
            </tbody>\
@@ -78,15 +78,15 @@
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue">{{contact.nom}}</td>\
+               <td class="inputValue">{{nom}}</td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue">{{contact.prenom}}</td>\
+               <td class="inputValue">{{prenom}}</td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue">{{contact.numero}}</td>\
+               <td class="inputValue">{{numero}}</td>\
              </tr>\
            </tbody>\
          </table>\
@@ -177,16 +177,16 @@
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue"><input id="prenom" type="text" placeholder="Bruce" /></td>\
+               <td class="inputValue"><input id="prenom" type="text" placeholder="prenom" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue"><input id="nom" type="text" placeholder="Wayne" /></td>\
+               <td class="inputValue"><input id="nom" type="text" placeholder="nom" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
                <td class="inputValue">\
-                 <input id="numero" type="text" placeholder="000-000-000" />\
+                 <input id="numero" type="text" placeholder="numero" />\
                </td>\
              </tr>\
            </tbody>\
