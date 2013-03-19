@@ -7,12 +7,16 @@ var Contact = Backbone.Model.extend({
       prenom : "b",
       numero : 0
     },
-    url : 'getAll'
+    //url : 'getAll'
 });
 
 var Contacts = Backbone.Collection.extend({
 	model : Contact,
-	url : 'getAll'
+
+  comparator: function(contact) {
+     return contact.get('id');
+  },
+	//url : 'getAll'
 });
 
 var ContactsView = Backbone.View.extend({
@@ -20,29 +24,25 @@ var ContactsView = Backbone.View.extend({
  	
  	events: {
       'click button#add': 'addContact',
-      'click button#deleteB' : 'deleteContact'
+      'click button#deleteB' : 'deleteContact',
+      'click button#edit' : 'editContact'
     },
     
 	 	initialize : function(){
 	 	this.counter =1; 
- 		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template');
+ 		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
  		this.collection = new Contacts();
- 		this.collection.fetch();
- 		console.log(this.collection.toJSON());
+ 		//this.collection.fetch();
  		this.render();
  	},
  	
  	render : function(){
- 		//var self = this;
- 		//_(this.collection.models).each(function(item){ // in case collection is not empty
-        //	self.appendContact(item);
-      	//}, this);
-      	this.template();
-      	
-    },
+    this.template();
+  },
     
     template : function(){
-    	console.log(mus);
+      this.collection.sort();
+      console.log(this.collection);
     	var that = this;
     	$.ajax({
     		url : "trame.html",
@@ -51,8 +51,7 @@ var ContactsView = Backbone.View.extend({
     			$('#tpl').empty();
     			$('#tpl').append(mus);
     			var val= that.collection.toJSON();
-    			console.log(val);
-      			$('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
+      		$('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
     		},
     		error : function(XMLHttpRequest, textStatus, errorThrown){
     			alert();
@@ -68,7 +67,7 @@ var ContactsView = Backbone.View.extend({
       });
       this.counter++;
       this.collection.add(contact);
-      contact.save();
+      //contact.save();
       this.template();
     },
     
@@ -78,6 +77,14 @@ var ContactsView = Backbone.View.extend({
     	this.template();
     },
     
+    editContact : function(){
+      contact = this.collection.get(''+$('#idE').val());
+      this.collection.remove(contact);
+      contact.set({nom : $('#nomE').val()});
+      contact.set({prenom : $('#prenomE').val()});
+      this.collection.add(contact);
+      this.template();
+    }
  });
  	var mus = $('#tpl').html();
 	var contactsView = new ContactsView();
