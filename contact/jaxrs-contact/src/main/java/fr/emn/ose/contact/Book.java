@@ -5,7 +5,8 @@
 
 package fr.emn.ose.contact;
 
-import java.net.URI;
+import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,8 +15,6 @@ import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-
 
 @Path("/contacts")
 public class Book {
@@ -33,25 +32,9 @@ public class Book {
      * Generate a new id by incrementing the former value of id
      * @return the new id
      */
-    public int inc(){
+    private int inc(){
         this.compt++;
         return compt;
-    }
-
-
-    /**
-     * Adds the contact to the list
-     * @param c : the contact to be added
-     * @return the contact that was added
-     */
-    @POST()
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    @Path("/addContact")
-    public Contact addContact(Contact c){
-        c.setId(this.inc());
-        this.contacts.put(c.getId(), c);
-        return c;
     }
 
     /**
@@ -62,7 +45,7 @@ public class Book {
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/getAll")
-    public List<Contact> getAll(){
+    public Response getAll(){
         Iterator<Integer> it = contacts.keySet().iterator();
         ArrayList<Contact> aRet = new ArrayList<Contact>();
 
@@ -70,9 +53,61 @@ public class Book {
             aRet.add(contacts.get(it.next()));
         }
 
-        return aRet;
+        return Response.ok(aRet).header("Access-Control-Allow-Origin", "*").build();
     }
 
+    /**
+     * The OPTIONS request for CORS “preflighted” request.
+     *
+     * A preflighted request first sends the OPTIONS header to the
+     * resource on the other domain, to check and see if the actual
+     * request is safe to send.
+     *
+     * @return  OK status for POST requests on "addContact".
+     */
+    @OPTIONS()
+    @Path("/addContact")
+    public Response addContactOption() {
+        return Response.ok().
+                header("Access-Control-Allow-Origin", "*").
+                header("Access-Control-Allow-Methods", "POST, OPTIONS").
+                header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
+
+    /**
+     * Adds the contact to the list.
+     *
+     * @param c : the contact to be added
+     * @return the contact that was added
+     */
+    @POST()
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/addContact")
+    public Response addContact(Contact c){
+        c.setId(this.inc());
+        this.contacts.put(c.getId(), c);
+
+        return Response.ok(c).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    /**
+     * The OPTIONS request for CORS “preflighted” request.
+     *
+     * A preflighted request first sends the OPTIONS header to the
+     * resource on the other domain, to check and see if the actual
+     * request is safe to send.
+     *
+     * @return  OK status for PUT / DELETE requests on "editContact".
+     */
+    @OPTIONS()
+    @Path("/editContact/{contact}")
+    public Response editContactOption() {
+        return Response.ok().
+                header("Access-Control-Allow-Origin", "*").
+                header("Access-Control-Allow-Methods", "PUT, DELETE, OPTIONS").
+                header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
 
     /**
      * Edit the contact in the book with the new value.
@@ -85,9 +120,10 @@ public class Book {
     @Path("/editContact/{contact}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Contact editContact(@PathParam("contact")String id, Contact c){
+    public Response editContact(@PathParam("contact")String id, Contact c){
         contacts.put(Integer.parseInt(id), c);
-        return c;
+
+        return Response.ok(c).header("Access-Control-Allow-Origin", "*").build();
     }
 
 
@@ -100,6 +136,7 @@ public class Book {
     @Path("/editContact/{contact}")
     public Response deleteContact(@PathParam("contact") String id){
         this.contacts.remove(Integer.parseInt(id));
-        return Response.status(200).build();
+
+        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 }

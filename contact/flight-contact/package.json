@@ -1,0 +1,12 @@
+{
+  "name": "flight-contact",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "connect": "2.7.x",
+    "bower": "0.8.x"
+  },
+  "scripts" : {
+    "postinstall": "node_modules/bower/bin/bower install"
+  }
+}

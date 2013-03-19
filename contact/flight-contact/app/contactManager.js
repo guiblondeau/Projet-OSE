@@ -202,11 +202,16 @@ define(
         var that = this;
         var href = this.attr.root + 'contacts/addContact';
 
+        contact.id = undefined;
+
         jQuery.ajax({
           url: href,
           type: 'POST',
           data: JSON.stringify(contact),
           dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
           success: function(data) {
             that.trigger('addContactOK', data);
           },
@@ -235,6 +240,9 @@ define(
           url: href,
           type: 'DELETE',
           dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
           success: function(data) {
             that.trigger('deleteContactOK', data);
           },
@@ -264,6 +272,9 @@ define(
           type: 'PUT',
           data: JSON.stringify(contact),
           dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
           success: function(data) {
             that.trigger('updateContactOK', data);
           },
@@ -279,7 +290,7 @@ define(
       // ### Attributes.
       this.defaultAttrs({
         // Root url of persistant layer
-        root: '/'
+        root: 'http://localhost:8080/jaxrs-contact/'
       });
     }
   }
