@@ -5,12 +5,9 @@
 
 package fr.emn.ose.contact;
 
-import org.apache.cxf.rs.security.cors.CrossOriginResourceSharing;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

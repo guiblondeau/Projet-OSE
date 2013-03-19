@@ -4,3 +4,4 @@ bookView = new BookView();
 bookView.collection.add(c1);
 
 
+c2 = new Contact({prenom:"Nicholas", nom:"Brody", numero:"+555 098 909", id:"2"})
