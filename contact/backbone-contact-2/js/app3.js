@@ -60,7 +60,7 @@ var ContactsView = Backbone.View.extend({
     	});
     },
 
- 	addContact: function(){
+    addContact: function(){
       var contact = new Contact({
       	id : this.counter,
       	nom : ($('#nom')).val(),
@@ -68,7 +68,27 @@ var ContactsView = Backbone.View.extend({
       });
       this.counter++;
       this.collection.add(contact);
-      //contact.save();
+      var that = this;
+      var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
+        jQuery.ajax({
+          url: href,
+          type: 'POST',
+          data: JSON.stringify(that.contact),
+          dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
+          success: function(data) {
+            that.trigger('addContactOK', data);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            that.trigger('addContactNOTOK', contact);
+            // TODO: trigger event error
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      
       this.template();
     },
     
@@ -87,6 +107,6 @@ var ContactsView = Backbone.View.extend({
       this.template();
     }
  });
- 	var mus = $('#tpl').html();
-	var contactsView = new ContactsView();
+    var mus = $('#tpl').html();
+    var contactsView = new ContactsView();
 })(jQuery);
