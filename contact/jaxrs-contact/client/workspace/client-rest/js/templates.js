@@ -30,21 +30,24 @@
        <div id="contactList" class="appContent">\
          <table id="contactsTable" class="table table-hover">\
            <tbody>\
-             {{#contactList}}\
-             <tr contactData="{{data}}" class="contactItem">\
+             <div id = "contactsContainer">\
+             </div>\
+           </tbody>\
+         </table>\
+       </div>';
+       
+       window.contactListTemplate = contactListTemplate;
+       
+       var contactTemplate = '<tr contactData="{{data}}" class="contactItem">\
                <td class="item">{{label}}</td>\
                <td class="img">\
                  <img src="http://dummyimage.com/64/000/fff.jpg&text={{prenom}}"\
                      class="img-polaroid"/>\
                </td>\
                <td class="name">{{prenom}}</td>\
-             </tr>\
-           {{/contactList}}\
-           </tbody>\
-         </table>\
-       </div>';
-       
-       window.contactListTemplate = contactListTemplate;
+             </tr>';
+             
+       window.contactTemplate = contactTemplate;
 
 	
     // ## Template for One Contact Page
@@ -102,7 +105,7 @@
            <div id="menu" class="container" >\
              <form class="navbar-form">\
                <button id="previousPage" type="button" class="btn contactTool"\
-                  page="editContactPage" contactData="{{data}}" >\
+                  page="editContactPage" >\
                  <i class="icon-chevron-left"></i>\
                </button>\
                <button id="validEditContact" type="button"\
@@ -115,7 +118,7 @@
        </div>\
 \
        <div id="contactEdit" class="appContent">\
-         <table id="contact" contactId="{{contact.id}}">\
+         <table id="contact" contactId="{{id}}">\
            <tbody>\
              <tr>\
                <td class="img">\
@@ -126,20 +129,20 @@
              </tr>\
              <tr>\
                <td class="inputLabel">First Name</td>\
-               <td class="inputValue"><input id="prenom" type="text" value="{{contact.prenom}}" /></td>\
+               <td class="inputValue"><input id="prenom" type="text" value="{{prenom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Last Name</td>\
-               <td class="inputValue"><input id="nom" type="text" value="{{contact.nom}}" /></td>\
+               <td class="inputValue"><input id="nom" type="text" value="{{nom}}" /></td>\
              </tr>\
              <tr>\
                <td class="inputLabel">Tel</td>\
-               <td class="inputValue"><input id="numero" type="text" value="{{contact.numero}}" /</td>\
+               <td class="inputValue"><input id="numero" type="text" value="{{numero}}" /</td>\
              </tr>\
            </tbody>\
          </table>\
 \
-         <button id="deleteContact" contactId="{{contact.id}}"\
+         <button id="deleteContact" contactId="{{id}}"\
                  class="btn btn-large btn-block btn-danger contactTool"\
                  type="button">Delete</button>\
        </div>';
