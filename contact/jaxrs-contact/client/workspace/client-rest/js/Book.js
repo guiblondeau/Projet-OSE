@@ -173,7 +173,7 @@
         
         removeContact:function(){
         	BookJS.collection.get(this.contactID).destroy();
-        	BookJS.router.navigate('/',{pushstate:true});
+        	BookJS.router.navigate('/',{trigger:true});
         }
 		
 		
@@ -211,10 +211,13 @@
 	      this.el = options.el
 	    },
 	    routes: {
-	      "": "index",
-	      "editContact/:id" : "edit"
+	      "editContact/:id" : "edit",
+	      "*path": "index",
+	      
+	      
 	    },
-	    index: function() {
+	    index: function(path) {
+	    console.warn('toto');
 	      var index = new BookJS.BookView();
 	      this.el.empty();
 	      this.el.append(index.render().el);
