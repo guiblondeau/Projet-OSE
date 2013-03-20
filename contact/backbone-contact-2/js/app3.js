@@ -5,7 +5,7 @@ var Contact = Backbone.Model.extend({
       id : 0,
       nom : "a",
       prenom : "b",
-      numero : 0
+      numero :"0"
     },
     //url : 'getAll'
 });
@@ -69,6 +69,8 @@ var ContactsView = Backbone.View.extend({
       });
       this.counter++;
       this.collection.add(contact);
+	console.log("hey");
+	console.log(JSON.stringify(contact));
       var that = this;
       var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
         jQuery.ajax({
