@@ -16,7 +16,7 @@ var Contacts = Backbone.Collection.extend({
   comparator: function(contact) {
      return contact.get('id');
   },
-	//url : 'getAll'
+  url : 'http://localhost:8080/jaxrs-contact/contacts/getAll'
 });
 
 var ContactsView = Backbone.View.extend({
@@ -32,7 +32,8 @@ var ContactsView = Backbone.View.extend({
 	 	this.counter =1; 
  		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
  		this.collection = new Contacts();
- 		//this.collection.fetch();
+ 		this.collection.fetch();
+                    console.log(this.collection);
  		this.render();
  	},
  	
