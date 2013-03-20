@@ -5,7 +5,7 @@ var Contact = Backbone.Model.extend({
       id : 0,
       nom : "a",
       prenom : "b",
-      numero : 0
+      numero :"0"
     },
     //url : 'getAll'
 });
@@ -16,7 +16,7 @@ var Contacts = Backbone.Collection.extend({
   comparator: function(contact) {
      return contact.get('id');
   },
-	//url : 'getAll'
+  url : 'http://localhost:8080/jaxrs-contact/contacts/getAll'
 });
 
 var ContactsView = Backbone.View.extend({
@@ -28,38 +28,40 @@ var ContactsView = Backbone.View.extend({
       'click button#edit' : 'editContact'
     },
     
-	 	initialize : function(){
-	 	this.counter =1; 
- 		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
- 		this.collection = new Contacts();
- 		//this.collection.fetch();
- 		this.render();
+	initialize : function(){
+	    this.counter =1; 
+	    _.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
+	    this.collection = new Contacts();
+	    this.collection.fetch();
+	    console.log(this.collection);
+	    this.template();
+	    this.render();
  	},
  	
- 	render : function(){
-    this.template();
-  },
+    render : function(){
+	this.template();
+    },
     
     template : function(){
-      this.collection.sort();
-      console.log(this.collection);
+	this.collection.sort();
+	console.log(this.collection);
     	var that = this;
     	$.ajax({
-    		url : "trame.html",
-    		cache : false,
-    		success : function(html){
-    			$('#tpl').empty();
-    			$('#tpl').append(mus);
-    			var val= that.collection.toJSON();
+    	    url : "trame.html",
+    	    cache : false,
+    	    success : function(html){
+    		$('#tpl').empty();
+    		$('#tpl').append(mus);
+    		var val= that.collection.toJSON();
       		$('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
-    		},
-    		error : function(XMLHttpRequest, textStatus, errorThrown){
-    			alert();
-    		}
+    	    },
+    	    error : function(XMLHttpRequest, textStatus, errorThrown){
+    		alert();
+    	    }
     	});
     },
 
- 	addContact: function(){
+    addContact: function(){
       var contact = new Contact({
       	id : this.counter,
       	nom : ($('#nom')).val(),
@@ -67,7 +69,29 @@ var ContactsView = Backbone.View.extend({
       });
       this.counter++;
       this.collection.add(contact);
-      //contact.save();
+	console.log("hey");
+	console.log(JSON.stringify(contact));
+      var that = this;
+      var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
+        jQuery.ajax({
+          url: href,
+          type: 'POST',
+          data: JSON.stringify(that.contact),
+          dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
+          success: function(data) {
+            that.trigger('addContactOK', data);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            that.trigger('addContactNOTOK', contact);
+            // TODO: trigger event error
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      
       this.template();
     },
     
@@ -86,6 +110,6 @@ var ContactsView = Backbone.View.extend({
       this.template();
     }
  });
- 	var mus = $('#tpl').html();
-	var contactsView = new ContactsView();
+    var mus = $('#tpl').html();
+    var contactsView = new ContactsView();
 })(jQuery);

@@ -34,6 +34,15 @@ public class Book {
         return compt;
     }
 
+    @OPTIONS()
+    @Path("/getAll")
+    public Response getAllOption() {
+        return Response.ok().
+                header("Access-Control-Allow-Origin", "*").
+                header("Access-Control-Allow-Methods", "GET, OPTIONS").
+                header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
+
     /**
      * Return all the contacts which were added to the book.
      *
