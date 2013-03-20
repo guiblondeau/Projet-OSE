@@ -28,35 +28,36 @@ var ContactsView = Backbone.View.extend({
       'click button#edit' : 'editContact'
     },
     
-	 	initialize : function(){
-	 	this.counter =1; 
- 		_.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
- 		this.collection = new Contacts();
- 		this.collection.fetch();
-                    console.log(this.collection);
- 		this.render();
+	initialize : function(){
+	    this.counter =1; 
+	    _.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
+	    this.collection = new Contacts();
+	    this.collection.fetch();
+	    console.log(this.collection);
+	    this.template();
+	    this.render();
  	},
  	
- 	render : function(){
-    this.template();
-  },
+    render : function(){
+	this.template();
+    },
     
     template : function(){
-      this.collection.sort();
-      console.log(this.collection);
+	this.collection.sort();
+	console.log(this.collection);
     	var that = this;
     	$.ajax({
-    		url : "trame.html",
-    		cache : false,
-    		success : function(html){
-    			$('#tpl').empty();
-    			$('#tpl').append(mus);
-    			var val= that.collection.toJSON();
+    	    url : "trame.html",
+    	    cache : false,
+    	    success : function(html){
+    		$('#tpl').empty();
+    		$('#tpl').append(mus);
+    		var val= that.collection.toJSON();
       		$('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
-    		},
-    		error : function(XMLHttpRequest, textStatus, errorThrown){
-    			alert();
-    		}
+    	    },
+    	    error : function(XMLHttpRequest, textStatus, errorThrown){
+    		alert();
+    	    }
     	});
     },
 
