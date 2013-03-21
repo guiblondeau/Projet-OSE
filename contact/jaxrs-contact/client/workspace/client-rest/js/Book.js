@@ -57,7 +57,7 @@
 
 	BookJS.Book = Backbone.Collection.extend({
 		model : BookJS.Contact,
-		localStorage: new Store("book"),
+		//localStorage: new Store("book"),
 
 
 		initialize : function(){
@@ -85,7 +85,7 @@ console.log('Book constructor');
 
 
 			BookJS.collection.on('all', this.render, this);
-			BookJS.collection.fetch();
+			//BookJS.collection.fetch();
 
 		},
 
@@ -173,15 +173,16 @@ console.log('Book constructor');
 
 
 		removeContact:function(){
-//BookJS.collection.get(this.contactID).destroy();
-BookJS.collection.remove(this.contactID);
-BookJS.router.navigate('/',{trigger:true});
-},
+		//BookJS.collection.get(this.contactID).destroy();
+			BookJS.collection.remove(this.contactID);
+			BookJS.router.navigate('/',{trigger:true});
+		},
 
-validateEdit:function(){
-
-
-}
+		validateEdit:function(){
+			BookJS.collection.get(this.contactID).set({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
+			console.log(BookJS.collection.get(this.contactID));
+			BookJS.router.navigate('/', {trigger:true, replace:true});
+		}
 
 
 });
@@ -198,11 +199,39 @@ validateEdit:function(){
 		},
 		add: function(event) {
 			event.preventDefault();
-			this.collection.create({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
-			window.kollec = this.collection;
+
+			this.contact = new BookJS.contact({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
+			BookJS.collection.add(this.contact);
+			this.requete();
+
+
 			this.render();
 
 		},
+
+		requete:function(){
+
+			var that = this;
+			var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
+			jQuery.ajax({
+				url: href,
+				type: 'POST',
+				data: JSON.stringify(that.contact),
+				dataType: 'json',
+				beforeSend: function(req) {
+					req.setRequestHeader('Content-Type', 'application/json');
+				},
+				success: function(data) {
+					that.trigger('addContactOK', data);
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					that.trigger('addContactNOTOK', contact);
+	            // TODO: trigger event error
+	            console.log(textStatus);
+	            console.log(errorThrown);
+	        }
+	    });
+		}
 
 
 	});
