@@ -5,7 +5,8 @@
 
 
 
-	var hashTemplate = {'contact':window.contactTemplate,'contactList':window.contactListTemplate, 'contactEdit':window.contactEditTemplate, 'contactAdd':window.contactAddTemplate};
+	var hashTemplate = {'contact':window.contactTemplate,'contactList':window.contactListTemplate,
+	 'contactEdit':window.contactEditTemplate, 'contactAdd':window.contactAddTemplate};
 
 	var template = function(name) {
 		return Mustache.compile(hashTemplate[name]);
@@ -61,8 +62,8 @@
 
 
 		initialize : function(){
-//this.url = "../getAll";
-console.log('Book constructor');
+			this.url = 'http://localhost:8080/jaxrs-contact/contacts/getAll';
+			console.log('Book constructor');
 }
 
 
@@ -70,11 +71,11 @@ console.log('Book constructor');
 });
 
 	BookJS.collection = new BookJS.Book();
-	  
-	  
-	  
-	  
-	  
+
+
+
+
+
 	BookJS.BookView = Backbone.View.extend({
 		template : template('contactList'),
 
@@ -174,15 +175,15 @@ console.log('Book constructor');
 
 		removeContact:function(){
 		//BookJS.collection.get(this.contactID).destroy();
-			BookJS.collection.remove(this.contactID);
-			BookJS.router.navigate('/',{trigger:true});
-		},
+		BookJS.collection.remove(this.contactID);
+		BookJS.router.navigate('/',{trigger:true});
+	},
 
-		validateEdit:function(){
-			BookJS.collection.get(this.contactID).set({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
-			console.log(BookJS.collection.get(this.contactID));
-			BookJS.router.navigate('/', {trigger:true, replace:true});
-		}
+	validateEdit:function(){
+		BookJS.collection.get(this.contactID).set({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
+		console.log(BookJS.collection.get(this.contactID));
+		BookJS.router.navigate('/', {trigger:true, replace:true});
+	}
 
 
 });
@@ -190,6 +191,8 @@ console.log('Book constructor');
 
 	BookJS.AddForm = Backbone.View.extend({
 		template: template('contactAdd'),
+		contact:{},
+
 		events: {
 			'click button#validAddContact': 'add'
 		},
@@ -200,7 +203,8 @@ console.log('Book constructor');
 		add: function(event) {
 			event.preventDefault();
 
-			this.contact = new BookJS.contact({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
+			this.contact = new BookJS.Contact({nom: $('#nom').val(),prenom:$('#prenom').val(),numero:$('#numero').val()});
+
 			BookJS.collection.add(this.contact);
 			this.requete();
 
@@ -213,7 +217,7 @@ console.log('Book constructor');
 
 			var that = this;
 			var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
-			jQuery.ajax({
+			Zepto.ajax({
 				url: href,
 				type: 'POST',
 				data: JSON.stringify(that.contact),
@@ -242,36 +246,36 @@ console.log('Book constructor');
 
 
 
-	BookRouter = Backbone.Router.extend({
-		initialize: function(options) {
-			this.el = options.el
-		},
-		routes: {
-			"editContact/:id" : "edit",
-			"*path": "index",
+BookRouter = Backbone.Router.extend({
+	initialize: function(options) {
+		this.el = options.el
+	},
+	routes: {
+		"editContact/:id" : "edit",
+		"*path": "index",
 
 
-		},
-		index: function(path) {
-			var index = new BookJS.BookView();
-			this.el.empty();
-			this.el.append(index.render().el);
-		},
+	},
+	index: function(path) {
+		var index = new BookJS.BookView();
+		this.el.empty();
+		this.el.append(index.render().el);
+	},
 
-		edit:function(id){
-			this.el.empty();
-			editView = new BookJS.editView();
-			editView.contactID=id;
-			this.el.append(editView.render().el);
-		}
-	});
-
-	BookJS.boot = function(container){
-		container = $(container);
-		BookJS.router = new BookRouter({el:container});    
-		Backbone.history.start({replace:true});	
-
+	edit:function(id){
+		this.el.empty();
+		editView = new BookJS.editView();
+		editView.contactID=id;
+		this.el.append(editView.render().el);
 	}
+});
+
+BookJS.boot = function(container){
+	container = $(container);
+	BookJS.router = new BookRouter({el:container});    
+	Backbone.history.start({replace:true});	
+
+}
 
 
 
