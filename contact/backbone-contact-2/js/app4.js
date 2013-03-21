@@ -11,7 +11,7 @@ var Contact = Backbone.Model.extend({
 });
 
 var Contacts = Backbone.Collection.extend({
-	model : Contact,
+  model : Contact,
 
   comparator: function(contact) {
      return contact.get('id');
@@ -20,52 +20,52 @@ var Contacts = Backbone.Collection.extend({
 });
 
 var ContactsView = Backbone.View.extend({
- 	el : $ ('body'),
- 	
- 	events: {
+  el : $ ('body'),
+  
+  events: {
       'click button#add': 'addContact',
       'click button#deleteB' : 'deleteContact',
       'click button#edit' : 'editContact'
     },
     
-	initialize : function(){
-	    this.counter =1; 
-	    _.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
-	    this.collection = new Contacts();
-	    this.collection.fetch();
-	    console.log(this.collection);
-	    this.template();
-	    this.render();
- 	},
- 	
+  initialize : function(){
+      this.counter =1; 
+      _.bindAll(this, 'render', 'addContact', 'deleteContact', 'template', 'editContact');
+      this.collection = new Contacts();
+      this.collection.fetch();
+      console.log(this.collection);
+      this.template();
+      this.render();
+  },
+  
     render : function(){
-	this.template();
+  this.template();
     },
     
     template : function(){
-	this.collection.sort();
-	console.log(this.collection);
-    	var that = this;
-    	$.ajax({
-    	    url : "trame.html",
-    	    cache : false,
-    	    success : function(html){
-    		$('#tpl').empty();
-    		$('#tpl').append(mus);
-    		var val= that.collection.toJSON();
-      		$('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
-    	    },
-    	    error : function(XMLHttpRequest, textStatus, errorThrown){
-    		alert();
-    	    }
-    	});
+  this.collection.sort();
+  console.log(this.collection);
+      var that = this;
+      $.ajax({
+          url : "trame.html",
+          cache : false,
+          success : function(html){
+        $('#tpl').empty();
+        $('#tpl').append(mus);
+        var val= that.collection.toJSON();
+          $('#tpl').html(Mustache.render($('#tpl').html(),{book : val}));
+          },
+          error : function(XMLHttpRequest, textStatus, errorThrown){
+        alert();
+          }
+      });
     },
 
     addContact: function(){
       var contact = new Contact({
-      	id : this.counter,
-      	nom : ($('#nom')).val(),
-      	prenom : ($('#prenom')).val(),
+        id : this.counter,
+        nom : ($('#nom')).val(),
+        prenom : ($('#prenom')).val(),
       });
       this.counter++;
       this.collection.add(contact);
@@ -83,7 +83,7 @@ var ContactsView = Backbone.View.extend({
             that.trigger('addContactOK', data);
           },
           error: function(jqXHR, textStatus, errorThrown) {
-            that.trigger('addContactNOTOK', contact);
+            that.trigger('addContactNOTOK', that.contact);
             // TODO: trigger event error
             console.log(textStatus);
             console.log(errorThrown);
@@ -94,9 +94,9 @@ var ContactsView = Backbone.View.extend({
     },
     
     deleteContact : function(){
-    	contact = this.collection.get(''+$('#delete').val());
-    	this.collection.remove(contact);
-    	this.template();
+      contact = this.collection.get(''+$('#delete').val());
+      this.collection.remove(contact);
+      this.template();
     },
     
     editContact : function(){
