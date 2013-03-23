@@ -70,20 +70,22 @@ var ContactsView = Backbone.View.extend({
       this.counter++;
       this.collection.add(contact);
       var that = this;
-      var href ='http://localhost:8080/jaxrs-contact/contacts/addContact';
         jQuery.ajax({
-          url: href,
-          type: 'POST',
+          url: 'http://localhost:8080/jaxrs-contact/contacts/addContact',
+          type: 'post',
+          crossDomain: true,
           data: JSON.stringify(that.contact),
           dataType: 'json',
           beforeSend: function(req) {
             req.setRequestHeader('Content-Type', 'application/json');
           },
           success: function(data) {
-            that.trigger('addContactOK', data);
+            console.log('cool');
+            //that.trigger('addContactOK', data);
           },
           error: function(jqXHR, textStatus, errorThrown) {
-            that.trigger('addContactNOTOK', that.contact);
+            console.log('dommage');
+            //that.trigger('addContactNOTOK', that.contact);
             // TODO: trigger event error
             console.log(textStatus);
             console.log(errorThrown);
@@ -96,6 +98,22 @@ var ContactsView = Backbone.View.extend({
     deleteContact : function(){
       contact = this.collection.get(''+$('#delete').val());
       this.collection.remove(contact);
+      jQuery.ajax({
+          url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+$('#delete').val(),
+          type: 'DELETE',
+          dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
+          success: function(data) {
+            console/log('cool');
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            // TODO: trigger event error
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
       this.template();
     },
     
@@ -105,6 +123,25 @@ var ContactsView = Backbone.View.extend({
       contact.set({nom : $('#nomE').val()});
       contact.set({prenom : $('#prenomE').val()});
       this.collection.add(contact);
+      jQuery.ajax({
+          url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+$('#idE').val(),
+          type: 'PUT',
+          data: JSON.stringify(contact),
+          dataType: 'json',
+          beforeSend: function(req) {
+            req.setRequestHeader('Content-Type', 'application/json');
+          },
+          success: function(data) {
+            //that.trigger('updateContactOK', data);
+            console.log('cool');
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            //that.trigger('updateContactNOTOK', contact);
+            // TODO: trigger event error
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
       this.template();
     }
  });

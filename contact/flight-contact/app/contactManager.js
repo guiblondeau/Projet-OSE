@@ -236,7 +236,7 @@ define(
         var that = this;
         var href = this.attr.root + 'contacts/editContact/' + data.id;
 
-        jQuery.ajax({
+        Backbone.ajax({
           url: href,
           type: 'DELETE',
           dataType: 'json',
