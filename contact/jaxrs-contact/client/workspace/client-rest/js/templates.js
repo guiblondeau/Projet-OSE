@@ -3,7 +3,7 @@
 'use strict';
 
 
-  (function() {
+  (function() { 
 
     // ## Template for All Contact Page.
      var contactListTemplate =
