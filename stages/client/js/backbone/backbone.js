@@ -22,37 +22,50 @@
 
 	});
 
-	//view
+	//vue des stages
 	var StagesView = Backbone.View.extend({
-		el : $ ('#page-principale'),
+		el : $('#page-principale'),
+
+		events:{
+
+		},
 
 		initialize: function(){
+			//_.bindAll(this, render);
+			var stages = new Stages();
+
+		},
+	});
+
+	// vue ajout stages
+	var AddView = Backbone.View.extend({
+
+		initialize:function(){
 			console.log("coucou");
-			el.append("cacahuete");
+			$('#page-principale').hide();
 		},
 	});
 
 	//router
 	var StagesApp = Backbone.Router.extend({
 
-		initialize: function(options) {
-			
-		},
-
 		routes: {
-			"/:id" : "edit",
+			":id" : "edit",
 			"*path": "index",
 		},
 
 		index:function(path){
-			console.log("hey");
 			var index = new StagesView();
+			console.log("passe dans defaut");
 		},
 
 		edit:function(id){
+			var index = new AddView();
+			console.log("passe dans edit");
 		}
 	});
 
 	var app = new StagesApp();
+	Backbone.history.start();
 
 })(jQuery);
