@@ -3,6 +3,7 @@
 
 <head>
 	<link rel = "stylesheet" href="js/bootstrap/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap/css/bootstrap-select.css">
 	<meta charset="utf-8">
 	<title>Stages EMN</title>
 
@@ -12,7 +13,6 @@
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1Ajbt4HK38uinqBUGpoofTwFXCfq1WAY&sensor=false">
 	</script>
 </head>
-
 
 <body>
 	<div id="page-principale">
@@ -25,6 +25,11 @@
 
 		<div id="barrerecherche" class="well">
 			<div id="boutons" align="center">
+				<select class="selectpicker">
+					<option>Mustard</option>
+					<option>Ketchup</option>
+					<option>Relish</option>
+				</select>
 				<div class="btn-group">
 					<button class="btn">Domaine</button>
 					<button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -64,7 +69,10 @@
 			</div>
 			<div align="right">
 				<a href="#">Recherche avancée</a>
-			</div>	
+			</div>
+			<div hidden="true">
+				test de hidden
+			</div>
 		</div>
 
 		<div class = "row">
@@ -134,6 +142,7 @@
 	<script src="js/underscore-min.js"></script>
 	<script src = "js/backbone/backbone-source.js"></script>
 	<script src = "js/backbone/backbone.js"></script>
+	<script src = "js/bootstrap/js/bootstrap-select.js"></script>
 </body>
 
 </html>
