@@ -1,7 +1,7 @@
 (function($){
 
 	// model
-	var Stage = Backbone.model.extend({
+	var Stage = Backbone.Model.extend({
 		defaults: {
 			id:0,
 			pays:"nowhere",
@@ -17,21 +17,26 @@
 	});
 
 	//collection
-	var Stages = Backbone.collection.extend({
+	var Stages = Backbone.Collection.extend({
 		model : Stage,
 
 	});
 
 	//view
 	var StagesView = Backbone.View.extend({
-		
+		el : $ ('#page-principale'),
+
+		initialize: function(){
+			console.log("coucou");
+			el.append("cacahuete");
+		},
 	});
 
 	//router
-	var Router = Backbone.Router.extend({
+	var StagesApp = Backbone.Router.extend({
 
 		initialize: function(options) {
-			this.el = container;
+			
 		},
 
 		routes: {
@@ -40,12 +45,14 @@
 		},
 
 		index:function(path){
+			console.log("hey");
 			var index = new StagesView();
 		},
 
 		edit:function(id){
-
-		},
+		}
 	});
+
+	var app = new StagesApp();
 
 })(jQuery);
