@@ -5,46 +5,83 @@
 	<link rel = "stylesheet" href="js/bootstrap/css/bootstrap.css"/>
 	<meta charset="utf-8">
 	<title>Stages EMN</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1Ajbt4HK38uinqBUGpoofTwFXCfq1WAY&sensor=false">
+	</script>
 </head>
 
 
 <body>
-
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="brand">Connecté en tant que : test</div>
 		</div>
 	</div>
 
-	<div class = "accordion" id = "listeStages">
-		<div class = "accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#listeStages" href="#collapseOne">
-					Stage 1
-				</a>
-			</div>
-			<div id="collapseOne" class="accordion-body collapse in">
-				<div class="accordion-inner">
-					Beaucoup de code =) 
+	<div class = "row">
+		<div class = "span1" >
+		</div>
+		<div class = "span10">
+			<div class = "accordion" id = "accordion">
+				<div class = "accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							Stage 1
+						</a>
+					</div>
+					<div id="collapseOne" class="accordion-body collapse in">
+						<div class="accordion-inner">
+							Beaucoup de code =) 
+							<div class="row">
+								<div class="span3">
+									Entreprise : Flander's company
+									<br/>
+									Adresse : 3 rue des Bisounours
+									<br/>
+									Pays : le Pays des Merveilles
+									<br/>
+									Salaire : des bisous
+									<br/>
+									Description : c'est trop cool
+								</div>
+								<div class="span3">
+									Notre super map
+									<!--<div id="map-canvas" style = "width : 50%; height : 350px"></div> -->
+									<img src = "emn.png"/>
+								</div>
+								<div class="span3">
+									Note : 22/20
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+							Stage 2
+						</a>
+					</div>
+					<div id="collapseTwo" class="accordion-body collapse ">
+						<div class="accordion-inner">
+							Encore plus de code =) 
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class = "accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#listeStages" href="#collapseTwo">
-					Stage 2
-				</a>
-			</div>
-			<div id="collapseTwo" class="accordion-body collapse ">
-				<div class="accordion-inner">
-					Encore plus de code =)  
-				</div>
-			</div>
+
+		<div class = "span1">
 		</div>
+
 	</div>
 
 	<script src = "js/jQuery.js"></script>
 	<script src = "js/bootstrap/js/bootstrap.js"></script>
+	<script src = "js/gMap.js"></script>
 </body>
 
 </html>
