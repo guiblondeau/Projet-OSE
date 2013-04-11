@@ -32,8 +32,8 @@
 
 		initialize: function(){
 			//_.bindAll(this, render);
-			$('#add-stage').hide();
-			$('#page-principale').show();
+			$('#add-stage').slideUp();
+			$('#page-principale').slideDown();
 			console.log(collection);
 		},
 
@@ -53,8 +53,8 @@
 		},
 
 		initialize:function(){
-			$('#page-principale').hide();
-			$('#add-stage').show();
+			$('#page-principale').slideUp();
+			$('#add-stage').slideDown();
 
 		},
 
@@ -87,6 +87,7 @@
 			console.log("passe dans edit");
 		}
 	});
+
 
 	var app = new StagesApp();
 	Backbone.history.start();
