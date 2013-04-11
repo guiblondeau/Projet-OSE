@@ -24,6 +24,7 @@
 		</div>
 
 		<div id="barrerecherche" class="well">
+			<button class="btn" id="add-btn">Ajouter un stage</button>
 			<div id="boutons" align="center">
 				<select class="selectpicker">
 					<option>Mustard</option>
@@ -108,62 +109,96 @@
 									</div>
 									<div class="span3">
 										Note : 22/20
-									</div>
+									</br>
+									<button class="btn" id="stage-edit"> Editer ce stage </button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class = "accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-								Stage 2
-							</a>
-						</div>
-						<div id="collapseTwo" class="accordion-body collapse ">
-							<div class="accordion-inner">
-								Encore plus de code =) 
-							</div>
+				</div>
+				<div class = "accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+							Stage 2
+						</a>
+					</div>
+					<div id="collapseTwo" class="accordion-body collapse ">
+						<div class="accordion-inner">
+							Encore plus de code =) 
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class = "span1">
-			</div>
-
 		</div>
-		
-		<div id="add-contact">
-			<div class="breadcrumb">
-				<h2>Ajout de stage</h2>
-			</div>
-			<div class="span3">
-			</div>
-			<div class="span6">
-				<table class="table table-stripped">
-					<tr>
-						<td>Intitulé du stage</td>
-						<td><input type="text" id ="intitule" placeholder="Text input"></td>
-					</tr>
-					<tr>
-						<td>Domaine</td>
-						<td><input type="text" id ="domaine" placeholder="Text input"></td>
-					</tr>
-				</table>
-			</div>
-			<div class="span3">
-			</div>
+
+		<div class = "span1">
+		</div>
+
+	</div>
+</div>	
+<div id="add-stage" >
+	<div class="breadcrumb">
+		<h2 style="text-align:center">Ajout de stage</h2>
+	</div>
+	<div class="span3">
+	</div>
+	<div class="span6">
+		<table class="table table-stripped">
+			<tr>
+				<td>Intitulé du stage</td>
+				<td><input type="text" id ="intitule" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Domaine</td>
+				<td><input type="text" id ="domaine" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Option</td>
+				<td><input type="text" id ="option" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" id ="description" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Adresse</td>
+				<td><input type="text" id ="adresse" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Pays</td>
+				<td><input type="text" id ="pays" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Salaire</td>
+				<td><input type="text" id ="domaine" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Avantages</td>
+				<td><input type="text" id ="avantages" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Langue</td>
+				<td><input type="text" id ="langue" placeholder="Text input"></td>
+			</tr>
+		</table>
+		<div align = "center">
+			<button class ="btn btn-success" id="add-validation">Valider ce stage</button>
+			<button class="btn btn-danger" id = "add-deletion">Supprimer ce stage</button>
 		</div>
 	</div>
-	<script src = "js/jQuery.js"></script>
-	<script src = "js/bootstrap/js/bootstrap.js"></script>
-	<script src = "js/gMap.js"></script>
+	<div class="span3">
+	</div>
+</div>
+</div>
+<script src = "js/jQuery.js"></script>
+<script src = "js/bootstrap/js/bootstrap.js"></script>
+<script src = "js/gMap.js"></script>
 
-	<script src="js/json2.js"></script>
-	<script src="js/underscore-min.js"></script>
-	<script src = "js/backbone/backbone-source.js"></script>
-	<script src = "js/backbone/backbone.js"></script>
-	<script src = "js/bootstrap/js/bootstrap-select.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src = "js/backbone/backbone-source.js"></script>
+<script src = "js/backbone/backbone.js"></script>
+<script src = "js/bootstrap/js/bootstrap-select.js"></script>
 </body>
 
 </html>

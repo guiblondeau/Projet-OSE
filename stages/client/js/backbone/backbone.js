@@ -27,22 +27,45 @@
 		el : $('#page-principale'),
 
 		events:{
-
+			'click button#add-btn': 'addStage',
 		},
 
 		initialize: function(){
 			//_.bindAll(this, render);
-			var stages = new Stages();
-
+			$('#add-stage').hide();
+			$('#page-principale').show();
+			console.log(collection);
 		},
+
+		addStage: function(){
+			var addStage = new AddView();
+		}
 	});
 
 	// vue ajout stages
 	var AddView = Backbone.View.extend({
 
+		el:$('#add-stage'),
+
+		events:{
+			'click button#add-validation': 'addStage',
+			'click button#add-deletion': 'deleteStage',
+		},
+
 		initialize:function(){
-			console.log("coucou");
 			$('#page-principale').hide();
+			$('#add-stage').show();
+
+		},
+
+		addStage : function(){
+			console.log("coucou");
+			var stage = new Stage({
+				intitule : $('#intitule').val(),
+			});
+			console.log(stage);
+			collection.add(stage);
+			var index = new StagesView();
 		},
 	});
 
@@ -67,5 +90,6 @@
 
 	var app = new StagesApp();
 	Backbone.history.start();
+	var collection = new Stages();
 
 })(jQuery);
