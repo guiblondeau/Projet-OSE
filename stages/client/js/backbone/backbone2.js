@@ -28,6 +28,7 @@
 
 		events:{
 			'click button#add-btn': 'addStage',
+			'click button#stage-edit': 'editStage',
 		},
 
 		initialize: function(){
@@ -38,6 +39,18 @@
 
 		addStage: function(){
 			addStage.render();
+		},
+
+		editStage: function(){
+			var id = 0;
+			var trouve = false;
+			while (!trouve){
+				trouve = $('#collapse'+id).hasClass('accordion-body  in collapse');
+				id++;
+			}
+			id--;//il y aura un pb quand on editera un contact (decalage d'indice)
+			console.log(id);
+			addStage.editStage(id)
 		},
 
 		render : function(){
@@ -62,7 +75,7 @@
 	// vue ajout stages
 	var AddView = Backbone.View.extend({
 
-		el:$('#add-stage'),
+		el : $('#add-stage'),
 
 		events:{
 			'click button#add-validation':'addStage',
@@ -81,14 +94,29 @@
 			var stage = new Stage({
 				id : counter,
 				intitule : $('#intitule').val(),
-				pays:$('#pays').val(),
+				pays : $('#pays').val(),
+				domaine : $('#domaine').val(),
+				option : $('#option').val(),
+				description : $('#description').val(),
+				adresse : $('#adresse').val(),
+				salaire : $('#salaire').val(),
+				avantages : $('#avantages').val(),
+				langue : $('#langue').val(),
 			});
 			counter++;
 			console.log(counter);
 			console.log(stage);
 			collection.add(stage);
+			$('#intitule').empty();
 			index.render();
 		},
+
+		editStage : function(id){
+			stage = collection.get(id);;
+			$('#page-principale').slideUp();
+			$('#add-stage').slideDown();
+			$('#intitule').val(stage.get("intitule"));
+		}
 	});
 
 	//router
@@ -100,12 +128,10 @@
 		},
 
 		index:function(path){
-			var index = new StagesView();
 			console.log("passe dans defaut");
 		},
 
 		edit:function(id){
-			var index = new AddView();
 			console.log("passe dans edit");
 		}
 	});

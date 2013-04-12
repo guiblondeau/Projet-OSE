@@ -42,22 +42,12 @@
 		},
 
 		render : function(){
-			var that = this;
-      		$.ajax({
-        		url : "index.html",
-       			cache : false,
-        		success : function(html){
-        			$('#add-stage').slideUp();
-					$('#page-principale').slideDown();
-         			$('#accordion').empty();
-          			$('#accordion').append(accor);
-          			var val= collection.toJSON();
-          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-       			},
-        		error : function(XMLHttpRequest, textStatus, errorThrown){
-          			alert();
-        		}
-      		});
+			$('#add-stage').slideUp();
+			$('#page-principale').slideDown();
+       		$('#accordion').empty();
+   			$('#accordion').append(accor);
+          	var val= collection.toJSON();
+          	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
 		}
 	});
 
