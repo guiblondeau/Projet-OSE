@@ -32,17 +32,15 @@
 
 		initialize: function(){
 			//_.bindAll(this, render);
-			
 			console.log(collection);
 			this.render();
 		},
 
 		addStage: function(){
-			var addStage = new AddView();
+			addStage.render();
 		},
 
 		render : function(){
-			var that = this;
       		$.ajax({
         		url : "index.html",
        			cache : false,
@@ -67,18 +65,19 @@
 		el:$('#add-stage'),
 
 		events:{
-			'click button#add-validation': 'addStage',
+			'click button#add-validation':'addStage',
 			'click button#add-deletion': 'deleteStage',
 		},
 
 		initialize:function(){
+		},
+
+		render : function(){
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
-
 		},
 
 		addStage : function(){
-			console.log("coucou");
 			var stage = new Stage({
 				id : counter,
 				intitule : $('#intitule').val(),
@@ -87,7 +86,7 @@
 			console.log(counter);
 			console.log(stage);
 			collection.add(stage);
-			var index = new StagesView();
+			index.render();
 		},
 	});
 
@@ -115,5 +114,6 @@
 	Backbone.history.start();
 	var collection = new Stages();
 	var counter=0;
-
+	var index = new StagesView();
+	var addStage = new AddView();
 })(jQuery);
