@@ -81,6 +81,7 @@
 			var stage = new Stage({
 				id : counter,
 				intitule : $('#intitule').val(),
+				pays:$('#pays').val(),
 			});
 			counter++;
 			console.log(counter);

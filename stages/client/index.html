@@ -80,68 +80,70 @@
 			<div class = "span1" >
 			</div>
 			<div class = "span10">
-				<div class = "accordion" id = "accordion">
-					<div class = "accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-								Stage 1
-							</a>
-						</div>
-						<div id="collapseOne" class="accordion-body collapse in">
-							<div class="accordion-inner">
-								Beaucoup de code =) 
-								<div class="row">
-									<div class="span3">
-										Entreprise : Flander's company
-										<br/>
-										Adresse : 3 rue des Bisounours
-										<br/>
-										Pays : le Pays des Merveilles
-										<br/>
-										Salaire : des bisous
-										<br/>
-										Description : c'est trop cool
+				<div type="text/template">
+					<div class = "accordion" id = "accordion">
+						<div class = "accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+									Stage 1
+								</a>
+							</div>
+							<div id="collapseOne" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									Beaucoup de code =) 
+									<div class="row">
+										<div class="span3">
+											Entreprise : Flander's company
+											<br/>
+											Adresse : 3 rue des Bisounours
+											<br/>
+											Pays : le Pays des Merveilles
+											<br/>
+											Salaire : des bisous
+											<br/>
+											Description : c'est trop cool
+										</div>
+										<div class="span3">
+											Notre super map
+											<!--<div id="map-canvas" style = "width : 50%; height : 350px"></div> -->
+											<img src = "emn.png"/>
+										</div>
+										<div class="span3">
+											Note : 22/20
+										</br>
+										<button class="btn" id="stage-edit"> Editer ce stage </button>
 									</div>
-									<div class="span3">
-										Notre super map
-										<!--<div id="map-canvas" style = "width : 50%; height : 350px"></div> -->
-										<img src = "emn.png"/>
-									</div>
-									<div class="span3">
-										Note : 22/20
-									</br>
-									<button class="btn" id="stage-edit"> Editer ce stage </button>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class = "accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-							Stage 2
-						</a>
-					</div>
-					<div id="collapseTwo" class="accordion-body collapse ">
-						<div class="accordion-inner">
-							Encore plus de code =) 
+					<div class = "accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+								Stage 2
+							</a>
+						</div>
+						<div id="collapseTwo" class="accordion-body collapse ">
+							<div class="accordion-inner">
+								Encore plus de code =) 
+							</div>
 						</div>
 					</div>
-				</div>
-				{{#book}}
-				<div class = "accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse"{{id}}>
-							{{intitule}} 
-						</a>
-					</div>
-					<div id="collapse"{{id}} class="accordion-body collapse ">
-						<div class="accordion-inner">
-							{{pays}}
+					{{#book}}
+					<div class = "accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+								{{intitule}} 
+							</a>
+						</div>
+						<div id="collapse{{id}}" class="accordion-body collapse ">
+							<div class="accordion-inner">
+								{{pays}}
+							</div>
 						</div>
 					</div>
+					{{/book}}
 				</div>
-				{{/book}}
 			</div>
 		</div>
 
@@ -216,7 +218,7 @@
 <script src = "js/mustache.js"></script>
 <script type="text/javascript">
 
-	$('.selectpicker').selectpicker();
+$('.selectpicker').selectpicker();
 </script>
 </body>
 
