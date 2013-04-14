@@ -23,7 +23,7 @@ public class HelloWorldIT {
 		endpointUrl = System.getProperty("service.url");
 	}
 	
-	@Test
+
 	public void testPing() throws Exception {
 		WebClient client = WebClient.create(endpointUrl + "/hello/echo/SierraTangoNevada");
 		Response r = client.accept("text/plain").get();
@@ -31,8 +31,8 @@ public class HelloWorldIT {
 		String value = IOUtils.toString((InputStream)r.getEntity());
 		assertEquals("SierraTangoNevada", value);
 	}
-	
-	@Test
+
+
 	public void testJsonRoundtrip() throws Exception {
 		 List<Object> providers = new ArrayList<Object>();
 	    providers.add(new org.codehaus.jackson.jaxrs.JacksonJsonProvider());
