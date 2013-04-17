@@ -3,7 +3,7 @@
 
 <head>
 	<link rel = "stylesheet" href="js/bootstrap/css/bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap/css/bootstrap-select.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap/css/bootstrap-select.min.css">
 	<meta charset="utf-8">
 	<title>Stages EMN</title>
 
@@ -24,6 +24,7 @@
 		</div>
 
 		<div id="barrerecherche" class="well">
+			<button class="btn" id="add-btn">Ajouter un stage</button>
 			<div id="boutons" align="center">
 				<select class="selectpicker">
 					<option>Mustard</option>
@@ -79,40 +80,45 @@
 			<div class = "span1" >
 			</div>
 			<div class = "span10">
-				<div class = "accordion" id = "accordion">
-					<div class = "accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-								Stage 1
-							</a>
-						</div>
-						<div id="collapseOne" class="accordion-body collapse in">
-							<div class="accordion-inner">
-								Beaucoup de code =) 
-								<div class="row">
-									<div class="span3">
-										Entreprise : Flander's company
-										<br/>
-										Adresse : 3 rue des Bisounours
-										<br/>
-										Pays : le Pays des Merveilles
-										<br/>
-										Salaire : des bisous
-										<br/>
-										Description : c'est trop cool
-									</div>
-									<div class="span3">
-										Notre super map
-										<!--<div id="map-canvas" style = "width : 50%; height : 350px"></div> -->
-										<img src = "emn.png"/>
-									</div>
-									<div class="span3">
-										Note : 22/20
+				<div type="text/template">
+					<div class = "accordion" id = "accordion">
+						<!--
+						<div class = "accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+									Stage 1
+								</a>
+							</div>
+							<div id="collapseOne" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									Beaucoup de code =) 
+									<div class="row">
+										<div class="span3">
+											Entreprise : Flander's company
+											<br/>
+											Adresse : 3 rue des Bisounours
+											<br/>
+											Pays : le Pays des Merveilles
+											<br/>
+											Salaire : des bisous
+											<br/>
+											Description : c'est trop cool
+										</div>
+										<div class="span3">
+											Notre super map
+											<div id="map-canvas" style = "width : 50%; height : 350px"></div> 
+											<img src = "emn.png"/>
+										</div>
+										<div class="span3">
+											Note : 22/20
+											</br>
+											<button class="btn" id="stage-edit"> Editer ce stage </button>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					
 					<div class = "accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
@@ -125,24 +131,116 @@
 							</div>
 						</div>
 					</div>
+					-->
+					{{#book}}
+					<div class = "accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+								{{intitule}} 
+							</a>
+						</div>
+						<div id="collapse{{id}}" class="accordion-body collapse ">
+							<div class="accordion-inner">
+								<div class = "span3">
+									Entreprise : {{entreprise}}
+									<br/>
+									Adresse : {{adresse}}
+									<br/>
+									Pays : {{pays}}
+									<br/>
+									Salaire : {{salaire}}
+									<br/>
+									Description : {{description}}
+								</div>
+								<div class="span3">
+								</div>
+								<div class="span3">
+									Note : 22/20
+									</br>
+									<button class="btn" id="stage-edit"> Editer ce stage </button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/book}}
 				</div>
 			</div>
-
-			<div class = "span1">
-			</div>
-
 		</div>
-		
-	</div>
-	<script src = "js/jQuery.js"></script>
-	<script src = "js/bootstrap/js/bootstrap.js"></script>
-	<script src = "js/gMap.js"></script>
 
-	<script src="js/json2.js"></script>
-	<script src="js/underscore-min.js"></script>
-	<script src = "js/backbone/backbone-source.js"></script>
-	<script src = "js/backbone/backbone.js"></script>
-	<script src = "js/bootstrap/js/bootstrap-select.js"></script>
+		<div class = "span1">
+		</div>
+
+	</div>
+</div>	
+
+<div id="add-stage" >
+	<div class="breadcrumb">
+		<h2 style="text-align:center">Ajout de stage</h2>
+	</div>
+	<div class="span3">
+	</div>
+	<div class="span6">
+		<table class="table table-stripped">
+			<tr>
+				<td>Intitulé du stage</td>
+				<td><input type="text" id ="intitule" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Domaine</td>
+				<td><input type="text" id ="domaine" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Option</td>
+				<td><input type="text" id ="option" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><input type="text" id ="description" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Adresse</td>
+				<td><input type="text" id ="adresse" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Pays</td>
+				<td><input type="text" id ="pays" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Salaire</td>
+				<td><input type="text" id ="domaine" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Avantages</td>
+				<td><input type="text" id ="avantages" placeholder="Text input"></td>
+			</tr>
+			<tr>
+				<td>Langue</td>
+				<td><input type="text" id ="langue" placeholder="Text input"></td>
+			</tr>
+		</table>
+		<div align = "center">
+			<button class ="btn btn-success" id="add-validation">Valider ce stage</button>
+			<button class="btn btn-danger" id = "add-deletion">Supprimer ce stage</button>
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
+</div>
+<script src = "js/jQuery.js"></script>
+<script src = "js/bootstrap/js/bootstrap.js"></script>
+<script src = "js/gMap.js"></script>
+
+<script src="js/json2.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src = "js/backbone/backbone-source.js"></script>
+<script src = "js/backbone/backbone2.js"></script>
+<script src = "js/bootstrap/js/bootstrap-select.min.js"></script>
+<script src = "js/mustache.js"></script>
+<script type="text/javascript">
+
+$('.selectpicker').selectpicker();
+</script>
 </body>
 
 </html>
