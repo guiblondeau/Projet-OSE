@@ -15,58 +15,29 @@
 </head>
 
 <body>
-	<div id="page-principale">
-
-		<div class="navbar">
-			<div class="navbar-inner">
-				<div class="brand">Connecté en tant que : test</div>
-			</div>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="brand">Connecté en tant que : test</div>
 		</div>
-
+	</div>
+	<div id="page-principale">
 		<div id="barrerecherche" class="well">
-			<button class="btn" id="add-btn">Ajouter un stage</button>
+			<button class="btn" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
 			<div id="boutons" align="center">
-				<select class="selectpicker">
-					<option>Mustard</option>
-					<option>Ketchup</option>
-					<option>Relish</option>
+				<select class="selectpicker" id="domaine">
+					<option>Informatique</option>
+					<option>SSG</option>
+					<option>Automatique</option>
+					<option>Productique</option>
+					<option>Energie-Environnement</option>
+					<option>Nucléaire</option>
 				</select>
-				<div class="btn-group">
-					<button class="btn">Domaine</button>
-					<button class="btn dropdown-toggle" data-toggle="dropdown">
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Informatique</a></li>
-						<li><a href="#">SSG</a></li>
-						<li><a href="#">Nucléaire</a></li>
-						<li><a href="#">Energétique</a></li>
-						<li><a href="#">Automatique</a></li>
-					</ul>
-				</div>
-				<div class="btn-group">
-					<button class="btn">Option</button>
-					<button class="btn dropdown-toggle" data-toggle="dropdown">
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="#">GSI</a></li>
-						<li><a href="#">OMTI</a></li>
-						<li><a href="#">GSE</a></li>
-						<li><a href="#">GIPAD</a></li>
-					</ul>
-				</div>
-				<div class="btn-group">
-					<button class="btn">Pays</button>
-					<button class="btn dropdown-toggle" data-toggle="dropdown">
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Angleterre</a></li>
-						<li><a href="#">Pays-Bas</a></li>
-						<li><a href="#">Espagne</a></li>
-					</ul>
-				</div>
+				<select class="selectpicker" id="option">
+					<option>GSI</option>
+					<option>OMTI</option>
+					<option>GIPAD</option>
+				</select>
+				<input type="text" id="recherchePays" placeholder="Pays">
 			</div>
 			<div align="right">
 				<a href="#">Recherche avancée</a>
@@ -82,95 +53,46 @@
 			<div class = "span10">
 				<div type="text/template">
 					<div class = "accordion" id = "accordion">
-						<!--
+						{{#book}}
 						<div class = "accordion-group">
 							<div class="accordion-heading">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-									Stage 1
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+									{{intitule}} 
 								</a>
 							</div>
-							<div id="collapseOne" class="accordion-body collapse in">
+							<div id="collapse{{id}}" class="accordion-body collapse ">
 								<div class="accordion-inner">
-									Beaucoup de code =) 
-									<div class="row">
-										<div class="span3">
-											Entreprise : Flander's company
-											<br/>
-											Adresse : 3 rue des Bisounours
-											<br/>
-											Pays : le Pays des Merveilles
-											<br/>
-											Salaire : des bisous
-											<br/>
-											Description : c'est trop cool
-										</div>
-										<div class="span3">
-											Notre super map
-											<div id="map-canvas" style = "width : 50%; height : 350px"></div> 
-											<img src = "emn.png"/>
-										</div>
-										<div class="span3">
-											Note : 22/20
-											</br>
-											<button class="btn" id="stage-edit"> Editer ce stage </button>
-										</div>
+									<div class = "span3">
+										Entreprise : {{entreprise}}
+										<br/>
+										Option : {{option}}
+										<br/>
+										Adresse : {{adresse}}
+										<br/>
+										Pays : {{pays}}
+										<br/>
+										Salaire : {{salaire}}
+										<br/>
+										Description : {{description}}
 									</div>
+									<div class="span3">
+									</div>
+									<div class="span3">
+										Note : 22/20
+									</br>
+									<button class="btn" id="stage-edit"> Editer ce stage </button>
 								</div>
 							</div>
 						</div>
-					
-					<div class = "accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-								Stage 2
-							</a>
-						</div>
-						<div id="collapseTwo" class="accordion-body collapse ">
-							<div class="accordion-inner">
-								Encore plus de code =) 
-							</div>
-						</div>
 					</div>
-				-->
-				{{#book}}
-				<div class = "accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
-							{{intitule}} 
-						</a>
-					</div>
-					<div id="collapse{{id}}" class="accordion-body collapse ">
-						<div class="accordion-inner">
-							<div class = "span3">
-								Entreprise : {{entreprise}}
-								<br/>
-								Adresse : {{adresse}}
-								<br/>
-								Pays : {{pays}}
-								<br/>
-								Salaire : {{salaire}}
-								<br/>
-								Description : {{description}}
-							</div>
-							<div class="span3">
-							</div>
-							<div class="span3">
-								Note : 22/20
-							</br>
-							<button class="btn" id="stage-edit"> Editer ce stage </button>
-						</div>
-					</div>
+					{{/book}}
 				</div>
 			</div>
-			{{/book}}
 		</div>
+		<div class = "span1">
+		</div>
+
 	</div>
-</div>
-
-<div class = "span1">
-</div>
-
-</div>
 </div>	
 
 <div id="add-stage" >
@@ -190,13 +112,20 @@
 			<div class="control-group">
 				<label class="control-label" for="inputDomaine">Domaine</label>
 				<div class="controls">
-					<input type="text" id="domaine" placeholder="Text input">
+					<select class="selectpicker" id="domaine">
+						<option>Informatique</option>
+						<option>SSG</option>
+						<option>Automatique</option>
+						<option>Productique</option>
+						<option>Energie-Environnement</option>
+						<option>Nucléaire</option>
+					</select>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="inputOption">Option</label>
 				<div class="controls">
-					<select class="selectpicker">
+					<select class="selectpicker" id="option">
 						<option>GSI</option>
 						<option>OMTI</option>
 						<option>GIPAD</option>
@@ -241,8 +170,8 @@
 			</div>
 		</form>
 		<div align = "center">
-			<button class ="btn btn-success" id="add-validation">Valider ce stage</button>
-			<button class="btn btn-danger" id = "add-deletion">Supprimer ce stage</button>
+			<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
+			<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
 		</div>
 	</div>
 	<div class="span3">
