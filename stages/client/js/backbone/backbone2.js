@@ -112,10 +112,14 @@
 		},
 
 		editStage : function(id){
-			stage = collection.get(id);;
+			stage = collection.get(id);
+			collection.remove(stage);
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
 			$('#intitule').val(stage.get("intitule"));
+			$('#pays').val(stage.get("pays"));
+			$('#domaine').val(stage.get("domaine"));
+			$('#option').val(stage.get("option"));
 		}
 	});
 

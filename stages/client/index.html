@@ -131,46 +131,46 @@
 							</div>
 						</div>
 					</div>
-					-->
-					{{#book}}
-					<div class = "accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
-								{{intitule}} 
-							</a>
-						</div>
-						<div id="collapse{{id}}" class="accordion-body collapse ">
-							<div class="accordion-inner">
-								<div class = "span3">
-									Entreprise : {{entreprise}}
-									<br/>
-									Adresse : {{adresse}}
-									<br/>
-									Pays : {{pays}}
-									<br/>
-									Salaire : {{salaire}}
-									<br/>
-									Description : {{description}}
-								</div>
-								<div class="span3">
-								</div>
-								<div class="span3">
-									Note : 22/20
-									</br>
-									<button class="btn" id="stage-edit"> Editer ce stage </button>
-								</div>
+				-->
+				{{#book}}
+				<div class = "accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+							{{intitule}} 
+						</a>
+					</div>
+					<div id="collapse{{id}}" class="accordion-body collapse ">
+						<div class="accordion-inner">
+							<div class = "span3">
+								Entreprise : {{entreprise}}
+								<br/>
+								Adresse : {{adresse}}
+								<br/>
+								Pays : {{pays}}
+								<br/>
+								Salaire : {{salaire}}
+								<br/>
+								Description : {{description}}
 							</div>
+							<div class="span3">
+							</div>
+							<div class="span3">
+								Note : 22/20
+							</br>
+							<button class="btn" id="stage-edit"> Editer ce stage </button>
 						</div>
 					</div>
-					{{/book}}
 				</div>
 			</div>
+			{{/book}}
 		</div>
-
-		<div class = "span1">
-		</div>
-
 	</div>
+</div>
+
+<div class = "span1">
+</div>
+
+</div>
 </div>	
 
 <div id="add-stage" >
@@ -180,44 +180,66 @@
 	<div class="span3">
 	</div>
 	<div class="span6">
-		<table class="table table-stripped">
-			<tr>
-				<td>Intitulé du stage</td>
-				<td><input type="text" id ="intitule" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Domaine</td>
-				<td><input type="text" id ="domaine" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Option</td>
-				<td><input type="text" id ="option" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Description</td>
-				<td><input type="text" id ="description" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Adresse</td>
-				<td><input type="text" id ="adresse" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Pays</td>
-				<td><input type="text" id ="pays" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Salaire</td>
-				<td><input type="text" id ="domaine" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Avantages</td>
-				<td><input type="text" id ="avantages" placeholder="Text input"></td>
-			</tr>
-			<tr>
-				<td>Langue</td>
-				<td><input type="text" id ="langue" placeholder="Text input"></td>
-			</tr>
-		</table>
+		<form class="form-horizontal" align="center">
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Intitule</label>
+				<div class="controls">
+					<input type="text" id="intitule" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputDomaine">Domaine</label>
+				<div class="controls">
+					<input type="text" id="domaine" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputOption">Option</label>
+				<div class="controls">
+					<select class="selectpicker">
+						<option>GSI</option>
+						<option>OMTI</option>
+						<option>GIPAD</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputDescription">Description</label>
+				<div class="controls">
+					<textarea rows="3" id="description" placeholder="Text input"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAdresse">Adresse</label>
+				<div class="controls">
+					<input type="text" id="adresse" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPays">Pays</label>
+				<div class="controls">
+					<input type="text" id="pays" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputSalaire">Salaire</label>
+				<div class="controls">
+					<input type="text" id="salaire" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAvantages">Avantages</label>
+				<div class="controls">
+					<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLangue">Langue</label>
+				<div class="controls">
+					<input type="text" id="langue" placeholder="Text input">
+				</div>
+			</div>
+		</form>
 		<div align = "center">
 			<button class ="btn btn-success" id="add-validation">Valider ce stage</button>
 			<button class="btn btn-danger" id = "add-deletion">Supprimer ce stage</button>
