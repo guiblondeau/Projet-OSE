@@ -173,7 +173,7 @@
 	</div>
 </div>	
 
-<div id="add-stage" >
+<div id="add-stage" hidden = "true">
 	<div class="breadcrumb">
 		<h2 style="text-align:center">Ajout de stage</h2>
 	</div>
@@ -240,68 +240,6 @@
 <script type="text/javascript">
 $('.selectpicker').selectpicker();
 </script>
-
-Géocoder une adresse - V3
-
-Pour récupérer les coordonnées géographiques d’une adresse ou d’une ville, nous pouvons utiliser le service de geocodage : geocoder, de l’api Google Map.
-
-Dans cet exemple, 2 points sont abordés :
-
-    Récupérer les coordonnées d’une adresse en affichant un marker sur la map
-    Supprimer les markers au fil des recherches afin de n’avoir toujours qu’un seul marker sur la carte
-
-<script type="text/javascript">
-
-  /* Déclaration des variables  */
-  var geocoder;
-  var map;
-  var markers = new Array();
-  var i = 0;
-
-  /* Initialisation de la carte  */
-  function initialize() {
-   /* Instanciation du geocoder  */
-   geocoder = new google.maps.Geocoder();
-   var paris = new google.maps.LatLng(48.8566667, 2.3509871);
-   var myOptions = {
-    zoom: 4,
-    center: paris,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   }
-   /* Chargement de la carte  */
-   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-  }
-
-  /* Fonction de géocodage déclenchée en cliquant surle bouton "Geocoder"  */
-  function codeAddress() {
-   /* Récupération de la valeur de l'adresse saisie */
-   var address = document.getElementById("address").value;
-   /* Appel au service de geocodage avec l'adresse en paramètre */
-   geocoder.geocode( { 'address': address}, function(results, status) {
-    /* Si l'adresse a pu être géolocalisée */
-    if (status == google.maps.GeocoderStatus.OK) {
-     /* Récupération de sa latitude et de sa longitude */
-     document.getElementById('lat').value = results[0].geometry.location.lat();
-     document.getElementById('lng').value = results[0].geometry.location.lng();
-     map.setCenter(results[0].geometry.location);
-     /* Affichage du marker */
-     var marker = new google.maps.Marker({
-      map: map,
-      position: results[0].geometry.location
-     });
-     /* Permet de supprimer le marker précédemment affiché */
-     markers.push(marker);
-     if(markers.length > 1)
-      markers[(i-1)].setMap(null);
-      i++;
-     } else {
-      alert("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
-     }
-    });
-  }
-
-</script>
-
 </body>
 
 </html>
