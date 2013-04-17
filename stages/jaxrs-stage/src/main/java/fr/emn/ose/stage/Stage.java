@@ -1,6 +1,7 @@
 package fr.emn.ose.stage;
 
 import com.github.jmkgreen.morphia.annotations.Embedded;
+import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
 import org.bson.types.ObjectId;
 
@@ -19,7 +20,7 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Path("/stages")
-@Embedded
+@Entity("stage")
 public class Stage {
 
     @Id
