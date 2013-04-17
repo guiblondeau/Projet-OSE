@@ -118,5 +118,32 @@ public class Stages {
     }
 
 
+    /**
+     * Option request for preflighted request. Notifies the request is safe.
+     * @return Ok status for requests using GET on stages/recherche
+     */
+    @OPTIONS
+    @Path("/stages/recherche")
+    public Response rechercheStagesOption(){
+        return Response.ok().
+                header("Access-Control-Allow-Origin", "*").
+                header("Access-Control-Allow-Methods", "GET, OPTIONS").
+                header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
+
+    /**
+     *
+     * @param type
+     * @return
+     */
+    @GET()
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/stages/recherche")
+    public Response rechercheStages(Stage type){
+       return null;
+    }
+
+
 
 }
