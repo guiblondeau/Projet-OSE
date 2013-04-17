@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,25 +18,20 @@ import java.util.ArrayList;
  * Time: 16:59
  * To change this template use File | Settings | File Templates.
  */
-@Entity
 public class Stages {
 
-    @Embedded
-    private ArrayList<Stage> listeStages;
 
-    public Stages(){
-        this.listeStages = new ArrayList<Stage>();
-    }
 
     @POST()
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/addStage")
     public Response addContact(Stage s){
-        this.listeStages.add(s);
+
+
         try {
             Datastore ds = ConnectionDataStore.createDataStore();
-            ds.save(this.listeStages);
+            ds.save(s);
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -46,6 +42,12 @@ public class Stages {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/getAll")
     public Response getAll(){
-        return Response.ok(this.listeStages).header("Access-Control-Allow-Origin", "*").build();
+        List<Stage> toRet = new ArrayList<Stage>();
+        try {
+             toRet = ConnectionDataStore.createDataStore().find(Stage.class).asList();
+        } catch (UnknownHostException e) {
+
+        }
+        return Response.ok(toRet).header("Access-Control-Allow-Origin", "*").build();
     }
 }

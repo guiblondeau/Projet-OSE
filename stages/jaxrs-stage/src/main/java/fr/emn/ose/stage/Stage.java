@@ -19,7 +19,6 @@ import javax.ws.rs.core.MediaType;
  * To change this template use File | Settings | File Templates.
  */
 
-@Path("/stages")
 @Entity("stage")
 public class Stage {
 
