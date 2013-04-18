@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * Created with IntelliJ IDEA.
@@ -103,7 +104,20 @@ public class Stages {
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/stages/{id}")
     public Response editStage(@PathParam("id") String id, Stage stage){
-        return null;
+        List<Stage> toRet = new ArrayList<Stage>();
+        try {
+            toRet = ConnectionDataStore.createDataStore().find(Stage.class).asList();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        ObjectId Id = new ObjectId(id);
+        for(int i=0; i<toRet.size(); i++){
+            if(toRet.get(i).getId()==Id){
+                toRet.set(i,stage);
+                break;
+            }
+        }
+        return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
@@ -114,9 +128,58 @@ public class Stages {
     @DELETE()
     @Path("/stages/{id}")
     public Response deleteStage(@PathParam("id") String id){
-        return null;
+        try {
+            Datastore ds = ConnectionDataStore.createDataStore();
+            ds.delete(Stage.class, this.getById(id));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return Response.ok("Supprime !").header("Access-Control-Allow-Origin", "*").build();
     }
 
 
+    /**
+     * Option request for preflighted request. Notifies the request is safe.
+     * @return Ok status for requests using GET on stages/recherche
+     */
+    @OPTIONS
+    @Path("/stages/recherche")
+    public Response rechercheStagesOption(){
+        return Response.ok().
+                header("Access-Control-Allow-Origin", "*").
+                header("Access-Control-Allow-Methods", "GET, OPTIONS").
+                header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
+
+    /**
+     *
+     * @param type
+     * @return
+     */
+    @GET()
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/stages/recherche")
+    public Response rechercheStages(Stage type){
+       return null;
+    }
+
+    /**
+     * Get the internships of "id" id of the database
+     * @return
+     */
+    @GET()
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/stages")
+    public Response getById(String id){
+        Stage stage = null;
+        try {
+            Datastore ds = ConnectionDataStore.createDataStore();
+            stage = ds.get(Stage.class, new ObjectId(id));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
+    }
 
 }
