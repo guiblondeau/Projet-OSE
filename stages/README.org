@@ -3,32 +3,37 @@
 
 * Internship
   The project proposes a RESTful architecture to manage our internships. 
-  For the client part, we use the JavaScript framework [[http://backbonejs.org/][Backbonejs]]
+  For the client part, we use the JavaScript framework [[http://backbonejs.org/][Backbonejs]]. For the server part, we use the java jax-rs technology.
   The rest of this document describes API, implementations and
   installation.
 
-** API - working with contacts
+** API - working with internships
 
-*** Contact Entry
-    The Contact API allows manipulation of Contact Entry. The format
-    of a Contact Entry is the following:
+*** Internship Entry
+    The Internship API allows manipulation of Internship Entry. The format
+    of a Internship Entry is the following:
     #+BEGIN_SRC json
     {
-      "id" :    "Contact identifier",
-      "nom":    "Last name",
-      "prenom": "First name",
-      "numero": "Phone number"
+      "id" : "Internship identifier",
+      "intitule" : "Brief description explaining the internship",
+      "option" : "Our school has 10 specialities, the user has to choose between them",
+      "description" : "Description of the internship",
+      "adresse" : "Adress of the company",
+      "pays" : "Country of the company",
+      "salaire" : "Earning of the studient during the internship",
+      "avantages" : "Advantages offered by the company",
+      "langue" : "Language used during the internship"
     }
     #+END_SRC
 
-*** Retrieving all contacts
-    To retrieve all of user's contacts, send a ~GET~ request. Upon
+*** Retrieving all internships
+    To retrieve all of internships, send a ~GET~ request. Upon
     success, the server responds with a ~HTTP 200 OK~ status code and
     the requested contacts set.
 
     Request
     #+BEGIN_SRC example
-    GET contacts/getAll
+    GET stages/getAll
     #+END_SRC
 
     Response:
