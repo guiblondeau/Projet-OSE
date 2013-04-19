@@ -49,7 +49,7 @@
 				id++;
 			}
 			id--;//il y aura un pb quand on editera un contact (decalage d'indice)
-			console.log(id);
+			stageEnCours = id;
 			addStage.editStage(id)
 		},
 
@@ -58,6 +58,7 @@
         		url : "index4.html",
        			cache : false,
         		success : function(html){
+        			stageEnCours = -1;
         			$('#add-stage').slideUp();
 					$('#page-principale').slideDown();
          			$('#accordion').empty();
@@ -88,6 +89,16 @@
 		render : function(){
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
+		},
+
+		deleteStage : function(){
+			if (stageEnCours != -1){
+				stage = collection.get(stageEnCours);
+				collection.remove(stage);
+				index.render();
+			}else{
+				index.render();
+			}
 		},
 
 		addStage : function(){
@@ -140,6 +151,7 @@
 		}
 	});
 
+	var stageEnCours;
 	var accor = $("#accordion").html();
 	var app = new StagesApp();
 	Backbone.history.start();
