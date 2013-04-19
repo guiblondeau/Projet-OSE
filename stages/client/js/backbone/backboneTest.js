@@ -5,6 +5,7 @@
 		defaults: {
 			id:0,
 			pays:"nowhere",
+			entreprise : "flander's company",
 			adresse:"nowhere",
 			domaine:"none",
 			intitule:"none",
@@ -33,8 +34,20 @@
 
 		initialize: function(){
 			//_.bindAll(this, render);
-			console.log(collection);
-			this.render();
+			$.ajax({
+        		url : "index4.html",
+       			cache : false,
+        		success : function(html){
+        			stageEnCours = -1;
+         			$('#accordion').empty();
+          			$('#accordion').append(accor);
+          			var val= collection.toJSON();
+          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+       			},
+        		error : function(XMLHttpRequest, textStatus, errorThrown){
+          			alert();
+        		}
+      		});
 		},
 
 		addStage: function(){
@@ -105,6 +118,7 @@
 			var stage = new Stage({
 				id : counter,
 				intitule : $('#intitule').val(),
+				entreprise : $('#entreprise').val(),
 				pays : $('#pays').val(),
 				domaine : $('#domaine').val(),
 				option : $('#option').val(),
