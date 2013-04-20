@@ -134,7 +134,7 @@ public class Stages {
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        return Response.ok("Supprime !").header("Access-Control-Allow-Origin", "*").build();
+        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 
 
