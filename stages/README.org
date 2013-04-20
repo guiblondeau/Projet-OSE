@@ -57,22 +57,27 @@
     ]
     #+END_SRC
 
-*** Creating contacts
-    To create a new contact, send a ~POST~ request with in the
-    payload, the new contact. Upon success, the server responds with
+*** Creating internship
+    To create a new internship, send a ~POST~ request with in the
+    payload, the new internship. Upon success, the server responds with
     an ~HTTP 201 Created~ status code and the created contact entry
     with ~id~ set by the server.
 
     Request:
     #+BEGIN_SRC example
-    POST contacts/addContact
+    POST stagess/addStage
     ...
 
     {
-      "id":     "",
-      "nom":    "Gordon",
-      "prenom": "James",
-      "numero": "11-222-333"
+      "id" : "",
+      "intitule" : "Stage international a Google",
+      "option" : "GIPAD",
+      "description" : "Bla bla bla",
+      "adresse" : "New York City...",
+      "pays" : "USA",
+      "salaire" : "1000 $",
+      "avantages" : "Gym, un jour de travail chez soi...",
+      "langue" : "Anglais"
     }
     #+END_SRC
 
@@ -82,23 +87,28 @@
     ...
 
     {
-      "id":     "03",
-      "nom":    "Gordon",
-      "prenom": "James",
-      "numero": "11-222-333"
+      "id" : "",
+      "intitule" : "Stage international a Google",
+      "option" : "GIPAD",
+      "description" : "Bla bla bla",
+      "adresse" : "New York City...",
+      "pays" : "USA",
+      "salaire" : "1000 $",
+      "avantages" : "Gym, un jour de travail chez soi...",
+      "langue" : "Anglais"
     }
     #+END_SRC
 
-*** Updating contacts
-    To update a contact, first retrieve the contact entry, modify the
-    data and send a ~PUT~ request to the contact's edit URL with the
-    modified contact entry in the body. Upon success, the server
+*** Updating internships
+    To update an internship, first retrieve the internship entry, modify the
+    data and send a ~PUT~ request to the internship's edit URL with the
+    modified internship entry in the body. Upon success, the server
     responds with an ~HTTP 200 OK~ status code and the updated contact
     entry.
 
     Request:
     #+BEGIN_SRC example
-    PUT contacts/editContact/{contactID}
+    PUT stages/editStage/{stageID}
     ...
 
     {

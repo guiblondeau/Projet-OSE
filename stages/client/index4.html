@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap/css/bootstrap-select.min.css">
 	<meta charset="utf-8">
 	<title>Stages EMN</title>
-
+	<link rel="icon" href="images/favicon.png" sizes="32x32"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<script type="text/javascript"
@@ -42,9 +42,6 @@
 			<div align="right">
 				<a href="#" onclick= "test()" id="a">Recherche avancée</a>
 			</div>
-			<div hidden="true">
-				test de hidden
-			</div>
 		</div>
 
 		<div class = "row">
@@ -76,108 +73,115 @@
 										Description : {{description}}
 									</div>
 									<div class="span3">
-										<div id="map-canvas" style = "width : 50%; height : 350px"></div>
+										<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
 									</div>
 									<div class="span3">
-										Note : 22/20
-									</br>
-									<button class="btn" id="stage-edit"> Editer ce stage </button>
+										<div style = "height : 150px"> Note : 22/20</div>
+										<div style = "height : 50px">
+											<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+						{{/book}}
 					</div>
-					{{/book}}
 				</div>
 			</div>
-		</div>
-		<div class = "span1">
-		</div>
+			<div class = "span1">
+			</div>
 
-	</div>
-</div>	
+		</div>
+	</div>	
 
-<div id="add-stage" >
-	<div class="breadcrumb">
-		<h2 style="text-align:center">Ajout de stage</h2>
-	</div>
-	<div class="span3">
-	</div>
-	<div class="span6">
-		<form class="form-horizontal" align="center">
-			<div class="control-group">
-				<label class="control-label" for="inputEmail">Intitule</label>
-				<div class="controls">
-					<input type="text" id="intitule" placeholder="Text input">
+	<div id="add-stage" hidden = "true">
+		<div class="breadcrumb">
+			<h2 style="text-align:center">Ajout de stage</h2>
+		</div>
+		<div class="span3">
+		</div>
+		<div class="span6">
+			<form class="form-horizontal" align="center">
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Intitule</label>
+					<div class="controls">
+						<input type="text" id="intitule" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputDomaine">Domaine</label>
-				<div class="controls">
-					<select class="selectpicker" id="domaine">
-						<option>Informatique</option>
-						<option>SSG</option>
-						<option>Automatique</option>
-						<option>Productique</option>
-						<option>Energie-Environnement</option>
-						<option>Nucléaire</option>
-					</select>
+				<div class="control-group">
+					<label class="control-label" for="inputEntreprise">Entreprise</label>
+					<div class="controls">
+						<input type="text" id="entreprise" placeholder="Text input"></input>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputOption">Option</label>
-				<div class="controls">
-					<select class="selectpicker" id="option">
-						<option>GSI</option>
-						<option>OMTI</option>
-						<option>GIPAD</option>
-					</select>
+				<div class="control-group">
+					<label class="control-label" for="inputDomaine">Domaine</label>
+					<div class="controls">
+						<select class="selectpicker" id="domaine">
+							<option>Informatique</option>
+							<option>SSG</option>
+							<option>Automatique</option>
+							<option>Productique</option>
+							<option>Energie-Environnement</option>
+							<option>Nucléaire</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputDescription">Description</label>
-				<div class="controls">
-					<textarea rows="3" id="description" placeholder="Text input"></textarea>
+				<div class="control-group">
+					<label class="control-label" for="inputOption">Option</label>
+					<div class="controls">
+						<select class="selectpicker" id="option">
+							<option>GSI</option>
+							<option>OMTI</option>
+							<option>GIPAD</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputAdresse">Adresse</label>
-				<div class="controls">
-					<input type="text" id="adresse" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputDescription">Description</label>
+					<div class="controls">
+						<textarea rows="3" id="description" placeholder="Text input"></textarea>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPays">Pays</label>
-				<div class="controls">
-					<input type="text" id="pays" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputAdresse">Adresse</label>
+					<div class="controls">
+						<input type="text" id="adresse" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputSalaire">Salaire</label>
-				<div class="controls">
-					<input type="text" id="salaire" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputPays">Pays</label>
+					<div class="controls">
+						<input type="text" id="pays" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputAvantages">Avantages</label>
-				<div class="controls">
-					<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+				<div class="control-group">
+					<label class="control-label" for="inputSalaire">Salaire</label>
+					<div class="controls">
+						<input type="text" id="salaire" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputLangue">Langue</label>
-				<div class="controls">
-					<input type="text" id="langue" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputAvantages">Avantages</label>
+					<div class="controls">
+						<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+					</div>
 				</div>
+				<div class="control-group">
+					<label class="control-label" for="inputLangue">Langue</label>
+					<div class="controls">
+						<input type="text" id="langue" placeholder="Text input">
+					</div>
+				</div>
+			</form>
+			<div align = "center">
+				<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
+				<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
 			</div>
-		</form>
-		<div align = "center">
-			<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
-			<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
+		</div>
+		<div class="span3">
 		</div>
 	</div>
-	<div class="span3">
-	</div>
-</div>
 </div>
 <script src = "js/jQuery.js"></script>
 <script src = "js/bootstrap/js/bootstrap.js"></script>
@@ -193,17 +197,17 @@
 $('.selectpicker').selectpicker();
 var test = function (a){
 	console.log("cliqué ! "+a);
-	map = initializeMap();
+	map = initializeMap(a);
 }
 var latlng = new google.maps.LatLng(32.334167, -95.3);
-	function initializeMap() {
-		var myOptions = {
-			zoom: 8,
-			center: latlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		return new google.maps.Map($('#map-canvas')[0], myOptions);
-	}
+function initializeMap(a) {
+	var myOptions = {
+		zoom: 8,
+		center: latlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	return new google.maps.Map($('#map-canvas'+a)[0], myOptions);
+}
 </script>
 </body>
 
