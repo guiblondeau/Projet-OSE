@@ -126,11 +126,13 @@ public class Stages {
      * @return Ok status if well deleted
      */
     @DELETE()
-    @Path("/stages/{id}")
+    @Path("/stage/{id}")
     public Response deleteStage(@PathParam("id") String id){
         try {
             Datastore ds = ConnectionDataStore.createDataStore();
-            ds.delete(Stage.class, this.getById(id));
+            Stage stage = ds.get(Stage.class, new ObjectId(id));
+
+            ds.delete(stage);
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -170,7 +172,7 @@ public class Stages {
      */
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/stages")
+    @Path("/stage/{id}")
     public Response getById(String id){
         Stage stage = null;
         try {
