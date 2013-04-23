@@ -34,20 +34,11 @@
 
 		initialize: function(){
 			//_.bindAll(this, render);
-			$.ajax({
-        		url : "index4.html",
-       			cache : false,
-        		success : function(html){
-        			stageEnCours = -1;
+			stageEnCours = -1;
          			$('#accordion').empty();
           			$('#accordion').append(accor);
           			var val= collection.toJSON();
           			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-       			},
-        		error : function(XMLHttpRequest, textStatus, errorThrown){
-          			alert();
-        		}
-      		});
 		},
 
 		addStage: function(){
@@ -67,22 +58,13 @@
 		},
 
 		render : function(){
-      		$.ajax({
-        		url : "index4.html",
-       			cache : false,
-        		success : function(html){
-        			stageEnCours = -1;
+      		stageEnCours = -1;
         			$('#add-stage').slideUp();
 					$('#page-principale').slideDown();
          			$('#accordion').empty();
           			$('#accordion').append(accor);
           			var val= collection.toJSON();
           			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-       			},
-        		error : function(XMLHttpRequest, textStatus, errorThrown){
-          			alert();
-        		}
-      		});
 		}
 	});
 
