@@ -66,6 +66,11 @@
             <type>jar</type>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>

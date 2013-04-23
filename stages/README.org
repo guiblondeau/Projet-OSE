@@ -33,28 +33,31 @@
 
     Request
     #+BEGIN_SRC example
-    GET stages/getAll
+    GET stages
     #+END_SRC
 
     Response:
     #+BEGIN_SRC json
-    HTTP/1.1 200 OK
-    ...
+    
+    Status Code: 200 OK
+    Content-Type: application/json
+    Date: Mon, 22 Apr 2013 20:59:32 GMT
+    Server: Apache-Coyote/1.1
+    Transfer-Encoding: chunked
+    access-control-allow-origin: *
+
+
 
     [
-      {
-        "id":     "01",
-        "nom":    "Wayne",
-        "prenom": "Bruce",
-        "numero": "11-222-331"
-      },
-      {
-        "id":     "02",
-        "nom":    "Kyle",
-        "prenom": "Selina",
-        "numero": "11-222-332"
-      }
-    ]
+  {
+    "id": {
+      "time": 1366641738000,
+      "new": false,
+      "inc": 1798942067,
+      "machine": -2081434795,
+      "timeSecond": 1366641738
+    },
+	...
     #+END_SRC
 
 *** Creating internship
@@ -69,15 +72,15 @@
     ...
 
     {
-      "id" : "",
-      "intitule" : "Stage international a Google",
-      "option" : "GIPAD",
-      "description" : "Bla bla bla",
-      "adresse" : "New York City...",
-      "pays" : "USA",
-      "salaire" : "1000 $",
-      "avantages" : "Gym, un jour de travail chez soi...",
-      "langue" : "Anglais"
+      "option": "GIPAD",
+       "description": "You will be in charge of...",
+       "pays": "USA",
+       "adresse": "New York City...",
+       "domaine": null,
+       "intitule": "International internship in Google",
+       "salaire": "1000 $",
+       "avantages": "Gym, a day of work at home...",
+       "langue": "English"
     }
     #+END_SRC
 
@@ -87,15 +90,23 @@
     ...
 
     {
-      "id" : "",
-      "intitule" : "Stage international a Google",
-      "option" : "GIPAD",
-      "description" : "Bla bla bla",
-      "adresse" : "New York City...",
-      "pays" : "USA",
-      "salaire" : "1000 $",
-      "avantages" : "Gym, un jour de travail chez soi...",
-      "langue" : "Anglais"
+       "id":
+       {
+           "time": 1366664704000,
+           "new": false,
+           "inc": 1395151418,
+           "machine": -1717089160,
+           "timeSecond": 1366664704
+       },
+       "option": "GIPAD",
+       "description": "You will be in charge of...",
+       "pays": "USA",
+       "adresse": "New York City...",
+       "domaine": null,
+       "intitule": "International internship in Google",
+       "salaire": "1000 $",
+       "avantages": "Gym, a day of work at home...",
+       "langue": "English"
     }
     #+END_SRC
 

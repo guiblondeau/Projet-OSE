@@ -3,6 +3,7 @@ package fr.emn.ose.stage;
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
+import com.github.jmkgreen.morphia.query.Query;
 import com.sun.corba.se.pept.transport.ContactInfo;
 
 import javax.ws.rs.*;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bson.types.ObjectId;
 
 /**
@@ -22,8 +24,20 @@ import org.bson.types.ObjectId;
  */
 public class Stages {
 
+
+    private StageDAO stageDAO;
+
+    public Stages() {
+        try {
+            this.stageDAO = new StageDAO(ConnectionDataStore.getMorphiaObject(), ConnectionMongo.getConnection());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
     /**
      * Add a new internship to the list
+     *
      * @param s, the internship to be added
      * @return the internship which was added
      */
@@ -31,29 +45,22 @@ public class Stages {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stage")
-    public Response addStage(Stage s){
-
-
-        try {
-            Datastore ds = ConnectionDataStore.createDataStore();
-            ds.save(s);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    public Response addStage(Stage s) {
+        this.stageDAO.save(s);
         return Response.ok(s).header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
      * OPTION request for CORS preflighted requests.
-     *
+     * <p/>
      * The preflighted request sends an OPTION header to the server, to check
      * the safety of the request.
      *
-     * @return  OK status for GET and POST request
+     * @return OK status for GET and POST request
      */
     @OPTIONS
     @Path("/stages")
-    public Response optionStages(){
+    public Response optionStages() {
         return Response.ok().
                 header("Access-Control-Allow-Origin", "*").
                 header("Access-Control-Allow-Methods", "GET, POST, OPTIONS").
@@ -63,18 +70,17 @@ public class Stages {
 
     /**
      * Get all the internships of the database
+     *
      * @return
      */
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages")
-    public Response getAll(){
+    public Response getAll() {
         List<Stage> toRet = new ArrayList<Stage>();
-        try {
-             toRet = ConnectionDataStore.createDataStore().find(Stage.class).asList();
-        } catch (UnknownHostException e) {
 
-        }
+        toRet = this.stageDAO.find().asList();
+
         return Response.ok(toRet).header("Access-Control-Allow-Origin", "*").build();
     }
 
@@ -85,7 +91,7 @@ public class Stages {
      */
     @OPTIONS
     @Path("/stages/{id}")
-    public Response optionStage(){
+    public Response optionStage() {
         return Response.ok().
                 header("Access-Control-Allow-Origin", "*").
                 header("Access-Control-Allow-Methods", "PUT, GET , DELETE, OPTIONS").
@@ -95,7 +101,8 @@ public class Stages {
 
     /**
      * Edit the internship corresponding to the given id, with the "stage" parameter
-     * @param id id of the internship to be updated
+     *
+     * @param id    id of the internship to be updated
      * @param stage the new internship which overrides the former value
      * @return the new value of the internship
      */
@@ -103,48 +110,33 @@ public class Stages {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/stages/{id}")
-    public Response editStage(@PathParam("id") String id, Stage stage){
-        List<Stage> toRet = new ArrayList<Stage>();
-        try {
-            toRet = ConnectionDataStore.createDataStore().find(Stage.class).asList();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        ObjectId Id = new ObjectId(id);
-        for(int i=0; i<toRet.size(); i++){
-            if(toRet.get(i).getId()==Id){
-                toRet.set(i,stage);
-                break;
-            }
-        }
+    public Response editStage(@PathParam("id") String id, Stage stage) {
+        this.stageDAO.update(stage);
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
      * Delete the internship corresponding to the id parameter.
+     *
      * @param id the id of the internship to be deleted
      * @return Ok status if well deleted
      */
     @DELETE()
-    @Path("/stages/{id}")
-    public Response deleteStage(@PathParam("id") String id){
-        try {
-            Datastore ds = ConnectionDataStore.createDataStore();
-            ds.delete(Stage.class, this.getById(id));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return Response.ok("Supprime !").header("Access-Control-Allow-Origin", "*").build();
+    @Path("/stage/{id}")
+    public Response deleteStage(@PathParam("id") String id) {
+        this.stageDAO.delete(this.stageDAO.get(new ObjectId(id)));
+        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 
 
     /**
      * Option request for preflighted request. Notifies the request is safe.
+     *
      * @return Ok status for requests using GET on stages/recherche
      */
     @OPTIONS
     @Path("/stages/recherche")
-    public Response rechercheStagesOption(){
+    public Response rechercheStagesOption() {
         return Response.ok().
                 header("Access-Control-Allow-Origin", "*").
                 header("Access-Control-Allow-Methods", "GET, OPTIONS").
@@ -152,7 +144,6 @@ public class Stages {
     }
 
     /**
-     *
      * @param type
      * @return
      */
@@ -160,25 +151,20 @@ public class Stages {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages/recherche")
-    public Response rechercheStages(Stage type){
-       return null;
+    public Response rechercheStages(Stage type) {
+        return null;
     }
 
     /**
      * Get the internships of "id" id of the database
+     *
      * @return
      */
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/stages")
-    public Response getById(String id){
-        Stage stage = null;
-        try {
-            Datastore ds = ConnectionDataStore.createDataStore();
-            stage = ds.get(Stage.class, new ObjectId(id));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    @Path("/stage/{id}")
+    public Response getById(String id) {
+        Stage stage = this.stageDAO.get(new ObjectId(id));
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
 
