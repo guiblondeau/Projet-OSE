@@ -152,6 +152,8 @@ public class Stages {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages/recherche")
     public Response rechercheStages(Stage type) {
+
+
         return null;
     }
 
@@ -166,6 +168,15 @@ public class Stages {
     public Response getById(String id) {
         Stage stage = this.stageDAO.get(new ObjectId(id));
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    @DELETE()
+    @Path("/stages")
+    public Response deleteAll(){
+        Datastore datastore = this.stageDAO.getDatastore();
+        Query<Stage> query =  datastore.createQuery(Stage.class);
+        datastore.delete(query);
+        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 
 }
