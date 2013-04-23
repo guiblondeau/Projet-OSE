@@ -3,6 +3,7 @@ package fr.emn.ose.stage;
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
+import com.github.jmkgreen.morphia.query.Query;
 import com.sun.corba.se.pept.transport.ContactInfo;
 
 import javax.ws.rs.*;
@@ -104,19 +105,14 @@ public class Stages {
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/stages/{id}")
     public Response editStage(@PathParam("id") String id, Stage stage){
-        List<Stage> toRet = new ArrayList<Stage>();
+
         try {
-            toRet = ConnectionDataStore.createDataStore().find(Stage.class).asList();
+            StageDAO stageDAO = new StageDAO( ConnectionDataStore.getMorphiaObject(),ConnectionMongo.getConnection());
+            stageDAO.update(stage);
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        ObjectId Id = new ObjectId(id);
-        for(int i=0; i<toRet.size(); i++){
-            if(toRet.get(i).getId()==Id){
-                toRet.set(i,stage);
-                break;
-            }
-        }
+
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
 
@@ -130,9 +126,8 @@ public class Stages {
     public Response deleteStage(@PathParam("id") String id){
         try {
             Datastore ds = ConnectionDataStore.createDataStore();
-            Stage stage = ds.get(Stage.class, new ObjectId(id));
 
-            ds.delete(stage);
+            ds.delete(Stage.class, new ObjectId(id));
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 public class Stage {
 
     @Id
-    private ObjectId id;
+    private ObjectId id = new ObjectId();
 
     private String pays, adresse, domaine, intitule, description, salaire, option, avantages, langue;
 
@@ -106,4 +106,6 @@ public class Stage {
     public void setLangue(String langue) {
         this.langue = langue;
     }
+
+
 }

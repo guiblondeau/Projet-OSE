@@ -15,10 +15,20 @@ import java.net.UnknownHostException;
  */
 public class ConnectionDataStore {
 
+    public final static String dbName = "essai";
+
     public static Datastore createDataStore() throws UnknownHostException {
+
+
         Mongo db = ConnectionMongo.getConnection();
         Morphia morphia = new Morphia();
         morphia.map(Stage.class);
-        return morphia.createDatastore(db, "essai");
+        return morphia.createDatastore(db, dbName);
+    }
+
+    public static Morphia getMorphiaObject(){
+        Morphia morphia = new Morphia();
+        morphia.map(Stage.class);
+        return morphia;
     }
 }

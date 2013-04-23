@@ -33,7 +33,7 @@
 
     Request
     #+BEGIN_SRC example
-    GET stages/getAll
+    GET stages
     #+END_SRC
 
     Response:
