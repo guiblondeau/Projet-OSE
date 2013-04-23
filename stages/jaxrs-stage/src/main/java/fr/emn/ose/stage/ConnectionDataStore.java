@@ -26,7 +26,7 @@ public class ConnectionDataStore {
         return morphia.createDatastore(db, dbName);
     }
 
-    public static Morphia getMorphiaObject(){
+    public static Morphia getMorphiaObject() {
         Morphia morphia = new Morphia();
         morphia.map(Stage.class);
         return morphia;

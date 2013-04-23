@@ -18,13 +18,13 @@ import java.beans.PropertyDescriptor;
  * Time: 15:05
  * To change this template use File | Settings | File Templates.
  */
-public class StageDAO extends BasicDAO<Stage, ObjectId>{
+public class StageDAO extends BasicDAO<Stage, ObjectId> {
 
-    public StageDAO(Morphia morphia, Mongo mongo){
+    public StageDAO(Morphia morphia, Mongo mongo) {
         super(mongo, morphia, ConnectionDataStore.dbName);
     }
 
-    public Stage update(Stage stage){
+    public Stage update(Stage stage) {
 
         // The query getting the entity to update
         Query<Stage> updateQuery = getDatastore().createQuery(Stage.class).field("id").equal(stage.getId());
@@ -37,7 +37,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId>{
         PropertyDescriptor[] propertyDescriptors = PropertyUtils.getPropertyDescriptors(stage);
 
         // Creation de l'objet updateOperations
-        for(int i=0;i<propertyDescriptors.length;i++){
+        for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
             String attributeName = propertyDescriptor.getName();
             updateOperations = updateOperations.set(attributeName, propertyDescriptor.getValue(attributeName));
@@ -48,7 +48,6 @@ public class StageDAO extends BasicDAO<Stage, ObjectId>{
 
         return this.get(stage.getId());
     }
-
 
 
 }
