@@ -1,8 +1,3 @@
-//Useful links:
-// http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
-// http://code.google.com/apis/maps/documentation/javascript/services.html#Geocoding
-// http://jqueryui.com/demos/autocomplete/#remote-with-cache
-      
 var geocoder;
 var map;
 var marker;
