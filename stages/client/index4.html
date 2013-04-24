@@ -55,7 +55,7 @@
 						{{#book}}
 						<div class = "accordion-group">
 							<div class="accordion-heading">
-								<a onclick="test({{id}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+								<a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
 									{{intitule}} 
 								</a>
 							</div>
@@ -197,15 +197,21 @@
 
 <script type="text/javascript">
 $('.selectpicker').selectpicker();
-var test = function (a){
+var test = function (a, lat, lng){
 	console.log("cliqué ! "+a);
-	map = initializeMap(a);
+	map = initializeMap(a, lat, lng);
+	var marker = new google.maps.Marker({
+    	map: map,
+    	draggable: true
+	});
+	var location = new google.maps.LatLng(lat, lng);
+    marker.setPosition(location);
+    map.setCenter(location);
 }
-var latlng = new google.maps.LatLng(47.2820923, -1.5198500);
-function initializeMap(a) {
+function initializeMap(a, lat, lng) {
 	var myOptions = {
 		zoom: 15,
-		center: latlng,
+		center: new google.maps.LatLng(lat, lng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	return new google.maps.Map($('#map-canvas'+a)[0], myOptions);
