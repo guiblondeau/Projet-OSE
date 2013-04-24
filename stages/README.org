@@ -68,7 +68,7 @@
 
     Request:
     #+BEGIN_SRC example
-    POST stagess/addStage
+    POST stage
     ...
 
     {
@@ -119,7 +119,7 @@
 
     Request:
     #+BEGIN_SRC example
-    PUT stages/editStage/{stageID}
+    PUT stages/{id}
     ...
 
     {
@@ -143,17 +143,17 @@
     }
     #+END_SRC
 
-**** TODO See more about ETag on updating contacts
+**** TODO See more about ETag on updating internships
      [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
 
-*** Deleting contacts
-    To delete a contact, send a ~DELETE~ request to the contact's edit
+*** Deleting internship
+    To delete an internship, send a ~DELETE~ request to the internship's delete
     URL. Upon success, the server responds with an ~HTTP 200 OK~
     status code.
 
     Request:
     #+BEGIN_SRC example
-    DELETE contacts/editContact/{contactID}
+    DELETE stage/{id}
     #+END_SRC
 
     Response:
@@ -161,9 +161,26 @@
     HTTP/1.1 200 OK
     #+END_SRC
 
-**** TODO See more about ETag on updating contacts
+**** TODO See more about ETag on deleting contacts
      [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
 
+	 *** Deleting internships
+    To delete all the internships, send a ~DELETE~ request to the internship's delete
+    URL. Upon success, the server responds with an ~HTTP 200 OK~
+    status code.
+
+    Request:
+    #+BEGIN_SRC example
+    DELETE stages
+    #+END_SRC
+
+    Response:
+    #+BEGIN_SRC example
+    HTTP/1.1 200 OK
+    #+END_SRC
+
+**** TODO See more about ETag on deleting contacts
+     [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
 ** JAVA/JAX-RS implementation
 
 *** JAX-RS Technology
