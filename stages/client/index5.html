@@ -19,11 +19,30 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="brand">Connecté en tant que : test</div>
+			<form class="navbar-form pull-left">
+				<button class="btn" align = "center" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
+				<select id="domaine">
+					<option>Informatique</option>
+					<option>SSG</option>
+					<option>Automatique</option>
+					<option>Productique</option>
+					<option>Energie-Environnement</option>
+					<option>Nucléaire</option>
+				</select>
+				<select  id="option">
+					<option class = "well">GSI</option>
+					<option>OMTI</option>
+					<option>GIPAD</option>
+				</select>
+			</form>
 		</div>
 	</div>
 	<div style = "height : 50px">
 	</div>
-	<div id="page-principale">
+	<div id="page-principale" class="container-fluid">
+		<div class="well">
+			<h2 style="text-align:center">Annuaire de Stages</h2>
+		</div>
 		<!--<div id="barrerecherche" class="well">
 			<button class="btn" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
 			<div id="boutons" align="center">
@@ -46,11 +65,23 @@
 				<a href="#" onclick= "test()" id="a">Recherche avancée</a>
 			</div>
 		</div>
-		-->
+	-->
+	<div id="cote" class="span2">
+		<div class="well">
+			<h3 style="text-align:center">Recherche</h3>
+		</div>
+		<div align="center">
+			<button class="btn" align = "center" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
+		</div>
+	</div>
+	<div id = "principale" class = "span10">
 		<div class = "row">
 			<div class = "span1" >
 			</div>
-			<div class = "span10">
+			<div class = "span8">
+				<div class="well">
+					<h3 style="text-align:center">Stages</h3>
+				</div>
 				<div type="text/template">
 					<div class = "accordion" id = "accordion">
 						{{#book}}
@@ -93,98 +124,98 @@
 			</div>
 			<div class = "span1">
 			</div>
-
-		</div>
-	</div>	
-
-	<div id="add-stage" hidden = "true">
-		<div class="breadcrumb">
-			<h2 style="text-align:center">Ajout de stage</h2>
-		</div>
-		<div class="span3">
-		</div>
-		<div class="span6">
-			<form class="form-horizontal" align="center">
-				<div class="control-group">
-					<label class="control-label" for="inputEmail">Intitule</label>
-					<div class="controls">
-						<input type="text" id="intitule" placeholder="Text input">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputEntreprise">Entreprise</label>
-					<div class="controls">
-						<input type="text" id="entreprise" placeholder="Text input"></input>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputDomaine">Domaine</label>
-					<div class="controls">
-						<select class="selectpicker" id="domaine">
-							<option>Informatique</option>
-							<option>SSG</option>
-							<option>Automatique</option>
-							<option>Productique</option>
-							<option>Energie-Environnement</option>
-							<option>Nucléaire</option>
-						</select>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputOption">Option</label>
-					<div class="controls">
-						<select class="selectpicker" id="option">
-							<option>GSI</option>
-							<option>OMTI</option>
-							<option>GIPAD</option>
-						</select>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputDescription">Description</label>
-					<div class="controls">
-						<textarea rows="3" id="description" placeholder="Text input"></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputAdresse">Adresse</label>
-					<div class="controls">
-						<input type="text" id="adresse" placeholder="Text input">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputPays">Pays</label>
-					<div class="controls">
-						<input type="text" id="pays" placeholder="Text input">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputSalaire">Salaire</label>
-					<div class="controls">
-						<input type="text" id="salaire" placeholder="Text input">
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputAvantages">Avantages</label>
-					<div class="controls">
-						<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="inputLangue">Langue</label>
-					<div class="controls">
-						<input type="text" id="langue" placeholder="Text input">
-					</div>
-				</div>
-			</form>
-			<div align = "center">
-				<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
-				<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
-			</div>
-		</div>
-		<div class="span3">
 		</div>
 	</div>
+</div>	
+
+<div id="add-stage" hidden = "true">
+	<div class="breadcrumb">
+		<h2 style="text-align:center">Ajout de stage</h2>
+	</div>
+	<div class="span3">
+	</div>
+	<div class="span6">
+		<form class="form-horizontal" align="center">
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Intitule</label>
+				<div class="controls">
+					<input type="text" id="intitule" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputEntreprise">Entreprise</label>
+				<div class="controls">
+					<input type="text" id="entreprise" placeholder="Text input"></input>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputDomaine">Domaine</label>
+				<div class="controls">
+					<select class="selectpicker" id="domaine">
+						<option>Informatique</option>
+						<option>SSG</option>
+						<option>Automatique</option>
+						<option>Productique</option>
+						<option>Energie-Environnement</option>
+						<option>Nucléaire</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputOption">Option</label>
+				<div class="controls">
+					<select class="selectpicker" id="option">
+						<option>GSI</option>
+						<option>OMTI</option>
+						<option>GIPAD</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputDescription">Description</label>
+				<div class="controls">
+					<textarea rows="3" id="description" placeholder="Text input"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAdresse">Adresse</label>
+				<div class="controls">
+					<input type="text" id="adresse" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPays">Pays</label>
+				<div class="controls">
+					<input type="text" id="pays" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputSalaire">Salaire</label>
+				<div class="controls">
+					<input type="text" id="salaire" placeholder="Text input">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputAvantages">Avantages</label>
+				<div class="controls">
+					<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputLangue">Langue</label>
+				<div class="controls">
+					<input type="text" id="langue" placeholder="Text input">
+				</div>
+			</div>
+		</form>
+		<div align = "center">
+			<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
+			<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
+		</div>
+	</div>
+	<div class="span3">
+	</div>
+</div>
 </div>
 <script src = "js/jQuery.js"></script>
 <script src = "js/bootstrap/js/bootstrap.js"></script>
@@ -202,12 +233,12 @@ var test = function (a, lat, lng){
 	console.log("cliqué ! "+a);
 	map = initializeMap(a, lat, lng);
 	var marker = new google.maps.Marker({
-    	map: map,
-    	draggable: true
+		map: map,
+		draggable: true
 	});
 	var location = new google.maps.LatLng(lat, lng);
-    marker.setPosition(location);
-    map.setCenter(location);
+	marker.setPosition(location);
+	map.setCenter(location);
 }
 function initializeMap(a, lat, lng) {
 	var myOptions = {
