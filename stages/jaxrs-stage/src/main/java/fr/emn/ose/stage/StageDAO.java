@@ -24,30 +24,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         super(mongo, morphia, ConnectionDataStore.dbName);
     }
 
-    public Stage update(Stage stage) {
 
-        // The query getting the entity to update
-        Query<Stage> updateQuery = getDatastore().createQuery(Stage.class).field("id").equal(stage.getId());
-
-
-        // The UpdateOperations represents what's to be modified
-        UpdateOperations<Stage> updateOperations = getDatastore().createUpdateOperations(Stage.class);
-
-        // Représente les variables d'instance de mon instance de Stage
-        PropertyDescriptor[] propertyDescriptors = PropertyUtils.getPropertyDescriptors(stage);
-
-        // Creation de l'objet updateOperations
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
-            String attributeName = propertyDescriptor.getName();
-            updateOperations = updateOperations.set(attributeName, propertyDescriptor.getValue(attributeName));
-        }
-
-        // Updating the result of the query with the UpdateOperations object :
-        getDatastore().update(updateQuery, updateOperations);
-
-        return this.get(stage.getId());
-    }
 
 
 

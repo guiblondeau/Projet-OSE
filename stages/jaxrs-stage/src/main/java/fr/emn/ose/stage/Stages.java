@@ -109,9 +109,9 @@ public class Stages {
     @PUT()
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/stages/{id}")
+    @Path("/stage/{id}")
     public Response editStage(@PathParam("id") String id, Stage stage) {
-        this.stageDAO.update(stage);
+        this.stageDAO.save(stage);
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
 

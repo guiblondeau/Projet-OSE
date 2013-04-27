@@ -3,7 +3,11 @@ package fr.emn.ose.stage;
 import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
+import fr.emn.ose.serialization.ObjectIdDeserializer;
+import fr.emn.ose.serialization.ObjectIdSerializer;
 import org.bson.types.ObjectId;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -19,18 +23,20 @@ import javax.ws.rs.core.MediaType;
  * To change this template use File | Settings | File Templates.
  */
 
+
 @Entity("stage")
 public class Stage {
 
     @Id
-    private ObjectId id = new ObjectId();
+    private ObjectId id;
 
     private String pays, adresse, domaine, intitule, description, salaire, option, avantages, langue;
 
+    @JsonSerialize(using =  ObjectIdSerializer.class)
     public ObjectId getId() {
         return id;
     }
-
+    @JsonDeserialize(using = ObjectIdDeserializer.class)
     public void setId(ObjectId id) {
         this.id = id;
     }
