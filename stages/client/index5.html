@@ -43,179 +43,152 @@
 		<div class="well">
 			<h2 style="text-align:center">Annuaire de Stages</h2>
 		</div>
-		<!--<div id="barrerecherche" class="well">
-			<button class="btn" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
-			<div id="boutons" align="center">
-				<select class="selectpicker" id="domaine">
-					<option>Informatique</option>
-					<option>SSG</option>
-					<option>Automatique</option>
-					<option>Productique</option>
-					<option>Energie-Environnement</option>
-					<option>Nucléaire</option>
-				</select>
-				<select class="selectpicker" id="option">
-					<option>GSI</option>
-					<option>OMTI</option>
-					<option>GIPAD</option>
-				</select>
-				<input type="text" id="recherchePays" placeholder="Pays">
+		<div id="cote" class="span2" >
+			<div class="well">
+				<h3 style="text-align:center">Recherche</h3>
 			</div>
-			<div align="right">
-				<a href="#" onclick= "test()" id="a">Recherche avancée</a>
+			<div align="center">
+				<button class="btn" align = "center" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
 			</div>
 		</div>
-	-->
-	<div id="cote" class="span2">
-		<div class="well">
-			<h3 style="text-align:center">Recherche</h3>
-		</div>
-		<div align="center">
-			<button class="btn" align = "center" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
-		</div>
-	</div>
-	<div id = "principale" class = "span10">
-		<div class = "row">
-			<div class = "span1" >
-			</div>
-			<div class = "span8">
-				<div class="well">
-					<h3 style="text-align:center">Stages</h3>
-				</div>
-				<div type="text/template">
-					<div class = "accordion" id = "accordion">
-						{{#book}}
-						<div class = "accordion-group">
-							<div class="accordion-heading">
-								<a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
-									{{intitule}} 
-								</a>
-							</div>
-							<div id="collapse{{id}}" class="accordion-body collapse ">
-								<div class="accordion-inner">
-									<div class = "span3">
-										Entreprise : {{entreprise}}
-										<br/>
-										Option : {{option}}
-										<br/>
-										Adresse : {{adresse}}
-										<br/>
-										Pays : {{pays}}
-										<br/>
-										Salaire : {{salaire}}
-										<br/>
-										Description : {{description}}
-									</div>
-									<div class="span3">
-										<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
-									</div>
-									<div class="span3">
-										<div style = "height : 150px"> Note : 22/20</div>
-										<div style = "height : 50px">
-											<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+		<div id = "principale" class = "span10">
+			<div class = "row">
+				<div class = "span">
+					<div class="well">
+						<h3 style="text-align:center">Stages</h3>
+					</div>
+					<div type="text/template">
+						<div class = "accordion" id = "accordion">
+							{{#book}}
+							<div class = "accordion-group">
+								<div class="accordion-heading">
+									<a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+										{{intitule}} 
+									</a>
+								</div>
+								<div id="collapse{{id}}" class="accordion-body collapse ">
+									<div class="accordion-inner">
+										<div class = "span2">
+											Entreprise : {{entreprise}}
+											<br/>
+											Option : {{option}}
+											<br/>
+											Adresse : {{adresse}}
+											<br/>
+											Pays : {{pays}}
+											<br/>
+											Salaire : {{salaire}}
+											<br/>
+											Description : {{description}}
+										</div>
+										<div class="span4">
+											<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
+										</div>
+										<div class="span3">
+											<div style = "height : 150px"> Note : 22/20</div>
+											<div style = "height : 50px">
+												<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							{{/book}}
 						</div>
-						{{/book}}
 					</div>
 				</div>
 			</div>
-			<div class = "span1">
-			</div>
 		</div>
-	</div>
-</div>	
+	</div>	
 
-<div id="add-stage" hidden = "true">
-	<div class="breadcrumb">
-		<h2 style="text-align:center">Ajout de stage</h2>
-	</div>
-	<div class="span3">
-	</div>
-	<div class="span6">
-		<form class="form-horizontal" align="center">
-			<div class="control-group">
-				<label class="control-label" for="inputEmail">Intitule</label>
-				<div class="controls">
-					<input type="text" id="intitule" placeholder="Text input">
+	<div id="add-stage" hidden = "true">
+		<div class="breadcrumb">
+			<h2 style="text-align:center">Ajout de stage</h2>
+		</div>
+		<div class="span3">
+		</div>
+		<div class="span6">
+			<form class="form-horizontal" align="center">
+				<div class="control-group">
+					<label class="control-label" for="inputEmail">Intitule</label>
+					<div class="controls">
+						<input type="text" id="intitule" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputEntreprise">Entreprise</label>
-				<div class="controls">
-					<input type="text" id="entreprise" placeholder="Text input"></input>
+				<div class="control-group">
+					<label class="control-label" for="inputEntreprise">Entreprise</label>
+					<div class="controls">
+						<input type="text" id="entreprise" placeholder="Text input"></input>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputDomaine">Domaine</label>
-				<div class="controls">
-					<select class="selectpicker" id="domaine">
-						<option>Informatique</option>
-						<option>SSG</option>
-						<option>Automatique</option>
-						<option>Productique</option>
-						<option>Energie-Environnement</option>
-						<option>Nucléaire</option>
-					</select>
+				<div class="control-group">
+					<label class="control-label" for="inputDomaine">Domaine</label>
+					<div class="controls">
+						<select class="selectpicker" id="domaine">
+							<option>Informatique</option>
+							<option>SSG</option>
+							<option>Automatique</option>
+							<option>Productique</option>
+							<option>Energie-Environnement</option>
+							<option>Nucléaire</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputOption">Option</label>
-				<div class="controls">
-					<select class="selectpicker" id="option">
-						<option>GSI</option>
-						<option>OMTI</option>
-						<option>GIPAD</option>
-					</select>
+				<div class="control-group">
+					<label class="control-label" for="inputOption">Option</label>
+					<div class="controls">
+						<select class="selectpicker" id="option">
+							<option>GSI</option>
+							<option>OMTI</option>
+							<option>GIPAD</option>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputDescription">Description</label>
-				<div class="controls">
-					<textarea rows="3" id="description" placeholder="Text input"></textarea>
+				<div class="control-group">
+					<label class="control-label" for="inputDescription">Description</label>
+					<div class="controls">
+						<textarea rows="3" id="description" placeholder="Text input"></textarea>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputAdresse">Adresse</label>
-				<div class="controls">
-					<input type="text" id="adresse" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputAdresse">Adresse</label>
+					<div class="controls">
+						<input type="text" id="adresse" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPays">Pays</label>
-				<div class="controls">
-					<input type="text" id="pays" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputPays">Pays</label>
+					<div class="controls">
+						<input type="text" id="pays" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputSalaire">Salaire</label>
-				<div class="controls">
-					<input type="text" id="salaire" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputSalaire">Salaire</label>
+					<div class="controls">
+						<input type="text" id="salaire" placeholder="Text input">
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputAvantages">Avantages</label>
-				<div class="controls">
-					<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+				<div class="control-group">
+					<label class="control-label" for="inputAvantages">Avantages</label>
+					<div class="controls">
+						<textarea rows="3" id="avantages" placeholder="Text input"></textarea>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputLangue">Langue</label>
-				<div class="controls">
-					<input type="text" id="langue" placeholder="Text input">
+				<div class="control-group">
+					<label class="control-label" for="inputLangue">Langue</label>
+					<div class="controls">
+						<input type="text" id="langue" placeholder="Text input">
+					</div>
 				</div>
+			</form>
+			<div align = "center">
+				<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
+				<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
 			</div>
-		</form>
-		<div align = "center">
-			<button class ="btn btn-success" id="add-validation"><i class ="icon-ok"></i> Valider ce stage</button>
-			<button class="btn btn-danger" id = "add-deletion"><i class ="icon-remove"></i> Supprimer ce stage</button>
+		</div>
+		<div class="span3">
 		</div>
 	</div>
-	<div class="span3">
-	</div>
-</div>
 </div>
 <script src = "js/jQuery.js"></script>
 <script src = "js/bootstrap/js/bootstrap.js"></script>
