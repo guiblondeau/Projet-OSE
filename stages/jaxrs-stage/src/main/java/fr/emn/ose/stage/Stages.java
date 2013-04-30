@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -147,14 +148,14 @@ public class Stages {
      * @param type
      * @return
      */
-    @GET()
+    @POST()
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages/recherche")
-    public Response rechercheStages(Stage type) {
-
-
-        return null;
+    public Response rechercheStages(Stage type, HashMap<String, SearchParameters.LOGICAL_LINK> logical_link) {
+        SearchParameters searchParameters = new SearchParameters(logical_link);
+        List<Stage> stages = stageDAO.find(type, searchParameters);
+       return Response.ok(stages).header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
@@ -178,5 +179,6 @@ public class Stages {
         datastore.delete(query);
         return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
+
 
 }
