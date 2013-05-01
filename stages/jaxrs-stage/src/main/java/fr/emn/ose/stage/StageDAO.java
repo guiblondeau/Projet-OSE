@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 
 
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,17 +33,25 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         Query<Stage> query = getDatastore().createQuery(Stage.class);
 
         if (parameters.getOr().size() != 0) {
-            Criteria prec = queryChamp(parameters.getOr().get(0), stage, query);
-            Criteria suiv;
-            for (int i = 1; i < parameters.getOr().size(); i++) {
-                suiv = queryChamp(parameters.getOr().get(i), stage, query);
-                prec = query.or(suiv, prec);
-            }
+            List<Criteria> criterias = new ArrayList<Criteria>();
+           for(String champ : parameters.getOr()){
+              criterias.add(queryChamp(champ, stage, query));
+           }
+
+            query.or((Criteria[])criterias.toArray());
         }
 
+        if(parameters.getAnd().size() !=0){
+            List<Criteria> criterias = new ArrayList<Criteria>();
+            for(String champ : parameters.getAnd()){
+                criterias.add(queryChamp(champ, stage, query));
+            }
 
+            query.and((Criteria[])criterias.toArray());
 
-        return;
+        }
+
+        return query.asList();
 
     }
 
