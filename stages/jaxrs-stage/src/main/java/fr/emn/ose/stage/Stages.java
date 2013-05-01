@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.emn.ose.queries.QueryException;
 import org.bson.types.ObjectId;
 
 /**
@@ -145,17 +146,30 @@ public class Stages {
     }
 
     /**
-     * @param type
-     * @return
+     * @param wrapper The object wrapping a Stage and SearchParameters object.
+     * @return The result of the research : a list of internships
      */
     @POST()
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages/recherche")
-    public Response rechercheStages(Stage type, HashMap<String, SearchParameters.LOGICAL_LINK> logical_link) {
-        SearchParameters searchParameters = new SearchParameters(logical_link);
-        List<Stage> stages = stageDAO.find(type, searchParameters);
-       return Response.ok(stages).header("Access-Control-Allow-Origin", "*").build();
+    public Response rechercheStages(WrapperRecherche wrapper) {
+
+
+        List<Stage> stages = new ArrayList<Stage>();
+
+
+        SearchParameters parameters = (wrapper.getSearchParameters() != null) ?
+                wrapper.getSearchParameters() : SearchParameters.getDefault();
+
+        try {
+            stages = stageDAO.find(wrapper.getStage(), parameters);
+        } catch (QueryException e) {
+            stages = new ArrayList<Stage>();
+        }
+
+
+        return Response.ok(stages).header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
@@ -173,13 +187,12 @@ public class Stages {
 
     @DELETE()
     @Path("/stages")
-    public Response deleteAll(){
+    public Response deleteAll() {
         Datastore datastore = this.stageDAO.getDatastore();
-        Query<Stage> query =  datastore.createQuery(Stage.class);
+        Query<Stage> query = datastore.createQuery(Stage.class);
         datastore.delete(query);
         return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
-
 
 
 }

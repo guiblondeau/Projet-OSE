@@ -17,6 +17,6 @@ public class LangueQuery extends StageQuery {
      */
     public LangueQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.equal(stage.getLangue());
+        this.criteria = fieldEnd.equal((stage.getLangue()!=null)?stage.getLangue():"");
     }
 }

@@ -16,6 +16,6 @@ public class SalaireQuery extends StageQuery {
      */
     public SalaireQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.greaterThanOrEq(stage.getSalaire());
+        this.criteria = fieldEnd.greaterThanOrEq((stage.getSalaire()!=null)?stage.getSalaire():"");
     }
 }

@@ -18,7 +18,7 @@ public class PaysQuery extends StageQuery {
      */
     public PaysQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.containsIgnoreCase(stage.getPays());
+        this.criteria = fieldEnd.containsIgnoreCase((stage.getPays()!=null)?stage.getPays():"");
 
     }
 

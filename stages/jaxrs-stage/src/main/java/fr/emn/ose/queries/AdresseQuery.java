@@ -16,6 +16,6 @@ public class AdresseQuery extends StageQuery {
      */
     public AdresseQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.contains(stage.getAdresse());
+        this.criteria = fieldEnd.contains((stage.getAdresse()!=null)?stage.getAdresse():"");
     }
 }

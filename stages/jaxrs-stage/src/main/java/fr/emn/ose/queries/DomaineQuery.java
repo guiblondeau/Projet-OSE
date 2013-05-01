@@ -18,6 +18,6 @@ public class DomaineQuery extends StageQuery{
      */
     public DomaineQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.equal(stage.getDomaine());
+        this.criteria = fieldEnd.equal((stage.getDomaine()!=null)?stage.getDomaine():"");
     }
 }

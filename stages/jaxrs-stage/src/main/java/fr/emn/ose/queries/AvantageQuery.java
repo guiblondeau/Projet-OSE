@@ -17,6 +17,6 @@ public class AvantageQuery extends StageQuery {
      */
     public AvantageQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.containsIgnoreCase(stage.getAvantages());
+        this.criteria = fieldEnd.containsIgnoreCase((stage.getAvantages()!=null)?stage.getAvantages():"");
     }
 }

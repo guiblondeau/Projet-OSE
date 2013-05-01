@@ -16,6 +16,6 @@ public class DescriptionQuery extends StageQuery {
      */
     public DescriptionQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.containsIgnoreCase(stage.getDescription());
+        this.criteria = fieldEnd.containsIgnoreCase((stage.getDescription()!=null)?stage.getDescription():"");
     }
 }

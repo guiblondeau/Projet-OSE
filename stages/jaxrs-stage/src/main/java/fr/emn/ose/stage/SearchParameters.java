@@ -1,52 +1,58 @@
 package fr.emn.ose.stage;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Raoul
- * Date: 30/04/13
- * Time: 17:20
+ * Date: 01/05/13
+ * Time: 12:16
  * To change this template use File | Settings | File Templates.
  */
 public class SearchParameters {
 
-    public enum LOGICAL_LINK {AND, OR};
+    private List<String> and, or;
 
-    private HashMap<String, LOGICAL_LINK> table;
-
-    public SearchParameters() {
-        this.table = new HashMap<String, LOGICAL_LINK>();
-
-        this.table.put("pays", LOGICAL_LINK.AND);
-        this.table.put("adresse", LOGICAL_LINK.AND);
-        this.table.put("domaine", LOGICAL_LINK.AND);
-        this.table.put("intitule", LOGICAL_LINK.AND);
-        this.table.put("description", LOGICAL_LINK.AND);
-        this.table.put("salaire", LOGICAL_LINK.AND);
-        this.table.put("option", LOGICAL_LINK.AND);
-        this.table.put("avantage", LOGICAL_LINK.AND);
-        this.table.put("langue", LOGICAL_LINK.AND);
-
+    public SearchParameters(){
+        this.and = new ArrayList<String>();
+        this.or = new ArrayList<String>();
     }
 
-    public SearchParameters(HashMap<String, LOGICAL_LINK> hash){
-        this.table = new HashMap<String, LOGICAL_LINK>(hash);
+    public List<String> getAnd() {
+        return and;
     }
 
-    public void setLogicalLink(String champ, LOGICAL_LINK logical_link){
-        this.table.put(champ,logical_link);
+    public void setAnd(List<String> and) {
+        this.and = and;
     }
 
-    public LOGICAL_LINK getLogicalLink(String champ){
-        return this.table.get(champ);
+    public List<String> getOr() {
+        return or;
     }
 
-    public HashMap<String, LOGICAL_LINK> getTable(){
-        return this.table;
+    public void setOr(List<String> or) {
+        this.or = or;
     }
 
+    public static SearchParameters getDefault(){
+        List<String> and = new ArrayList<String>();
+        List<String> or = new ArrayList<String>();
+        or.add("salaire");
+        or.add("option");
+        or.add("intitule");
+        or.add("description");
+        or.add("adresse");
+        or.add("avantage");
 
+        and.add("pays");
+        and.add("domaine");
+        and.add("langue");
 
+        SearchParameters toRet = new SearchParameters();
+        toRet.setAnd(and);
+        toRet.setOr(or);
 
+        return toRet;
+    }
 }

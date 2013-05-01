@@ -18,6 +18,6 @@ public class IntituleQuery extends StageQuery {
      */
     public IntituleQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.containsIgnoreCase(stage.getIntitule());
+        this.criteria = fieldEnd.containsIgnoreCase((stage.getIntitule()!=null)?stage.getIntitule():"");
     }
 }

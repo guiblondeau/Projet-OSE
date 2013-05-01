@@ -16,6 +16,6 @@ public class OptionQuery extends StageQuery {
      */
     public OptionQuery(String name, Query query, Stage stage) {
         super(name, query);
-        this.criteria = fieldEnd.equal(stage.getOption());
+        this.criteria = fieldEnd.equal((stage.getOption()!=null)?stage.getOption():"");
     }
 }

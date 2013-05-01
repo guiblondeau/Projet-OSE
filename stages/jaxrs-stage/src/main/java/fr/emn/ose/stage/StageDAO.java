@@ -6,12 +6,9 @@ import com.github.jmkgreen.morphia.query.*;
 import com.mongodb.Mongo;
 import fr.emn.ose.queries.*;
 import fr.emn.ose.queries.QueryException;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.bson.types.ObjectId;
 
 
-import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         super(mongo, morphia, ConnectionDataStore.dbName);
     }
 
-    public List<Stage> find(Stage stage, SearchParameters2 parameters) throws QueryException {
+    public List<Stage> find(Stage stage, SearchParameters parameters) throws QueryException {
         List<Stage> stages;
         Query<Stage> query = getDatastore().createQuery(Stage.class);
 
@@ -47,7 +44,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
                 criterias.add(queryChamp(champ, stage, query));
             }
 
-            query.and((Criteria[])criterias.toArray());
+            query.and((Criteria[]) criterias.toArray());
 
         }
 
