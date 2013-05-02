@@ -16,8 +16,19 @@ public class DomaineQuery extends StageQuery{
     /**
      * @param name The name of the field
      */
-    public DomaineQuery(String name, Query query, Stage stage) {
-        super(name, query);
-        this.criteria = fieldEnd.equal((stage.getDomaine()!=null)?stage.getDomaine():"");
+    public DomaineQuery(String name, Query query, Stage stage) throws ChampNullException {
+        super(name, query, stage);
     }
+
+    @Override
+    protected String getChamp() {
+        return this.stage.getDomaine();
+    }
+
+    @Override
+    protected void setCriteria() {
+        this.criteria = fieldEnd.equal(this.getChamp());
+    }
+
+
 }

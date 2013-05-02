@@ -16,8 +16,17 @@ public class IntituleQuery extends StageQuery {
     /**
      * @param name The name of the field
      */
-    public IntituleQuery(String name, Query query, Stage stage) {
-        super(name, query);
-        this.criteria = fieldEnd.containsIgnoreCase((stage.getIntitule()!=null)?stage.getIntitule():"");
+    public IntituleQuery(String name, Query query, Stage stage) throws ChampNullException {
+        super(name, query, stage);
+    }
+
+    @Override
+    protected String getChamp() {
+        return this.stage.getIntitule();
+    }
+
+    @Override
+    protected void setCriteria() {
+        this.criteria = fieldEnd.containsIgnoreCase(this.getChamp());
     }
 }

@@ -14,8 +14,19 @@ public class AdresseQuery extends StageQuery {
     /**
      * @param name The name of the field
      */
-    public AdresseQuery(String name, Query query, Stage stage) {
-        super(name, query);
-        this.criteria = fieldEnd.contains((stage.getAdresse()!=null)?stage.getAdresse():"");
+    public AdresseQuery(String name, Query query, Stage stage) throws ChampNullException {
+        super(name, query, stage);
     }
+
+    @Override
+    protected String getChamp() {
+        return this.stage.getAdresse();
+    }
+
+    @Override
+    protected void setCriteria() {
+        this.criteria = fieldEnd.contains(this.getChamp());
+    }
+
+
 }

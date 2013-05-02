@@ -15,8 +15,17 @@ public class LangueQuery extends StageQuery {
     /**
      * @param name The name of the field
      */
-    public LangueQuery(String name, Query query, Stage stage) {
-        super(name, query);
-        this.criteria = fieldEnd.equal((stage.getLangue()!=null)?stage.getLangue():"");
+    public LangueQuery(String name, Query query, Stage stage) throws ChampNullException {
+        super(name, query, stage);
+    }
+
+    @Override
+    protected String getChamp() {
+        return this.stage.getLangue();
+    }
+
+    @Override
+    protected void setCriteria() {
+         this.criteria = this.fieldEnd.equal(this.getChamp());
     }
 }

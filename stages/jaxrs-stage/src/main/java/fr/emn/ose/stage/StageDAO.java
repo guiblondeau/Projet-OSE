@@ -30,30 +30,39 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         List<Stage> stages;
         Query<Stage> query = getDatastore().createQuery(Stage.class);
 
+
         if (parameters.getOr().size() != 0) {
             List<Criteria> criterias = new ArrayList<Criteria>();
            for(String champ : parameters.getOr()){
-              criterias.add(queryChamp(champ, stage, query));
+
+               try {
+                   criterias.add(queryChamp(champ, stage, query));
+               } catch (ChampNullException e) {
+
+               }
            }
             Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria[].class);
             query.or(criteriaArray);
         }
+
+        /*
 
         if(parameters.getAnd().size() !=0){
             List<Criteria> criterias = new ArrayList<Criteria>();
             for(String champ : parameters.getAnd()){
                 criterias.add(queryChamp(champ, stage, query));
             }
-
-            query.and((Criteria[]) criterias.toArray());
+            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria[].class);
+            query.and(criteriaArray);
 
         }
+        */
 
         return query.asList();
 
     }
 
-    private Criteria queryChamp(String champ, Stage stage, Query<Stage> query) throws QueryException {
+    private Criteria queryChamp(String champ, Stage stage, Query<Stage> query) throws QueryException, ChampNullException {
 
         if (champ.equals(Models.PAYS.toString())) {
             return (new PaysQuery(champ, query, stage)).getCriteria();
