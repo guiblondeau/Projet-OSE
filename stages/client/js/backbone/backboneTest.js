@@ -22,7 +22,7 @@
 	//collection
 	var Stages = Backbone.Collection.extend({
 		model : Stage,
-
+		url : "http://localhost:8080/jaxrs-stage/stages"
 	});
 
 	//vue des stages
@@ -37,10 +37,12 @@
 		initialize: function(){
 			//_.bindAll(this, render);
 			stageEnCours = -1;
-         			$('#accordion').empty();
-          			$('#accordion').append(accor);
-          			var val= collection.toJSON();
-          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+         	$('#accordion').empty();
+          	$('#accordion').append(accor);
+          	var val= collection.toJSON();
+          	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+          	collection.fetch();
+          	console.log(collection);
 		},
 
 		addStage: function(){
@@ -86,6 +88,7 @@
 		render : function(){
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
+
 		},
 
 		deleteStage : function(){
