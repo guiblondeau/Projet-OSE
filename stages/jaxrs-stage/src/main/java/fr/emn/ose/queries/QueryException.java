@@ -8,4 +8,14 @@ package fr.emn.ose.queries;
  * To change this template use File | Settings | File Templates.
  */
 public class QueryException extends Exception {
+
+    private String message;
+
+    public QueryException(String message){
+        this.message = message;
+    }
+
+    public String toString(){
+        return "QueryException because of String "+this.message;
+    }
 }

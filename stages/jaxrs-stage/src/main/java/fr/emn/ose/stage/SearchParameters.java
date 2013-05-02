@@ -43,7 +43,7 @@ public class SearchParameters {
         or.add("intitule");
         or.add("description");
         or.add("adresse");
-        or.add("avantage");
+        or.add("avantages");
 
         and.add("pays");
         and.add("domaine");

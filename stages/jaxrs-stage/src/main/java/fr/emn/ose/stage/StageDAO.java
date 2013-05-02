@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,8 +35,8 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
            for(String champ : parameters.getOr()){
               criterias.add(queryChamp(champ, stage, query));
            }
-
-            query.or((Criteria[])criterias.toArray());
+            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria.class);
+            query.or((criteriaArray);
         }
 
         if(parameters.getAnd().size() !=0){
@@ -82,7 +83,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
                                         if (champ.equals(Models.LANGUE.toString())) {
                                             return new LangueQuery(champ, query, stage).getCriteria();
                                         } else {
-                                            throw new QueryException();
+                                            throw new QueryException(champ);
                                         }
                                     }
                                 }
