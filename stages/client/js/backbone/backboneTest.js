@@ -2,6 +2,7 @@
 
 	// model
 	var Stage = Backbone.Model.extend({
+		urlRoot : "http://localhost:8080/jaxrs-stage/stages",
 		defaults: {
 			id:0,
 			pays:"nowhere",
@@ -22,7 +23,7 @@
 	//collection
 	var Stages = Backbone.Collection.extend({
 		model : Stage,
-		url : "http://localhost:8080/jaxrs-stage/stages"
+		url : "http://localhost:8080/jaxrs-stage/stages",
 	});
 
 	//vue des stages
@@ -109,7 +110,6 @@
    					var latitude = results[0].geometry.location.lat();
     				var longitude = results[0].geometry.location.lng();
     				var stage = new Stage({
-						id : counter,
 						intitule : $('#intitule').val(),
 						entreprise : $('#entreprise').val(),
 						pays : $('#pays').val(),
@@ -124,8 +124,7 @@
 						longitude : longitude,
 					});
 					counter++;
-					console.log(stage.get("longitude"));
-					collection.add(stage);
+					collection.create(stage);
 					$('#intitule').val("");
 					$('#entreprise').val("");
 					$('#pays').val("");
