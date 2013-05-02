@@ -2,11 +2,11 @@
 
 	// model
 	var Stage = Backbone.Model.extend({
-		urlRoot : "http://localhost:8080/jaxrs-stage/stages",
+		//url : "http://localhost:8080/jaxrs-stage/stages",
 		defaults: {
-			id:0,
+			//id:0,
 			pays:"nowhere",
-			entreprise : "flander's company",
+			//entreprise : "flander's company",
 			adresse:"nowhere",
 			domaine:"none",
 			intitule:"none",
@@ -15,8 +15,8 @@
 			option:"gsi bien sur",
 			avantages:"aucun",
 			langue:"francais sauf si t'as pas l'IELTS",
-			latitude : 0,
-			longitude : 0,
+			//latitude : 0,
+			//longitude : 0,
 		},
 	});
 
@@ -39,10 +39,10 @@
 			//_.bindAll(this, render);
 			stageEnCours = -1;
          	$('#accordion').empty();
+         	collection.fetch();
           	$('#accordion').append(accor);
           	var val= collection.toJSON();
           	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-          	collection.fetch();
           	console.log(collection);
 		},
 
@@ -111,7 +111,7 @@
     				var longitude = results[0].geometry.location.lng();
     				var stage = new Stage({
 						intitule : $('#intitule').val(),
-						entreprise : $('#entreprise').val(),
+						//entreprise : $('#entreprise').val(),
 						pays : $('#pays').val(),
 						domaine : $('#domaine').val(),
 						option : $('#option').val(),
@@ -120,11 +120,26 @@
 						salaire : $('#salaire').val(),
 						avantages : $('#avantages').val(),
 						langue : $('#langue').val(),
-						latitude : latitude,
-						longitude : longitude,
+						//latitude : ""+latitude,
+						//longitude : ""+longitude,
 					});
-					counter++;
-					collection.create(stage);
+					console.log(JSON.stringify(stage.toJSON()));
+					jQuery.ajax({
+      					url: "http://localhost:8080/jaxrs-stage/stages",
+      					type: 'POST',
+      					data: JSON.stringify(stage.toJSON()),
+      					dataType: 'json',
+      					beforeSend: function(req) {
+        					req.setRequestHeader('Content-Type', 'application/json');
+      					},
+      					success: function(data) {
+        					//that.trigger('addContactOK', data);
+      					},
+      					error: function(jqXHR, textStatus, errorThrown) {
+        					console.log(textStatus);
+        					console.log(errorThrown);
+      					}
+    				});
 					$('#intitule').val("");
 					$('#entreprise').val("");
 					$('#pays').val("");
