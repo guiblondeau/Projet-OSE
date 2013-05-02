@@ -4,6 +4,7 @@ import com.github.jmkgreen.morphia.query.Criteria;
 import com.github.jmkgreen.morphia.query.CriteriaContainerImpl;
 import com.github.jmkgreen.morphia.query.FieldEnd;
 import com.github.jmkgreen.morphia.query.Query;
+import fr.emn.ose.stage.Stage;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,17 +16,32 @@ import com.github.jmkgreen.morphia.query.Query;
 public abstract class StageQuery {
 
     protected FieldEnd<? extends CriteriaContainerImpl> fieldEnd;
-    protected Criteria criteria;
+    protected Criteria criteria=null;
+    protected Stage stage;
 
     /**
      *
      * @param name  The name of the field
      */
-    public  StageQuery(String name, Query query){
+    public  StageQuery(String name, Query query, Stage stage) throws ChampNullException {
+        this.stage = stage;
         this.fieldEnd =  query.criteria(name);
+        if(this.getChamp()!=null){
+            this.setCriteria();
+        }
+        else{
+            throw new ChampNullException();
+        }
+
+
+
     }
 
     public Criteria getCriteria(){
         return this.criteria;
     }
+
+    protected abstract String getChamp();
+
+    protected abstract void setCriteria();
 }

@@ -14,8 +14,17 @@ public class SalaireQuery extends StageQuery {
     /**
      * @param name The name of the field
      */
-    public SalaireQuery(String name, Query query, Stage stage) {
-        super(name, query);
-        this.criteria = fieldEnd.greaterThanOrEq((stage.getSalaire()!=null)?stage.getSalaire():"");
+    public SalaireQuery(String name, Query query, Stage stage) throws ChampNullException {
+        super(name, query, stage);
+    }
+
+    @Override
+    public String getChamp(){
+        return this.stage.getSalaire();
+    }
+
+    @Override
+    protected void setCriteria(){
+        this.criteria = fieldEnd.greaterThanOrEq(this.getChamp());
     }
 }

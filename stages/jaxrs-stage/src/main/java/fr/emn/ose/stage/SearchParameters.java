@@ -38,16 +38,16 @@ public class SearchParameters {
     public static SearchParameters getDefault(){
         List<String> and = new ArrayList<String>();
         List<String> or = new ArrayList<String>();
-        or.add("salaire");
-        or.add("option");
-        or.add("intitule");
-        or.add("description");
-        or.add("adresse");
-        or.add("avantages");
+        or.add(Models.SALAIRE.toString());
+        or.add(Models.OPTION.toString());
+        or.add(Models.INTITULE.toString());
+        or.add(Models.DESCRIPTION.toString());
+        or.add(Models.ADRESSE.toString());
+        or.add(Models.AVANTAGES.toString());
 
-        and.add("pays");
-        and.add("domaine");
-        and.add("langue");
+        and.add(Models.PAYS.toString());
+        and.add(Models.DOMAINE.toString());
+        and.add(Models.LANGUE.toString());
 
         SearchParameters toRet = new SearchParameters();
         toRet.setAnd(and);

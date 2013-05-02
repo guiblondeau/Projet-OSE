@@ -113,5 +113,9 @@ public class Stage {
         this.langue = langue;
     }
 
+    public String toString(){
+        return "Stage au "+this.getPays();
+    }
+
 
 }
