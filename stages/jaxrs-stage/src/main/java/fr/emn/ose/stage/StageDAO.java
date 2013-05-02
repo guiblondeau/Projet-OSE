@@ -35,8 +35,8 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
            for(String champ : parameters.getOr()){
               criterias.add(queryChamp(champ, stage, query));
            }
-            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria.class);
-            query.or((criteriaArray);
+            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria[].class);
+            query.or(criteriaArray);
         }
 
         if(parameters.getAnd().size() !=0){
