@@ -46,7 +46,7 @@ public class Stages {
     @POST()
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/stage")
+    @Path("/stages")
     public Response addStage(Stage s) {
         this.stageDAO.save(s);
         return Response.ok(s).header("Access-Control-Allow-Origin", "*").build();
@@ -111,7 +111,7 @@ public class Stages {
     @PUT()
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/stage/{id}")
+    @Path("/stages/{id}")
     public Response editStage(@PathParam("id") String id, Stage stage) {
         this.stageDAO.save(stage);
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
@@ -124,7 +124,7 @@ public class Stages {
      * @return Ok status if well deleted
      */
     @DELETE()
-    @Path("/stage/{id}")
+    @Path("/stages/{id}")
     public Response deleteStage(@PathParam("id") String id) {
         this.stageDAO.delete(this.stageDAO.get(new ObjectId(id)));
         return Response.ok().header("Access-Control-Allow-Origin", "*").build();
@@ -155,9 +155,7 @@ public class Stages {
     @Path("/stages/recherche")
     public Response rechercheStages(WrapperRecherche wrapper) {
 
-
         List<Stage> stages = new ArrayList<Stage>();
-
 
         SearchParameters parameters = (wrapper.getSearchParameters() != null) ?
                 wrapper.getSearchParameters() : SearchParameters.getDefault();
@@ -166,6 +164,7 @@ public class Stages {
             stages = stageDAO.find(wrapper.getStage(), parameters);
         } catch (QueryException e) {
             stages = new ArrayList<Stage>();
+            e.printStackTrace();
         }
 
 
@@ -179,7 +178,7 @@ public class Stages {
      */
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/stage/{id}")
+    @Path("/stages/{id}")
     public Response getById(String id) {
         Stage stage = this.stageDAO.get(new ObjectId(id));
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
