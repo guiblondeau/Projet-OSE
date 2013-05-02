@@ -30,7 +30,7 @@ public class Stage {
     @Id
     private ObjectId id;
 
-    private String pays, adresse, domaine, intitule, description, salaire, option, avantages, langue;
+    private String entreprise, longitude, latitude,pays, adresse, domaine, intitule, description, salaire, option, avantages, langue;
 
     @JsonSerialize(using =  ObjectIdSerializer.class)
     public ObjectId getId() {
@@ -39,6 +39,30 @@ public class Stage {
     @JsonDeserialize(using = ObjectIdDeserializer.class)
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public String getEntreprise() {
+        return entreprise;
+    }
+
+    public void setEntreprise(String entreprise) {
+        this.entreprise = entreprise;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getPays() {
