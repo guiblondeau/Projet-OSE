@@ -2,14 +2,15 @@ package fr.emn.ose.stage;
 
 import com.github.jmkgreen.morphia.Morphia;
 import com.github.jmkgreen.morphia.dao.BasicDAO;
-import com.github.jmkgreen.morphia.query.Query;
-import com.github.jmkgreen.morphia.query.UpdateOperations;
+import com.github.jmkgreen.morphia.query.*;
 import com.mongodb.Mongo;
-import org.apache.commons.beanutils.PropertyUtils;
+import fr.emn.ose.queries.*;
+import fr.emn.ose.queries.QueryException;
 import org.bson.types.ObjectId;
 
 
-import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,9 +25,75 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         super(mongo, morphia, ConnectionDataStore.dbName);
     }
 
+    public List<Stage> find(Stage stage, SearchParameters parameters) throws QueryException {
+        List<Stage> stages;
+        Query<Stage> query = getDatastore().createQuery(Stage.class);
 
+        if (parameters.getOr().size() != 0) {
+            List<Criteria> criterias = new ArrayList<Criteria>();
+           for(String champ : parameters.getOr()){
+              criterias.add(queryChamp(champ, stage, query));
+           }
 
+            query.or((Criteria[])criterias.toArray());
+        }
 
+        if(parameters.getAnd().size() !=0){
+            List<Criteria> criterias = new ArrayList<Criteria>();
+            for(String champ : parameters.getAnd()){
+                criterias.add(queryChamp(champ, stage, query));
+            }
+
+            query.and((Criteria[]) criterias.toArray());
+
+        }
+
+        return query.asList();
+
+    }
+
+    private Criteria queryChamp(String champ, Stage stage, Query<Stage> query) throws QueryException {
+
+        if (champ.equals(Models.PAYS.toString())) {
+            return (new PaysQuery(champ, query, stage)).getCriteria();
+
+        } else {
+            if (champ.equals(Models.ADRESSE.toString())) {
+                return (new AdresseQuery(champ, query, stage)).getCriteria();
+            } else {
+                if (champ.equals(Models.DOMAINE.toString())) {
+                    return (new DomaineQuery(champ, query, stage)).getCriteria();
+                } else {
+                    if (champ.equals(Models.INTITULE.toString())) {
+                        return (new IntituleQuery(champ, query, stage)).getCriteria();
+                    } else {
+                        if (champ.equals(Models.DESCRIPTION.toString())) {
+                            return (new DescriptionQuery(champ, query, stage)).getCriteria();
+                        } else {
+                            if (champ.equals(Models.SALAIRE.toString())) {
+                                return (new SalaireQuery(champ, query, stage)).getCriteria();
+                            } else {
+                                if (champ.equals(Models.OPTION.toString())) {
+                                    return (new OptionQuery(champ, query, stage)).getCriteria();
+                                } else {
+                                    if (champ.equals(Models.AVANTAGES.toString())) {
+                                        return (new AvantageQuery(champ, query, stage)).getCriteria();
+                                    } else {
+                                        if (champ.equals(Models.LANGUE.toString())) {
+                                            return new LangueQuery(champ, query, stage).getCriteria();
+                                        } else {
+                                            throw new QueryException();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 
 
 }
