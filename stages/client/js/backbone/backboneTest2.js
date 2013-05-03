@@ -65,15 +65,30 @@
 
 		render : function(){
       		stageEnCours = -1;
-      		a = collection.fetch();
-      		console.log(collection);
-      		console.log(collection.models);
-        	$('#add-stage').slideUp();
-			$('#page-principale').slideDown();
-         	$('#accordion').empty();
-          	$('#accordion').append(accor);
-          	var val= collection.toJSON();
-          	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+      		jQuery.ajax({
+          		url: "http://localhost:8080/jaxrs-stage/stages",
+          		type: 'GET',
+          		dataType: 'json',
+          		success: function(data) {
+          			console.log("coucou");
+            		var stages = data;
+            		for (var stag in stages){
+            			collection.add(stages[stag]);
+            		}
+            		$('#add-stage').slideUp();
+					$('#page-principale').slideDown();
+         			$('#accordion').empty();
+          			$('#accordion').append(accor);
+          			var val= collection.toJSON();
+          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+          		},
+          		error: function(jqXHR, textStatus, errorThrown) {
+            		that.trigger('getAllContactNOTOk');
+            		// TODO: trigger event error
+            		console.log(textStatus);
+            		console.log(errorThrown);
+          		}
+        	});
 		},
 	});
 
