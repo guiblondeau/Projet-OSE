@@ -2,11 +2,11 @@
 
 	// model
 	var Stage = Backbone.Model.extend({
-		//url : "http://localhost:8080/jaxrs-stage/stages",
+		url : "http://localhost:8080/jaxrs-stage/stages",
 		defaults: {
 			//id:0,
 			pays:"nowhere",
-			//entreprise : "flander's company",
+			entreprise : "flander's company",
 			adresse:"nowhere",
 			domaine:"none",
 			intitule:"none",
@@ -15,8 +15,8 @@
 			option:"gsi bien sur",
 			avantages:"aucun",
 			langue:"francais sauf si t'as pas l'IELTS",
-			//latitude : 0,
-			//longitude : 0,
+			latitude : 0,
+			longitude : 0,
 		},
 	});
 
@@ -33,17 +33,17 @@
 		events:{
 			'click button#add-btn': 'addStage',
 			'click button#stage-edit': 'editStage',
+			'click button#b': 'b',
 		},
 
 		initialize: function(){
-			//_.bindAll(this, render);
+			_.bindAll(this, 'render');
 			stageEnCours = -1;
-         	$('#accordion').empty();
-         	collection.fetch();
-          	$('#accordion').append(accor);
-          	var val= collection.toJSON();
-          	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-          	console.log(collection);
+          	this.render();
+		},
+
+		b : function(){
+			index.render();
 		},
 
 		addStage: function(){
@@ -64,13 +64,17 @@
 
 		render : function(){
       		stageEnCours = -1;
-        			$('#add-stage').slideUp();
-					$('#page-principale').slideDown();
-         			$('#accordion').empty();
-          			$('#accordion').append(accor);
-          			var val= collection.toJSON();
-          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-		}
+      		collection.fetch();
+      		console.log(collection);
+        	$('#add-stage').slideUp();
+			$('#page-principale').slideDown();
+         	$('#accordion').empty();
+          	$('#accordion').append(accor);
+          	var val= collection.toJSON();
+          	$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+          	collection.fetch();
+          	console.log(collection);
+		},
 	});
 
 	// vue ajout stages
@@ -111,7 +115,7 @@
     				var longitude = results[0].geometry.location.lng();
     				var stage = new Stage({
 						intitule : $('#intitule').val(),
-						//entreprise : $('#entreprise').val(),
+						entreprise : $('#entreprise').val(),
 						pays : $('#pays').val(),
 						domaine : $('#domaine').val(),
 						option : $('#option').val(),
@@ -120,10 +124,9 @@
 						salaire : $('#salaire').val(),
 						avantages : $('#avantages').val(),
 						langue : $('#langue').val(),
-						//latitude : ""+latitude,
-						//longitude : ""+longitude,
+						latitude : ""+latitude,
+						longitude : ""+longitude,
 					});
-					console.log(JSON.stringify(stage.toJSON()));
 					jQuery.ajax({
       					url: "http://localhost:8080/jaxrs-stage/stages",
       					type: 'POST',
@@ -148,6 +151,7 @@
 					$('#description').val("");
 					index.render();
   				} 
+
 			}); 
 			
 		},
