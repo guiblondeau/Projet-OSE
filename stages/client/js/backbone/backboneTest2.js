@@ -4,7 +4,6 @@
 	var Stage = Backbone.Model.extend({
 		urlRoot : "http://localhost:8080/jaxrs-stage/stages",
 		defaults: {
-			//id:0,
 			pays:"nowhere",
 			entreprise : "flander's company",
 			adresse:"nowhere",
@@ -53,14 +52,16 @@
 
 		editStage: function(){
 			var id = 0;
-			var trouve = false;
-			while (!trouve){
-				trouve = $('#collapse'+id).hasClass('accordion-body  in collapse');
-				id++;
-			}
-			id--;//il y aura un pb quand on editera un contact (decalage d'indice)
-			stageEnCours = id;
-			addStage.editStage(id)
+			for (var mod in collection._byId){
+				console.log($('#collapse'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+            stageEnCours = id;
+            console.log(collection.get(stageEnCours));
+			addStage.editStage(id);
 		},
 
 		render : function(){
@@ -70,11 +71,12 @@
           		type: 'GET',
           		dataType: 'json',
           		success: function(data) {
-          			console.log("coucou");
             		var stages = data;
+            		collection = new Stages();
             		for (var stag in stages){
             			collection.add(stages[stag]);
             		}
+            		console.log(collection);
             		$('#add-stage').slideUp();
 					$('#page-principale').slideDown();
          			$('#accordion').empty();
@@ -114,7 +116,21 @@
 		deleteStage : function(){
 			if (stageEnCours != -1){
 				stage = collection.get(stageEnCours);
-				collection.remove(stage);
+				jQuery.ajax({
+      				url: "http://localhost:8080/jaxrs-stage/stages/"+stageEnCours,
+      				type: 'DELETE',
+      				dataType: 'json',
+      				beforeSend: function(req) {
+        				req.setRequestHeader('Content-Type', 'application/json');
+      				},
+      				success: function(data) {
+      				},
+      				error: function(jqXHR, textStatus, errorThrown) {
+          				// TODO: trigger event error
+          				//console.log(textStatus);
+          				//console.log(errorThrown);
+        			}
+      			});
 				index.render();
 			}else{
 				index.render();
@@ -122,53 +138,71 @@
 		},
 
 		addStage : function(){
-			var geocoder = new google.maps.Geocoder();
-			var address = $('#adresse').val();
-			geocoder.geocode( { 'address': address}, function(results, status) {
-  				if (status == google.maps.GeocoderStatus.OK) {
-   					var latitude = results[0].geometry.location.lat();
-    				var longitude = results[0].geometry.location.lng();
-    				var stage = new Stage({
-						intitule : $('#intitule').val(),
-						entreprise : $('#entreprise').val(),
-						pays : $('#pays').val(),
-						domaine : $('#domaine').val(),
-						option : $('#option').val(),
-						description : $('#description').val(),
-						adresse : $('#adresse').val(),
-						salaire : $('#salaire').val(),
-						avantages : $('#avantages').val(),
-						langue : $('#langue').val(),
-						latitude : ""+latitude,
-						longitude : ""+longitude,
-					});
-					jQuery.ajax({
-      					url: "http://localhost:8080/jaxrs-stage/stages",
-      					type: 'POST',
-      					data: JSON.stringify(stage.toJSON()),
-      					dataType: 'json',
-      					beforeSend: function(req) {
-        					req.setRequestHeader('Content-Type', 'application/json');
-      					},
-      					success: function(data) {
-        					//that.trigger('addContactOK', data);
-      					},
-      					error: function(jqXHR, textStatus, errorThrown) {
-        					console.log(textStatus);
-        					console.log(errorThrown);
-      					}
-    				});
-					$('#intitule').val("");
-					$('#entreprise').val("");
-					$('#pays').val("");
-					$('#domaine').val("");
-					$('#option').val("");
-					$('#description').val("");
-					index.render();
-  				} 
+			if (stageEnCours == -1){
+				//var geocoder = new google.maps.Geocoder();
+				var address = $('#adresse').val();
+				//geocoder.geocode( { 'address': address}, function(results, status) {
+	  				//if (status == google.maps.GeocoderStatus.OK) {
+	   					//var latitude = results[0].geometry.location.lat();
+	    				//var longitude = results[0].geometry.location.lng();
+	    				var stage = new Stage({
+							intitule : $('#intitule').val(),
+							entreprise : $('#entreprise').val(),
+							pays : $('#pays').val(),
+							domaine : $('#domaine').val(),
+							option : $('#option').val(),
+							description : $('#description').val(),
+							adresse : $('#adresse').val(),
+							salaire : $('#salaire').val(),
+							avantages : $('#avantages').val(),
+							langue : $('#langue').val(),
+							//latitude : ""+latitude,
+							//longitude : ""+longitude,
+						});
+						jQuery.ajax({
+	      					url: "http://localhost:8080/jaxrs-stage/stages",
+	      					type: 'POST',
+	      					data: JSON.stringify(stage.toJSON()),
+	      					dataType: 'json',
+	      					beforeSend: function(req) {
+	        					req.setRequestHeader('Content-Type', 'application/json');
+	      					},
+	      					success: function(data) {
+	        					//that.trigger('addContactOK', data);
+	      					},
+	      					error: function(jqXHR, textStatus, errorThrown) {
+	        					console.log(textStatus);
+	        					console.log(errorThrown);
+	      					}
+	    				});
+						$('#intitule').val("");
+						$('#entreprise').val("");
+						$('#pays').val("");
+						$('#domaine').val("");
+						$('#option').val("");
+						$('#description').val("");
+						index.render();
+	  				//} 
 
-			}); 
-			
+				//}); 
+			}else {
+				/*jQuery.ajax({
+				      url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+$('#idE').val(),
+				      type: 'PUT',
+				      data: JSON.stringify(contact),
+				      dataType: 'json',
+				      beforeSend: function(req) {
+				        req.setRequestHeader('Content-Type', 'application/json');
+				      },
+				      success: function(data) {
+				      },
+				      error: function(jqXHR, textStatus, errorThrown) {
+				          // TODO: trigger event error
+				          console.log(textStatus);
+				          console.log(errorThrown);
+				        }
+				});*/
+			}	
 		},
 
 		editStage : function(id){
