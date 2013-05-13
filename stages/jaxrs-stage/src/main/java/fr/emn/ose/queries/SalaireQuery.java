@@ -1,5 +1,7 @@
 package fr.emn.ose.queries;
 
+import com.github.jmkgreen.morphia.query.CriteriaContainer;
+import com.github.jmkgreen.morphia.query.CriteriaContainerImpl;
 import com.github.jmkgreen.morphia.query.Query;
 import fr.emn.ose.stage.Stage;
 
@@ -25,6 +27,7 @@ public class SalaireQuery extends StageQuery {
 
     @Override
     protected void setCriteria(){
+        //this.criteria = this.query.or(fieldEnd.contains(this.getChamp()),fieldEnd.greaterThanOrEq(this.getChamp()));
         this.criteria = fieldEnd.greaterThanOrEq(this.getChamp());
     }
 }

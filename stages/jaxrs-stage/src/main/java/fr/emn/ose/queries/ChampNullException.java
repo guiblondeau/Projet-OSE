@@ -10,6 +10,6 @@ package fr.emn.ose.queries;
 public class ChampNullException extends Exception{
 
     public String toString(){
-        return "Ce champ de recherche est nul, un peu comme les créateurs de ce site.";
+        return "Ce champ de recherche est nul, un peu comme les auteurs du site.";
     }
 }
