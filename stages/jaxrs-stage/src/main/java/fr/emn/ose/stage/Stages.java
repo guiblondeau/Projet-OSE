@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.emn.ose.queries.ChampNullException;
 import fr.emn.ose.queries.QueryException;
 import org.bson.types.ObjectId;
 
@@ -113,6 +114,7 @@ public class Stages {
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/stages/{id}")
     public Response editStage(@PathParam("id") String id, Stage stage) {
+        stage.setId(new ObjectId(id));
         this.stageDAO.save(stage);
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }
@@ -141,7 +143,7 @@ public class Stages {
     public Response rechercheStagesOption() {
         return Response.ok().
                 header("Access-Control-Allow-Origin", "*").
-                header("Access-Control-Allow-Methods", "GET, OPTIONS").
+                header("Access-Control-Allow-Methods", "POST, OPTIONS").
                 header("Access-Control-Allow-Headers", "Content-Type").build();
     }
 
@@ -166,6 +168,9 @@ public class Stages {
             stages = new ArrayList<Stage>();
             e.printStackTrace();
         }
+        catch(ChampNullException e){
+            e.printStackTrace();
+        }
 
 
         return Response.ok(stages).header("Access-Control-Allow-Origin", "*").build();
@@ -179,7 +184,8 @@ public class Stages {
     @GET()
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/stages/{id}")
-    public Response getById(String id) {
+    public Response getById(@PathParam("id") String id) {
+        System.out.println("identifiant: "+id);
         Stage stage = this.stageDAO.get(new ObjectId(id));
         return Response.ok(stage).header("Access-Control-Allow-Origin", "*").build();
     }

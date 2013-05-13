@@ -26,37 +26,53 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         super(mongo, morphia, ConnectionDataStore.dbName);
     }
 
-    public List<Stage> find(Stage stage, SearchParameters parameters) throws QueryException {
+    public List<Stage> find(Stage stage, SearchParameters parameters) throws QueryException, ChampNullException {
         List<Stage> stages;
-        Query<Stage> query = getDatastore().createQuery(Stage.class);
+        Query<Stage> queryAnd = getDatastore().createQuery(Stage.class);
+        Query<Stage> queryOr = getDatastore().createQuery(Stage.class);
 
 
+        Criteria[] criteriaArray1;
+        CriteriaContainer container1 = null;
+
+        if (parameters.getAnd().size() != 0) {
+            List<Criteria> criterias = new ArrayList<Criteria>();
+            for (String champ : parameters.getAnd()) {
+                try{
+                criterias.add(queryChamp(champ, stage, queryAnd));
+                }
+                catch(ChampNullException e){
+
+                }
+            }
+            criteriaArray1 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
+            if (criteriaArray1.length > 0) {
+                container1= queryAnd.and(criteriaArray1);
+            }
+
+        }
+
+
+        Criteria[] criteriaArray2;
+        CriteriaContainer container2 = null;
         if (parameters.getOr().size() != 0) {
             List<Criteria> criterias = new ArrayList<Criteria>();
-           for(String champ : parameters.getOr()){
+            for (String champ : parameters.getOr()) {
+                try {
+                    criterias.add(queryChamp(champ, stage, queryOr));
+                } catch (ChampNullException e) {
+                }
 
-               try {
-                   criterias.add(queryChamp(champ, stage, query));
-               } catch (ChampNullException e) {
-
-               }
-           }
-            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria[].class);
-            query.or(criteriaArray);
-        }
-
-        /*
-
-        if(parameters.getAnd().size() !=0){
-            List<Criteria> criterias = new ArrayList<Criteria>();
-            for(String champ : parameters.getAnd()){
-                criterias.add(queryChamp(champ, stage, query));
             }
-            Criteria[] criteriaArray = Arrays.copyOf(criterias.toArray(),criterias.size(), Criteria[].class);
-            query.and(criteriaArray);
-
+            criteriaArray2 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
+            System.out.println(criteriaArray2.length);
+            if (criteriaArray2.length > 0) {
+                container2 = queryOr.or(criteriaArray2);
+            }
         }
-        */
+        Query<Stage> query = getDatastore().createQuery(Stage.class);
+        query.or(container2, container1);
+
 
         return query.asList();
 

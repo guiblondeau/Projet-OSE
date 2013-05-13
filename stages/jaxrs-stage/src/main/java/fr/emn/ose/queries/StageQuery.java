@@ -18,6 +18,7 @@ public abstract class StageQuery {
     protected FieldEnd<? extends CriteriaContainerImpl> fieldEnd;
     protected Criteria criteria=null;
     protected Stage stage;
+    protected Query<Stage> query;
 
     /**
      *
@@ -25,8 +26,9 @@ public abstract class StageQuery {
      */
     public  StageQuery(String name, Query query, Stage stage) throws ChampNullException {
         this.stage = stage;
+        this.query = query;
         this.fieldEnd =  query.criteria(name);
-        if(this.getChamp()!=null){
+        if(this.getChamp()!=null && !this.getChamp().equals("")){
             this.setCriteria();
         }
         else{
