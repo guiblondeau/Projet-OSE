@@ -66,31 +66,45 @@
 
 		render : function(){
       		stageEnCours = -1;
-      		jQuery.ajax({
-          		url: "http://localhost:8080/jaxrs-stage/stages",
-          		type: 'GET',
-          		dataType: 'json',
-          		success: function(data) {
-            		var stages = data;
-            		collection = new Stages();
-            		for (var stag in stages){
-            			collection.add(stages[stag]);
-            		}
-            		console.log(collection);
-            		$('#add-stage').slideUp();
-					$('#page-principale').slideDown();
-         			$('#accordion').empty();
-          			$('#accordion').append(accor);
-          			var val= collection.toJSON();
-          			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-          		},
-          		error: function(jqXHR, textStatus, errorThrown) {
-            		that.trigger('getAllContactNOTOk');
-            		// TODO: trigger event error
-            		console.log(textStatus);
-            		console.log(errorThrown);
-          		}
+     //  		jQuery.ajax({
+     //      		url: "http://localhost:8080/jaxrs-stage/stages",
+     //      		type: 'GET',
+     //      		dataType: 'json',
+     //      		success: function(data) {
+     //        		var stages = data;
+     //        		collection = new Stages();
+     //        		for (var stag in stages){
+     //        			collection.add(stages[stag]);
+     //        		}
+     //        		console.log(collection);
+     //        		$('#add-stage').slideUp();
+					// $('#page-principale').slideDown();
+     //     			$('#accordion').empty();
+     //      			$('#accordion').append(accor);
+     //      			var val= collection.toJSON();
+     //      			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+     //      		},
+     //      		error: function(jqXHR, textStatus, errorThrown) {
+     //        		that.trigger('getAllContactNOTOk');
+     //        		// TODO: trigger event error
+     //        		console.log(textStatus);
+     //        		console.log(errorThrown);
+     //      		}
+     //    	});
+        	collection.fetch({
+        		success : function(){
+        			console.log(collection);
+        			$('#add-stage').slideUp();
+				$('#page-principale').slideDown();
+       		$('#accordion').empty();
+   			$('#accordion').append(accor);
+   			var val= collection.toJSON();
+       		$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+
+        		}
         	});
+        	console.log(collection);
+        	
 		},
 	});
 
