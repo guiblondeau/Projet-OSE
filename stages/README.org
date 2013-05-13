@@ -2,8 +2,8 @@
 #+Description: Build a web application in order to manage all the internships made by the students of the 2nd year of the Ecole des Mines de Nantes (http://www.mines-nantes.fr)
 
 * Internship
-  The project proposes a RESTful architecture to manage our internships. 
-  For the client part, we use the JavaScript framework [[http://backbonejs.org/][Backbonejs]]. For the server part, we use the java jax-rs technology.
+  The project offers a RESTful architecture to manage our internships. 
+  For the client part, we use  a JavaScript framework [[http://backbonejs.org/][Backbonejs]]. For the server part, we use  java jax-rs technology.
   The rest of this document describes API, implementations and
   installation.
 
@@ -14,15 +14,16 @@
     of a Internship Entry is the following:
     #+BEGIN_SRC json
     {
-      "id" : "Internship identifier",
-      "intitule" : "Brief description explaining the internship",
+       "intitule" : "Brief description explaining the internship",
       "option" : "Our school has 10 specialities, the user has to choose between them",
       "description" : "Description of the internship",
       "adresse" : "Adress of the company",
       "pays" : "Country of the company",
       "salaire" : "Earning of the studient during the internship",
       "avantages" : "Advantages offered by the company",
-      "langue" : "Language used during the internship"
+      "langue" : "Language used during the internship",
+      "longitude " : "longitude of the company for gmap",
+       "latitude " : "latitude of the company for gmap" 
     }
     #+END_SRC
 
@@ -47,16 +48,23 @@
     access-control-allow-origin: *
 
 
+[
+   {
+    "entreprise": null,
+    "longitude": null,
+    "latitude": null,
+    "pays": "Canada",
+    "adresse": "calle de la muerte",
+    "domaine": "energie",
+    "intitule": "implatation d'eoliennes",
+    "salaire": "1€",
+    "avantages": "lumiere du bureau gratuite",
+    "langue": "espagnole",
+    "id": "51814601db4e5a47205a04bb",
+    "description": "physique",
+    "option": "GSE"
+  },
 
-    [
-  {
-    "id": {
-      "time": 1366641738000,
-      "new": false,
-      "inc": 1798942067,
-      "machine": -2081434795,
-      "timeSecond": 1366641738
-    },
 	...
     #+END_SRC
 
@@ -71,63 +79,72 @@
     POST stage
     ...
 
-    {
-      "option": "GIPAD",
-       "description": "You will be in charge of...",
-       "pays": "USA",
-       "adresse": "New York City...",
-       "domaine": null,
-       "intitule": "International internship in Google",
-       "salaire": "1000 $",
-       "avantages": "Gym, a day of work at home...",
-       "langue": "English"
-    }
+   {
+    "entreprise": " Le petit  vingtième ",
+    "pays": "Syldavie",
+    "adresse": "rue Tournesol",
+    "domaine": "automatique",
+    "intitule": "renovation du portail de la maison mere",
+    "salaire": "3 tolars syldaves",
+    "avantages": "abonnement au petit vingtieme gratuit",
+    "langue": "syldave",
+    "id": "5181461edb4e5a47205a04bc",
+    "description": "electronique",
+    "option": "AII",
+    "latitude": 70,
+    "longitude":80
+  }
     #+END_SRC
 
     Response:
     #+BEGIN_SRC example
-    HTTP/1.1 201 Created
+   Status Code: 200 OK
+
     ...
 
-    {
-       "id":
-       {
-           "time": 1366664704000,
-           "new": false,
-           "inc": 1395151418,
-           "machine": -1717089160,
-           "timeSecond": 1366664704
-       },
-       "option": "GIPAD",
-       "description": "You will be in charge of...",
-       "pays": "USA",
-       "adresse": "New York City...",
-       "domaine": null,
-       "intitule": "International internship in Google",
-       "salaire": "1000 $",
-       "avantages": "Gym, a day of work at home...",
-       "langue": "English"
-    }
+{
+  "entreprise":" Le petit  vingtième ",
+  "longitude": "80",
+  "latitude": "70",
+  "pays": "Syldavie",
+  "adresse": "rue Tournesol",
+  "domaine": "automatique",
+  "intitule": "renovation du portail de la maison mere",
+  "salaire": "3 tolars syldaves",
+  "avantages": "abonnement au petit vingtieme gratuit",
+  "langue": "syldave",
+  "id": "5181461edb4e5a47205a04bc",
+  "description": "electronique",
+  "option": "AII"
+}
     #+END_SRC
 
 *** Updating internships
     To update an internship, first retrieve the internship entry, modify the
     data and send a ~PUT~ request to the internship's edit URL with the
     modified internship entry in the body. Upon success, the server
-    responds with an ~HTTP 200 OK~ status code and the updated contact
+    responds with an ~HTTP 200 OK~ status code and the updated  internship
     entry.
 
     Request:
     #+BEGIN_SRC example
-    PUT stages/{id}
+    PUT stages/ 5181461edb4e5a47205a04bc
     ...
 
-    {
-      "id":     "03",
-      "nom":    "GORDON",
-      "prenom": "JAMES",
-      "numero": "22-333-444"
-    }
+{
+  "entreprise":" Le petit  vingtième ",
+  "longitude": "80",
+  "latitude": "70",
+  "pays": "Syldavie",
+  "adresse": "rue Tournesol",
+  "domaine": "automatique",
+  "intitule": "Arrestation du professeur Müller",
+  "salaire": "3 tolars syldaves",
+  "avantages": "abonnement au petit vingtieme gratuit",
+  "langue": "syldave",
+  "description": "electronique",
+  "option": "AII"
+}
     #+END_SRC
 
     Response:
@@ -135,12 +152,21 @@
     HTTP/1.1 200 OK
     ...
 
-    {
-      "id":     "03",
-      "nom":    "GORDON",
-      "prenom": "JAMES",
-      "numero": "22-333-444"
-    }
+  {
+  "entreprise":" Le petit  vingtième ",
+  "longitude": "80",
+  "latitude": "70",
+  "pays": "Syldavie",
+  "adresse": "rue Tournesol",
+  "domaine": "automatique",
+  "intitule": "Arrestation du professeur Müller",
+  "salaire": "3 tolars syldaves",
+  "avantages": "abonnement au petit vingtieme gratuit",
+  "id " :"5181461edb4e5a47205a04bc",
+  "langue": "syldave",
+  "description": "electronique",
+  "option": "AII"
+}
     #+END_SRC
 
 **** TODO See more about ETag on updating internships
