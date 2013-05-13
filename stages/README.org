@@ -205,6 +205,50 @@
     HTTP/1.1 200 OK
     #+END_SRC
 
+*** Make advanced search
+
+To retrieve internships based on criterias,  send a ~POST~ request to stages/recherche with the following body :
+
+#+BEGIN_SRC json
+{"stage" : <internship json object>, "searchParameters": {"and" : [ <fields*>], "or": [<fields*>]}}
+#+END_SRC
+
+The internship object is a json object with the parameters required for the research. This object is not necessarilly entire. A stage json object might contain between zero and [the number of parameters for stage] fields. An empty object retrieves all the internships.
+The searchParameters object enables to specify which parameters must be taken  into account together (and) and which can be taken into account independently (or). The list of parameter must be into brackets. If no searchParameters is precised, the server allocates a default searchParameter as follows :
+
+« And » parameters :
+
+ #+BEGIN_SRC example
+Pays, 
+domaine,
+langue
+#+END_SRC
+
+« Or » parameters :
+
+ #+BEGIN_SRC example
+salaire,
+option,
+intitulé,
+description,
+adresse,
+avantages
+#+END_SRC
+
+However, if you precise search parameters, you have to specify the parameters for every field. 
+
+Ex :
+
+#+BEGIN_SRC json
+
+{"stage":{"pays":"anad", "domaine":"info", "option":"AII"}, "searchParameters":{"and":["pays", "domaine"], "or":"option"}}
+
+
+#+END_SRC
+
+
+
+
 **** TODO See more about ETag on deleting contacts
      [[http://stackoverflow.com/questions/2085411/how-to-use-cxf-jax-rs-and-http-caching][How to use CXF, JAX-RS and HTTP Caching]]
 ** JAVA/JAX-RS implementation

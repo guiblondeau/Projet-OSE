@@ -32,46 +32,60 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         Query<Stage> queryOr = getDatastore().createQuery(Stage.class);
 
 
-        Criteria[] criteriaArray1;
         CriteriaContainer container1 = null;
 
         if (parameters.getAnd().size() != 0) {
             List<Criteria> criterias = new ArrayList<Criteria>();
             for (String champ : parameters.getAnd()) {
-                try{
-                criterias.add(queryChamp(champ, stage, queryAnd));
-                }
-                catch(ChampNullException e){
+                try {
+                    criterias.add(queryChamp(champ, stage, queryAnd));
+                } catch (ChampNullException e) {
 
                 }
             }
-            criteriaArray1 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
+            Criteria[] criteriaArray1 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
             if (criteriaArray1.length > 0) {
-                container1= queryAnd.and(criteriaArray1);
+                container1 = queryAnd.and(criteriaArray1);
             }
 
         }
 
 
-        Criteria[] criteriaArray2;
         CriteriaContainer container2 = null;
         if (parameters.getOr().size() != 0) {
             List<Criteria> criterias = new ArrayList<Criteria>();
+            System.out.println(parameters.getOr().size());
             for (String champ : parameters.getOr()) {
                 try {
                     criterias.add(queryChamp(champ, stage, queryOr));
                 } catch (ChampNullException e) {
+                    e.printStackTrace();
                 }
 
             }
-            criteriaArray2 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
+            Criteria[] criteriaArray2 = Arrays.copyOf(criterias.toArray(), criterias.size(), Criteria[].class);
             System.out.println(criteriaArray2.length);
             if (criteriaArray2.length > 0) {
                 container2 = queryOr.or(criteriaArray2);
             }
         }
-        Query<Stage> query = getDatastore().createQuery(Stage.class);
-        query.or(container2, container1);
+
+
+        Query<Stage> query;
+        if (container1 == null || container2 == null) {
+            if (container1 == null && container2 == null) {
+                query = getDatastore().createQuery(Stage.class);
+            } else {
+                if (container1 == null) {
+                    query = queryOr;
+                } else {
+                    query = queryAnd;
+                }
+            }
+        } else {
+            query = getDatastore().createQuery(Stage.class);
+            query.or(container2, container1);
+        }
 
 
         return query.asList();
