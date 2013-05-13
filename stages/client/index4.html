@@ -57,14 +57,18 @@
 						{{#book}}
 						<div class = "accordion-group">
 							<div class="accordion-heading">
-								<a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+								<!-- <a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+									{{intitule}} 
+								</a> -->
+								<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}"
+								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
 									{{intitule}} 
 								</a>
 							</div>
 							<div id="collapse{{id}}" class="accordion-body collapse ">
 								<div class="accordion-inner">
 									<div class = "span3">
-										{{id}}
+										"{{id}}"
 										<br/>
 										Entreprise : {{entreprise}}
 										<br/>
@@ -220,6 +224,11 @@ function initializeMap(a, lat, lng) {
 	};
 	return new google.maps.Map($('#map-canvas'+a)[0], myOptions);
 }
+$(document).ready(function(){
+	$(document).on('click', '.accordion-toggle', function(){ 
+		test($(this).attr("collapse-id"),$(this).attr("latitude"),$(this).attr("longitude"));	
+	});
+});
 </script>
 </body>
 
