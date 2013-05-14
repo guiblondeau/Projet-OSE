@@ -82,7 +82,7 @@ public class Stages {
     public Response getAll() {
         List<Stage> toRet = new ArrayList<Stage>();
 
-        toRet = this.stageDAO.find().asList();
+        toRet = ((Query<Stage>)this.stageDAO.find()).order("rankingGrade").asList();
 
         return Response.ok(toRet).header("Access-Control-Allow-Origin", "*").build();
     }

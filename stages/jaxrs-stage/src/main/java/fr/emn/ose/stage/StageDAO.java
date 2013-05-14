@@ -88,7 +88,7 @@ public class StageDAO extends BasicDAO<Stage, ObjectId> {
         }
 
 
-        return query.asList();
+        return query.order("rankingGrade").asList();
 
     }
 
