@@ -28,7 +28,9 @@
 			<button class="btn" id="add-btn"><i class ="icon-plus"></i> Ajouter un stage</button>
 			<button class="btn" id="b" align = "right"><i class ="icon-refresh"></i></button>
 			<div id="boutons" align="center">
+				Domaine : 
 				<select class="selectpicker" id="domaine">
+					<option>Aucun</option>
 					<option>Informatique</option>
 					<option>SSG</option>
 					<option>Automatique</option>
@@ -36,19 +38,19 @@
 					<option>Energie-Environnement</option>
 					<option>Nucléaire</option>
 				</select>
+				Option : 
 				<select class="selectpicker" id="option">
+					<option>Aucun</option>
 					<option>GSI</option>
 					<option>OMTI</option>
 					<option>GIPAD</option>
 				</select>
 				<input type="text" id="recherchePays" placeholder="Pays">
-			</div>
-			<div align="right">
-				<a href="#" onclick= "test()" id="a">Recherche avancée</a>
+				<button class="btn" id="search-btn"><i class ="icon-plus"></i>Rechercher</button>
 			</div>
 		</div>
 
-		<div class = "row">
+		<div class = "row" id = "stagesGlobal">
 			<div class = "span1" >
 			</div>
 			<div class = "span10">
@@ -95,6 +97,60 @@
 							</div>
 						</div>
 						{{/book}}
+					</div>
+				</div>
+			</div>
+			<div class = "span1">
+			</div>
+
+		</div>
+		<div class = "row" id = "stagesRecherche" hidden = "true">
+			<div class = "span1" >
+			</div>
+			<div class = "span10">
+				<div type="text/template">
+					<div class = "accordion" id = "accordion">
+						{{#book2}}
+						<div class = "accordion-group">
+							<div class="accordion-heading">
+								<!-- <a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+									{{intitule}} 
+								</a> -->
+								<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}"
+								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
+									{{intitule}} 
+								</a>
+							</div>
+							<div id="collapse{{id}}" class="accordion-body collapse ">
+								<div class="accordion-inner">
+									<div class = "span3">
+										"{{id}}"
+										<br/>
+										Entreprise : {{entreprise}}
+										<br/>
+										Option : {{option}}
+										<br/>
+										Adresse : {{adresse}}
+										<br/>
+										Pays : {{pays}}
+										<br/>
+										Salaire : {{salaire}}
+										<br/>
+										Description : {{description}}
+									</div>
+									<div class="span3">
+										<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
+									</div>
+									<div class="span3">
+										<div style = "height : 150px"> Note : 22/20</div>
+										<div style = "height : 50px">
+											<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{/book2}}
 					</div>
 				</div>
 			</div>

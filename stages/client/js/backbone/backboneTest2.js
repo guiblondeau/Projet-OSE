@@ -33,6 +33,7 @@
 			'click button#add-btn': 'addStage',
 			'click button#stage-edit': 'editStage',
 			'click button#b': 'b',
+			'click button#search-btn' : 'searchStage',
 		},
 
 		initialize: function(){
@@ -66,46 +67,36 @@
 
 		render : function(){
       		stageEnCours = -1;
-     //  		jQuery.ajax({
-     //      		url: "http://localhost:8080/jaxrs-stage/stages",
-     //      		type: 'GET',
-     //      		dataType: 'json',
-     //      		success: function(data) {
-     //        		var stages = data;
-     //        		collection = new Stages();
-     //        		for (var stag in stages){
-     //        			collection.add(stages[stag]);
-     //        		}
-     //        		console.log(collection);
-     //        		$('#add-stage').slideUp();
-					// $('#page-principale').slideDown();
-     //     			$('#accordion').empty();
-     //      			$('#accordion').append(accor);
-     //      			var val= collection.toJSON();
-     //      			$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-     //      		},
-     //      		error: function(jqXHR, textStatus, errorThrown) {
-     //        		that.trigger('getAllContactNOTOk');
-     //        		// TODO: trigger event error
-     //        		console.log(textStatus);
-     //        		console.log(errorThrown);
-     //      		}
-     //    	});
         	collection.fetch({
         		success : function(){
         			console.log(collection);
         			$('#add-stage').slideUp();
-				$('#page-principale').slideDown();
-       		$('#accordion').empty();
-   			$('#accordion').append(accor);
-   			var val= collection.toJSON();
-       		$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
+					$('#page-principale').slideDown();
+       				$('#accordion').empty();
+   					$('#accordion').append(accor);
+   					var val= collection.toJSON();
+       				$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
 
         		}
         	});
         	console.log(collection);
         	
 		},
+
+		searchStage : function(){
+			var domaine = $('#domaine').val();
+			var option = $('#option').val();
+			var pays = $('#recherchePays').val();
+			var search = { "stage": 
+				{
+					"domaine" : ""+domaine,
+					"option" : ""+option,
+					"pays" : ""+pays,
+				}
+			};
+			console.log(search);
+			searchView.render(search);
+		}
 	});
 
 	// vue ajout stages
@@ -197,26 +188,55 @@
 						$('#description').val("");
 						index.render();
 	  				} 
-
 				}); 
 			}else {
-				/*jQuery.ajax({
-				      url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+$('#idE').val(),
-				      type: 'PUT',
-				      data: JSON.stringify(contact),
-				      dataType: 'json',
-				      beforeSend: function(req) {
-				        req.setRequestHeader('Content-Type', 'application/json');
-				      },
-				      success: function(data) {
-				      },
-				      error: function(jqXHR, textStatus, errorThrown) {
-				          // TODO: trigger event error
-				          console.log(textStatus);
-				          console.log(errorThrown);
-				        }
-				});*/
-			}	
+				console.log(stageEnCours);
+				var geocoder = new google.maps.Geocoder();
+				var address = $('#adresse').val();
+				geocoder.geocode( { 'address': address}, function(results, status) {
+	  				if (status == google.maps.GeocoderStatus.OK) {
+	   					var latitude = results[0].geometry.location.lat();
+	    				var longitude = results[0].geometry.location.lng();
+	    				var stage = new Stage({
+							intitule : $('#intitule').val(),
+							entreprise : $('#entreprise').val(),
+							pays : $('#pays').val(),
+							domaine : $('#domaine').val(),
+							option : $('#option').val(),
+							description : $('#description').val(),
+							adresse : $('#adresse').val(),
+							salaire : $('#salaire').val(),
+							avantages : $('#avantages').val(),
+							langue : $('#langue').val(),
+							latitude : ""+latitude,
+							longitude : ""+longitude,
+						});
+						jQuery.ajax({
+				      		url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+stageEnCours,
+				      		type: 'PUT',
+				      		data: JSON.stringify(stage.toJSON()),
+				      		dataType: 'json',
+				      		beforeSend: function(req) {
+				        		req.setRequestHeader('Content-Type', 'application/json');
+				      		},
+				      		success: function(data) {
+				      		},
+				      		error: function(jqXHR, textStatus, errorThrown) {
+				          		// TODO: trigger event error
+				          		console.log(textStatus);
+				          		console.log(errorThrown);
+				        		}
+						});
+						$('#intitule').val("");
+						$('#entreprise').val("");
+						$('#pays').val("");
+						$('#domaine').val("");
+						$('#option').val("");
+						$('#description').val("");
+						index.render();
+	  				} 
+				});
+			}
 		},
 
 		editStage : function(id){
@@ -236,6 +256,34 @@
 			$('#avantages').val(stage.get("avantages"));
 			$('#langue').val(stage.get("langue"));
 		}
+	});
+
+	var SearchView = Backbone.View.extend({
+
+		render : function(search){
+			stageEnCours = -1;
+        	jQuery.ajax({
+					url: "http://localhost:8080/jaxrs-stage/stages/recherche",
+					type: 'POST',
+					data: search,
+					dataType: 'json',
+					beforeSend: function(req) {
+						req.setRequestHeader('Content-Type', 'application/json');
+					},
+					success: function(data) {
+						console.log(collection);
+        				$('#stagesGlobal').slideUp();
+						$('#stagesRecherche').slideDown();
+       					$('#accordion').empty();
+   						$('#accordion').append(accor);
+       					$('#accordion').html(Mustache.render($('#accordion').html(),{book2 : data}));
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.log(textStatus);
+						console.log(errorThrown);
+					}
+			});	
+		},
 	});
 
 	//router
@@ -261,4 +309,5 @@
 	var collection = new Stages();
 	var index = new StagesView();
 	var addStage = new AddView();
+	var searchView = new SearchView();
 })(jQuery);
