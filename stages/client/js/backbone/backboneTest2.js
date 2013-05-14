@@ -199,19 +199,20 @@
 	      					},
 	      					success: function(data) {
 	        					//that.trigger('addContactOK', data);
+	        					$('#intitule').val("");
+								$('#entreprise').val("");
+								$('#pays').val("");
+								$('#domaine').val("");
+								$('#option').val("");
+								$('#description').val("");
+								index.render();
 	      					},
 	      					error: function(jqXHR, textStatus, errorThrown) {
 	        					console.log(textStatus);
 	        					console.log(errorThrown);
 	      					}
 	    				});
-						$('#intitule').val("");
-						$('#entreprise').val("");
-						$('#pays').val("");
-						$('#domaine').val("");
-						$('#option').val("");
-						$('#description').val("");
-						index.render();
+
 	  				} 
 				}); 
 			}else {
