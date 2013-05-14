@@ -1,8 +1,6 @@
 package fr.emn.ose.stage;
 
-import com.github.jmkgreen.morphia.annotations.Embedded;
-import com.github.jmkgreen.morphia.annotations.Entity;
-import com.github.jmkgreen.morphia.annotations.Id;
+import com.github.jmkgreen.morphia.annotations.*;
 import fr.emn.ose.serialization.ObjectIdDeserializer;
 import fr.emn.ose.serialization.ObjectIdSerializer;
 import org.bson.types.ObjectId;
@@ -32,6 +30,17 @@ public class Stage {
 
     private String entreprise, longitude, latitude,pays, adresse, domaine, intitule, description, salaire, option, avantages, langue;
 
+    @Embedded
+    private NotesPertinence notesPertinence;
+
+    private int rankingGrade;
+
+    @PrePersist private void prePersist(){
+        if(notesPertinence!=null){
+            rankingGrade = notesPertinence.getRankingGrade();
+        }
+    }
+
     @JsonSerialize(using =  ObjectIdSerializer.class)
     public ObjectId getId() {
         return id;
@@ -39,6 +48,22 @@ public class Stage {
     @JsonDeserialize(using = ObjectIdDeserializer.class)
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public int getRankingGrade() {
+        return rankingGrade;
+    }
+
+    public void setRankingGrade(int rankingGrade) {
+        this.rankingGrade = rankingGrade;
+    }
+
+    public NotesPertinence getNotesPertinence() {
+        return notesPertinence;
+    }
+
+    public void setNotesPertinence(NotesPertinence notesPertinence) {
+        this.notesPertinence = notesPertinence;
     }
 
     public String getEntreprise() {

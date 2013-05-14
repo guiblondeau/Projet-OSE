@@ -14,8 +14,10 @@
     of a Internship Entry is the following:
     #+BEGIN_SRC json
     {
+      "entreprise" :"Name of the company ",
        "intitule" : "Brief description explaining the internship",
       "option" : "Our school has 10 specialities, the user has to choose between them",
+       "domaine " : "The gerenal field of the internship (computer sciences, nuclear field...) ",
       "description" : "Description of the internship",
       "adresse" : "Adress of the company",
       "pays" : "Country of the company",
@@ -23,7 +25,10 @@
       "avantages" : "Advantages offered by the company",
       "langue" : "Language used during the internship",
       "longitude " : "longitude of the company for gmap",
-       "latitude " : "latitude of the company for gmap" 
+       "latitude " : "latitude of the company for gmap" ,
+       "notesPertinence" : {"pertinent": how many times the internship was considered as relevant
+                                              "nonPertinent" :"how many times it was considered as unrevelevant"}
+
     }
     #+END_SRC
 
@@ -49,19 +54,21 @@
 
 
 [
-   {
-    "entreprise": null,
+  {
+    "rankingGrade": 1,
+    "notesPertinence": {"pertinent ":0, "nonPertinent":1},
+    "entreprise": "Gino's Pizza",
     "longitude": null,
     "latitude": null,
-    "pays": "Canada",
-    "adresse": "calle de la muerte",
-    "domaine": "energie",
-    "intitule": "implatation d'eoliennes",
-    "salaire": "1€",
-    "avantages": "lumiere du bureau gratuite",
-    "langue": "espagnole",
-    "id": "51814601db4e5a47205a04bb",
-    "description": "physique",
+    "pays": "Italie",
+    "adresse": "rue des aubépines",
+    "domaine": "info",
+    "intitule": "Creation d'une pizzeria indépendante en énergie",
+    "salaire": "200 €",
+    "avantages": "pizzas tous les midis",
+    "langue": "italien",
+    "id": "519255b48cbad160b20a2110",
+    "description": "Creation d'une pizzeria indépendante en énergie",
     "option": "GSE"
   },
 
@@ -82,6 +89,7 @@
    {
     "entreprise": " Le petit  vingtième ",
     "pays": "Syldavie",
+    "notesPertinence": {"pertinent ":0, "nonPertinent":1},
     "adresse": "rue Tournesol",
     "domaine": "automatique",
     "intitule": "renovation du portail de la maison mere",
@@ -107,6 +115,8 @@
   "longitude": "80",
   "latitude": "70",
   "pays": "Syldavie",
+  "notesPertinence": {"pertinent ":0, "nonPertinent":1},
+  "rankingGrade" : 1,
   "adresse": "rue Tournesol",
   "domaine": "automatique",
   "intitule": "renovation du portail de la maison mere",
