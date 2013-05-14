@@ -84,18 +84,43 @@
 		},
 
 		searchStage : function(){
-			var domaine = $('#domaine').val();
-			var option = $('#option').val();
+			var domaine = $('#domaineR').val();
+			var option = $('#optionR').val();
 			var pays = $('#recherchePays').val();
-			var search = { "stage": 
-				{
-					"domaine" : ""+domaine,
-					"option" : ""+option,
-					"pays" : ""+pays,
+			if (domaine == "Aucun"){
+				if (option == "Aucun"){
+					var search = { "stage": 
+						{
+							"pays" : ""+pays,
+						}
+					};
+				}else{
+					var search = { "stage": 
+						{
+							"option" : ""+option,
+							"pays" : ""+pays,
+						}
+					};
 				}
+			}else if (option == "Aucun"){
+				var search = { "stage": 
+					{
+						"domaine" : ""+domaine,
+						"pays" : ""+pays,
+					}
+				};
+			}else{
+				var search = { "stage": 
+					{
+						"domaine" : ""+domaine,
+						"option" : ""+option,
+						"pays" : ""+pays,
+					}
+				};
 			};
-			console.log(search);
-			searchView.render(search);
+			var searchJSON = JSON.stringify(search);
+			console.log(searchJSON);
+			searchView.render(searchJSON);
 		}
 	});
 
@@ -274,9 +299,10 @@
 						console.log(collection);
         				$('#stagesGlobal').slideUp();
 						$('#stagesRecherche').slideDown();
-       					$('#accordion').empty();
-   						$('#accordion').append(accor);
-       					$('#accordion').html(Mustache.render($('#accordion').html(),{book2 : data}));
+       					$('#accordion2').empty();
+   						$('#accordion2').append(accor2);
+   						console.log(data);
+       					$('#accordion2').html(Mustache.render($('#accordion2').html(),{book2 : data}));
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
 						console.log(textStatus);
@@ -304,6 +330,7 @@
 
 	var stageEnCours;
 	var accor = $("#accordion").html();
+	var accor2 = $("#accordion2").html();
 	var app = new StagesApp();
 	Backbone.history.start();
 	var collection = new Stages();
