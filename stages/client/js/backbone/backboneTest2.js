@@ -16,6 +16,10 @@
 			langue:"",
 			latitude : 0,
 			longitude : 0,
+			// notePertinence : {
+			// 	pertinent : 0,
+			// 	nonPertinent : 0,
+			// },
 		},
 	});
 
@@ -56,6 +60,13 @@
 			for (var mod in collection._byId){
 				console.log($('#collapse'+mod).hasClass('accordion-body  in collapse'));
 				if ($('#collapse'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+            for (var mod in collection._byId){
+				console.log($('#collapse2'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse2'+mod).hasClass('accordion-body  in collapse')){
 					id = mod;
 					console.log(mod);
 				}
