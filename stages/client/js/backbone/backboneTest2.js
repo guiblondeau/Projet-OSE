@@ -4,16 +4,16 @@
 	var Stage = Backbone.Model.extend({
 		urlRoot : "http://localhost:8080/jaxrs-stage/stages",
 		defaults: {
-			pays:"nowhere",
-			entreprise : "flander's company",
-			adresse:"nowhere",
-			domaine:"none",
-			intitule:"none",
-			description:"none",
-			salaire:"0€",
-			option:"gsi bien sur",
-			avantages:"aucun",
-			langue:"francais sauf si t'as pas l'IELTS",
+			pays:"",
+			entreprise : "",
+			adresse:"",
+			domaine:"",
+			intitule:"",
+			description:"",
+			salaire:"",
+			option:"",
+			avantages:"",
+			langue:"",
 			latitude : 0,
 			longitude : 0,
 		},
@@ -238,7 +238,7 @@
 							longitude : ""+longitude,
 						});
 						jQuery.ajax({
-				      		url: 'http://localhost:8080/jaxrs-contact/contacts/editContact/'+stageEnCours,
+				      		url: 'http://localhost:8080/jaxrs-stage/stages/'+stageEnCours,
 				      		type: 'PUT',
 				      		data: JSON.stringify(stage.toJSON()),
 				      		dataType: 'json',
@@ -246,6 +246,13 @@
 				        		req.setRequestHeader('Content-Type', 'application/json');
 				      		},
 				      		success: function(data) {
+				      			$('#intitule').val("");
+								$('#entreprise').val("");
+								$('#pays').val("");
+								$('#domaine').val("");
+								$('#option').val("");
+								$('#description').val("");
+								index.render();
 				      		},
 				      		error: function(jqXHR, textStatus, errorThrown) {
 				          		// TODO: trigger event error
@@ -253,13 +260,6 @@
 				          		console.log(errorThrown);
 				        		}
 						});
-						$('#intitule').val("");
-						$('#entreprise').val("");
-						$('#pays').val("");
-						$('#domaine').val("");
-						$('#option').val("");
-						$('#description').val("");
-						index.render();
 	  				} 
 				});
 			}
