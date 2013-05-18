@@ -130,7 +130,7 @@
 					{{#book2}}
 					<div class = "accordion-group">
 						<div class="accordion-heading">
-							<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
+							<a id="toto2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
 							collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
 							{{intitule}} 
 						</a>
@@ -300,7 +300,7 @@ function initializeMap(a, lat, lng) {
 	return new google.maps.Map($('#map-canvas'+a)[0], myOptions);
 }
 $(document).ready(function(){
-	$(document).on('click', '.accordion-toggle', function(){ 
+	$(document).on('click', '#toto', function(){ 
 		test($(this).attr("collapse-id"),$(this).attr("latitude"),$(this).attr("longitude"));	
 	});
 })
@@ -324,7 +324,7 @@ function initializeMap2(a, lat, lng) {
 	return new google.maps.Map($('#map-canvas2'+a)[0], myOptions);
 }
 $(document).ready(function(){
-	$(document).on('click', '.accordion-toggle', function(){ 
+	$(document).on('click', '#toto2', function(){ 
 		test2($(this).attr("collapse-id"),$(this).attr("latitude"),$(this).attr("longitude"));	
 	});
 })
