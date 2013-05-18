@@ -16,10 +16,10 @@
 			langue:"",
 			latitude : 0,
 			longitude : 0,
-			// notePertinence : {
-			// 	pertinent : 0,
-			// 	nonPertinent : 0,
-			// },
+			notesPertinence : {
+				pertinent : 0,
+				nonPertinent : 0,
+			},
 		},
 	});
 
@@ -38,6 +38,7 @@
 			'click button#stage-edit': 'editStage',
 			'click button#b': 'b',
 			'click button#search-btn' : 'searchStage',
+			'click input#pertinent' : 'pertinent'
 		},
 
 		initialize: function(){
@@ -46,6 +47,11 @@
 			collection = new Stages();
           	this.render();
 		},
+
+		pertinent : function(){
+			console.log("miaou");
+		},
+
 
 		b : function(){
 			index.render();
@@ -98,36 +104,24 @@
 			var domaine = $('#domaineR').val();
 			var option = $('#optionR').val();
 			var pays = $('#recherchePays').val();
+			var entreprise = $('#rechercheEntreprise').val();
+			var langue = $('#rechercheLangue').val();
+			var salaire = $('#rechercheSalaire').val();
 			if (domaine == "Aucun"){
-				if (option == "Aucun"){
-					var search = { "stage": 
-						{
-							"pays" : ""+pays,
-						}
-					};
-				}else{
-					var search = { "stage": 
-						{
-							"option" : ""+option,
-							"pays" : ""+pays,
-						}
-					};
+				domaine = "";
+			};
+			if (option == "Aucun"){
+				option = "";
+			};
+			var search = { "stage": 
+				{
+					"domaine" : ""+domaine,
+					"option" : ""+option,
+					"pays" : ""+pays,
+					"entreprise" : ""+entreprise,
+					"langue" : ""+langue,
+					"salaire" : ""+salaire,
 				}
-			}else if (option == "Aucun"){
-				var search = { "stage": 
-					{
-						"domaine" : ""+domaine,
-						"pays" : ""+pays,
-					}
-				};
-			}else{
-				var search = { "stage": 
-					{
-						"domaine" : ""+domaine,
-						"option" : ""+option,
-						"pays" : ""+pays,
-					}
-				};
 			};
 			var searchJSON = JSON.stringify(search);
 			console.log(searchJSON);

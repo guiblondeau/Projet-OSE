@@ -38,20 +38,19 @@
 					<option>Energie-Environnement</option>
 					<option>Nucléaire</option>
 				</select>
-				<!-- <label class="radio inline">
-					<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-					et
-				</label>
-				<label class="radio inline">
-					<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-					ou
-				</label> -->
 				Option : 
 				<select class="selectpicker" id="optionR">
 					<option>Aucun</option>
 					<option>GSI</option>
 					<option>OMTI</option>
 					<option>GIPAD</option>
+					<option>GSE</option>
+					<option>GE</option>
+					<option>AII</option>
+					<option>GOPL</option>
+					<option>QSF</option>
+					<option>NTSE</option>
+					<option>STAR</option>
 				</select>
 				<input type="text" id="recherchePays" placeholder="Pays">
 				<input type="text" id="rechercheEntreprise" placeholder="Entreprise">
@@ -81,8 +80,6 @@
 						<div id="collapse{{id}}" class="accordion-body collapse ">
 							<div class="accordion-inner">
 								<div class = "span3">
-									"{{id}}"
-									<br/>
 									Entreprise : {{entreprise}}
 									<br/>
 									Option : {{option}}
@@ -101,7 +98,7 @@
 								<div class="span3">
 									<div style = "height : 150px">
 										<label class="radio">
-											<input type="radio" name="optionsRadios" id="pertinent" value="option1" checked>
+											<input type="radio" name="optionsRadios" id="pertinent" value="option1">
 											Pertinent
 										</label>
 										<label class="radio">
@@ -133,52 +130,47 @@
 					{{#book2}}
 					<div class = "accordion-group">
 						<div class="accordion-heading">
-								<!-- <a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
-									{{intitule}} 
-								</a> -->
-								<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse2{{id}}"
-								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
-								{{intitule}} 
-							</a>
-						</div>
-						<div id="collapse2{{id}}" class="accordion-body collapse ">
-							<div class="accordion-inner">
-								<div class = "span3">
-									"{{id}}"
-									<br/>
-									Entreprise : {{entreprise}}
-									<br/>
-									Option : {{option}}
-									<br/>
-									Adresse : {{adresse}}
-									<br/>
-									Pays : {{pays}}
-									<br/>
-									Salaire (à titre indicatif) : {{salaire}}
-									<br/>
-									Description : {{description}}
+							<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
+							collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
+							{{intitule}} 
+						</a>
+					</div>
+					<div id="collapse2{{id}}" class="accordion-body collapse ">
+						<div class="accordion-inner">
+							<div class = "span3">
+								Entreprise : {{entreprise}}
+								<br/>
+								Option : {{option}}
+								<br/>
+								Adresse : {{adresse}}
+								<br/>
+								Pays : {{pays}}
+								<br/>
+								Salaire (à titre indicatif) : {{salaire}}
+								<br/>
+								Description : {{description}}
+							</div>
+							<div class="span3">
+								<div id="map-canvas2{{id}}" style = "width : 100%; height : 200px">coucou</div>
+							</div>
+							<div class="span3">
+								<div style = "height : 150px">
 								</div>
-								<div class="span3">
-									<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
-								</div>
-								<div class="span3">
-									<div style = "height : 150px">
-									</div>
-									<div style = "height : 50px">
-										<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
-									</div>
+								<div style = "height : 50px">
+									<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
 								</div>
 							</div>
 						</div>
 					</div>
-					{{/book2}}
 				</div>
+				{{/book2}}
 			</div>
 		</div>
-		<div class = "span1">
-		</div>
-
 	</div>
+	<div class = "span1">
+	</div>
+
+</div>
 </div>	
 
 <div id="add-stage" hidden = "true">
@@ -221,6 +213,13 @@
 						<option>GSI</option>
 						<option>OMTI</option>
 						<option>GIPAD</option>
+						<option>GSE</option>
+						<option>GE</option>
+						<option>AII</option>
+						<option>GOPL</option>
+						<option>QSF</option>
+						<option>NTSE</option>
+						<option>STAR</option>
 					</select>
 				</div>
 			</div>
@@ -283,7 +282,6 @@
 <script type="text/javascript">
 $('.selectpicker').selectpicker();
 var test = function (a, lat, lng){
-	console.log("cliqué ! "+a);
 	map = initializeMap(a, lat, lng);
 	var marker = new google.maps.Marker({
 		map: map,
@@ -305,7 +303,31 @@ $(document).ready(function(){
 	$(document).on('click', '.accordion-toggle', function(){ 
 		test($(this).attr("collapse-id"),$(this).attr("latitude"),$(this).attr("longitude"));	
 	});
-});
+})
+
+var test2 = function (a, lat, lng){
+	map = initializeMap2(a, lat, lng);
+	var marker = new google.maps.Marker({
+		map: map,
+		draggable: true
+	});
+	var location = new google.maps.LatLng(lat, lng);
+	marker.setPosition(location);
+	map.setCenter(location);
+}
+function initializeMap2(a, lat, lng) {
+	var myOptions = {
+		zoom: 15,
+		center: new google.maps.LatLng(lat, lng),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	return new google.maps.Map($('#map-canvas2'+a)[0], myOptions);
+}
+$(document).ready(function(){
+	$(document).on('click', '.accordion-toggle', function(){ 
+		test2($(this).attr("collapse-id"),$(this).attr("latitude"),$(this).attr("longitude"));	
+	});
+})
 </script>
 </body>
 
