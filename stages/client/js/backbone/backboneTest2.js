@@ -87,13 +87,15 @@
         	collection.fetch({
         		success : function(){
         			console.log(collection);
+        			// var stage  = collection.get();
+        			// console.log(stage);
         			$('#add-stage').slideUp();
 					$('#page-principale').slideDown();
        				$('#accordion').empty();
    					$('#accordion').append(accor);
    					var val= collection.toJSON();
        				$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-
+       				console.log(collection);
         		}
         	});
         	console.log(collection);
@@ -221,27 +223,27 @@
 	  				} 
 				}); 
 			}else {
-				console.log(stageEnCours);
 				var geocoder = new google.maps.Geocoder();
 				var address = $('#adresse').val();
 				geocoder.geocode( { 'address': address}, function(results, status) {
 	  				if (status == google.maps.GeocoderStatus.OK) {
 	   					var latitude = results[0].geometry.location.lat();
 	    				var longitude = results[0].geometry.location.lng();
-	    				var stage = new Stage({
-							intitule : $('#intitule').val(),
-							entreprise : $('#entreprise').val(),
-							pays : $('#pays').val(),
-							domaine : $('#domaine').val(),
-							option : $('#option').val(),
-							description : $('#description').val(),
-							adresse : $('#adresse').val(),
-							salaire : $('#salaire').val(),
-							avantages : $('#avantages').val(),
-							langue : $('#langue').val(),
-							latitude : ""+latitude,
-							longitude : ""+longitude,
-						});
+	    				var stage = collection.get(stageEnCours);
+	    				console.log(stage);
+						stage.set(intitule,$('#intitule').val()),
+						stage.set(entreprise , $('#entreprise').val()),
+						stage.set(pays , $('#pays').val()),
+						stage.set(domaine , $('#domaine').val()),
+						stage.set(option , $('#option').val()),
+						stage.set(description , $('#description').val()),
+						stage.set(adresse , $('#adresse').val()),
+						stage.set(salaire , $('#salaire').val()),
+						stage.set(avantages , $('#avantages').val()),
+						stage.set(langue , $('#langue').val()),
+						stage.set(latitude , ""+latitude),
+						stage.set(longitude , ""+longitude),
+						console.log(stage);
 						jQuery.ajax({
 				      		url: 'http://localhost:8080/jaxrs-stage/stages/'+stageEnCours,
 				      		type: 'PUT',
@@ -272,7 +274,6 @@
 
 		editStage : function(id){
 			stage = collection.get(id);
-			collection.remove(stage);
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
 			$('#intitule').val(stage.get("intitule"));
