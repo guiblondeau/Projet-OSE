@@ -39,7 +39,8 @@
 			'click button#stage-edit': 'editStage',
 			'click button#b': 'b',
 			'click button#search-btn' : 'searchStage',
-			'click input#pertinent' : 'pertinent'
+			'click input#pertinent' : 'pertinent',
+			'click input#nonPertinent' : 'nonPertinent'
 		},
 
 		initialize: function(){
@@ -93,13 +94,6 @@
 				        		req.setRequestHeader('Content-Type', 'application/json');
 				      		},
 				      		success: function(data) {
-				      			$('#intitule').val("");
-								$('#entreprise').val("");
-								$('#pays').val("");
-								$('#domaine').val("");
-								$('#option').val("");
-								$('#description').val("");
-								index.render();
 				      		},
 				      		error: function(jqXHR, textStatus, errorThrown) {
 				          		// TODO: trigger event error
@@ -109,6 +103,59 @@
 						});
 		},
 
+
+		nonPertinent : function(){
+			var id = 0;
+			for (var mod in collection._byId){
+				console.log($('#collapse'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+            for (var mod in collection._byId){
+				console.log($('#collapse2'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse2'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+			var stage = new Stage({
+				intitule : collection.get(id).attributes.intitule,
+				entreprise : collection.get(id).attributes.entreprise,
+				pays : collection.get(id).attributes.pays,
+				domaine : collection.get(id).attributes.domaine,
+				option : collection.get(id).attributes.option,
+				description : collection.get(id).attributes.description,
+				adresse : collection.get(id).attributes.adresse,
+				salaire : collection.get(id).attributes.salaire,
+				avantages : collection.get(id).attributes.avantages,
+				langue : collection.get(id).attributes.langue,
+				latitude : collection.get(id).attributes.latitude,
+				longitude : collection.get(id).attributes.longitude,
+				notesPertinence : {
+					pertinent : collection.get(id).attributes.notesPertinence.pertinent,
+					nonPertinent : collection.get(id).attributes.notesPertinence.nonPertinent+1,
+				},
+				rankingGrade : collection.get(id).attributes.rankingGrade,
+			});
+			jQuery.ajax({
+	      		url: 'http://localhost:8080/jaxrs-stage/stages/'+id,
+	      		type: 'PUT',
+	      		data: JSON.stringify(stage.toJSON()),
+	      		dataType: 'json',
+	      		beforeSend: function(req) {
+	        		req.setRequestHeader('Content-Type', 'application/json');
+	      		},
+	      		success: function(data) {
+	      		},
+	      		error: function(jqXHR, textStatus, errorThrown) {
+	          		// TODO: trigger event error
+	          		console.log(textStatus);
+	          		console.log(errorThrown);
+	        		}
+			});
+		},
 
 		b : function(){
 			index.render();
