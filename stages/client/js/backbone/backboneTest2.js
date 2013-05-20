@@ -46,6 +46,7 @@
 		initialize: function(){
 			_.bindAll(this, 'render');
 			stageEnCours = -1;
+			$('#stagesRecherche').hide();
 			collection = new Stages();
           	this.render();
 		},
@@ -187,6 +188,8 @@
 		},
 
 		render : function(){
+			$('#stagesRecherche').hide();
+			$('#stagesGlobal').show();
       		stageEnCours = -1;
         	collection.fetch({
         		success : function(){
@@ -281,12 +284,12 @@
 
 		addStage : function(){
 			if (stageEnCours == -1){
-				var geocoder = new google.maps.Geocoder();
-				var address = $('#adresse').val();
-				geocoder.geocode( { 'address': address}, function(results, status) {
-	  				if (status == google.maps.GeocoderStatus.OK) {
-	   					var latitude = results[0].geometry.location.lat();
-	    				var longitude = results[0].geometry.location.lng();
+				// var geocoder = new google.maps.Geocoder();
+				// var address = $('#adresse').val();
+				// geocoder.geocode( { 'address': address}, function(results, status) {
+	  	// 			if (status == google.maps.GeocoderStatus.OK) {
+	   // 					var latitude = results[0].geometry.location.lat();
+	   //  				var longitude = results[0].geometry.location.lng();
 	    				var stage = new Stage({
 							intitule : $('#intitule').val(),
 							entreprise : $('#entreprise').val(),
@@ -298,8 +301,8 @@
 							salaire : $('#salaire').val(),
 							avantages : $('#avantages').val(),
 							langue : $('#langue').val(),
-							latitude : ""+latitude,
-							longitude : ""+longitude,
+							// latitude : ""+latitude,
+							// longitude : ""+longitude,
 						});
 						jQuery.ajax({
 	      					url: "http://localhost:8080/jaxrs-stage/stages",
@@ -317,6 +320,10 @@
 								$('#domaine').val("");
 								$('#option').val("");
 								$('#description').val("");
+								$("#adresse").val("");
+								$('#salaire').val("");
+								$('#avantages').val("");
+								$('#langue').val("");
 								index.render();
 	      					},
 	      					error: function(jqXHR, textStatus, errorThrown) {
@@ -325,8 +332,8 @@
 	      					}
 	    				});
 
-	  				} 
-				}); 
+	  	// 			} 
+				// }); 
 			}else {
 				var geocoder = new google.maps.Geocoder();
 				var address = $('#adresse').val();
@@ -370,6 +377,10 @@
 								$('#domaine').val("");
 								$('#option').val("");
 								$('#description').val("");
+								$("#adresse").val("");
+								$('#salaire').val("");
+								$('#avantages').val("");
+								$('#langue').val("");
 								index.render();
 				      		},
 				      		error: function(jqXHR, textStatus, errorThrown) {
@@ -415,8 +426,8 @@
 					},
 					success: function(data) {
 						console.log(collection);
-        				$('#stagesGlobal').slideUp();
-						$('#stagesRecherche').slideDown();
+        				$('#stagesGlobal').hide();
+						$('#stagesRecherche').show();
        					$('#accordion2').empty();
    						$('#accordion2').append(accor2);
    						console.log(data);

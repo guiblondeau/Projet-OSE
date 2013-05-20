@@ -3,7 +3,6 @@
 
 <head>
 	<link rel = "stylesheet" href="js/bootstrap/css/bootstrap.css"/>
-	<link rel = "stylesheet" href="js/bootstrap/css/bootstrap-responsive.css"/>
 	<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap/css/bootstrap-select.min.css">
 	<meta charset="utf-8">
 	<title>Stages EMN</title>
@@ -17,8 +16,6 @@
 </head>
 
 <body><!-- style = "background-color :#B2B5E1"-->
-	
-
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="brand">Connecté en tant que : test</div>
@@ -26,11 +23,9 @@
 	</div>
 	<div style = "height : 50px">
 	</div>
-
-	<div id="page-principale" class="container-fluid">
+	<div id="page-principale">
 		<div class="row-fluid">
-
-			<div class="span4">
+			<div class="span3">
 				<div id="barrerecherche" data-spy="affix" class="well sidebar-nav">
 					<ul class="nav nav-list">
 						<li class="nav-header">Gestion des stages</li>
@@ -41,8 +36,7 @@
 								<option>Aucun</option>
 								<option>Informatique</option>
 								<option>SSG</option>
-								<option>Automatique</option>
-								<option>Productique</option>
+								<option>Automatique-Productique</option>
 								<option>Energie-Environnement</option>
 								<option>Nucléaire</option>
 							</select>
@@ -53,6 +47,13 @@
 								<option>GSI</option>
 								<option>OMTI</option>
 								<option>GIPAD</option>
+								<option>GSE</option>
+								<option>GE</option>
+								<option>AII</option>
+								<option>GOPL</option>
+								<option>QSF</option>
+								<option>NTSE</option>
+								<option>STAR</option>
 							</select>
 						</li>
 						<li><input type="text" id="recherchePays" placeholder="Pays"></li>
@@ -63,44 +64,43 @@
 					</ul>
 				</div>
 			</div>
-
-			<div class="span8">
-				<div class = "row" id = "stagesGlobal">
-					<div class = "span1" > </div>
-					<div class = "span10">
-						<div type="text/template">
-							<div class = "accordion" id = "accordion">
-								{{#book}}
-								<div class = "accordion-group">
-									<div class="accordion-heading">
+			<div class = "span9" id = "stagesGlobal">
+				<div class="breadcrumb">
+					<h2 style="text-align:center">Bienvenue sur l'outil de recherche de stage</h2>
+				</div>
+				<div class = "span10">
+					<div type="text/template">
+						<div class = "accordion" id = "accordion">
+							{{#book}}
+							<div class = "accordion-group">
+								<div class="accordion-heading">
 								<!-- <a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
 									{{intitule}} 
 								</a> -->
 								<a id="toto" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}"
-								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}"> 
+								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
 								{{intitule}} 
 							</a>
 						</div>
 						<div id="collapse{{id}}" class="accordion-body collapse ">
 							<div class="accordion-inner">
-								<div class = "span3">
-									Entreprise : {{entreprise}}
+								<div class = "span4">
+									<em>Entreprise</em> : {{entreprise}}
 									<br/>
-									Option : {{option}}
+									<em>Option</em> : {{option}}
 									<br/>
-									Adresse : {{adresse}}
+									<em>Adresse</em> : {{adresse}}
 									<br/>
-									Pays : {{pays}}
+									<em>Pays</em> : {{pays}}
 									<br/>
-									Salaire (à titre indicatif): {{salaire}}
+									<em>Salaire (à titre indicatif, par mois, en €)</em>: {{salaire}}
 									<br/>
-									Description : {{description}}
+									<em>Description</em> : {{description}}
 								</div>
-								<div class="span3">
-									<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou
-									</div>
+								<div class="span4">
+									<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
 								</div>
-								<div class="span3">
+								<div class="span4">
 									<div style = "height : 150px">
 										<label class="radio">
 											<input type="radio" name="optionsRadios" id="pertinent" value="option1">
@@ -110,6 +110,7 @@
 											<input type="radio" name="optionsRadios" id="nonPertinent" value="option2">
 											Non-pertinent
 										</label>
+										NB : Par pertinence, nous voulons savoir si l'entreprise existe encore. Nous ne voulons en aucun point juger l'entreprise.
 									</div>
 									<div style = "height : 50px">
 										<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
@@ -122,12 +123,10 @@
 				</div>
 			</div>
 		</div>
-		<div class = "span1">
-		</div>
 	</div>
-
-	<div class = "row" id = "stagesRecherche" hidden = "true">
-		<div class = "span1" >
+	<div class = "span9" id = "stagesRecherche" hidden ="true">
+		<div class="breadcrumb">
+			<h2 style="text-align:center">Recherche de stage</h2>
 		</div>
 		<div class = "span10">
 			<div type="text/template">
@@ -135,45 +134,100 @@
 					{{#book2}}
 					<div class = "accordion-group">
 						<div class="accordion-heading">
-							<a id="toto2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
-							collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
-							{{intitule}} 
-						</a>
-					</div>
-					<div id="collapse2{{id}}" class="accordion-body collapse ">
-						<div class="accordion-inner">
-							<div class = "span3">
-								Entreprise : {{entreprise}}
-								<br/>
-								Option : {{option}}
-								<br/>
-								Adresse : {{adresse}}
-								<br/>
-								Pays : {{pays}}
-								<br/>
-								Salaire (à titre indicatif) : {{salaire}}
-								<br/>
-								Description : {{description}}
-							</div>
-							<div class="span3">
-								<div id="map-canvas2{{id}}" style = "width : 100%; height : 200px">coucou</div>
-							</div>
-							<div class="span3">
-								<div style = "height : 150px">
+								<!-- <a onclick="test({{id}},{{latitude}},{{longitude}})" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}">
+									{{intitule}} 
+								</a> -->
+								<a id="toto2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
+								collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
+								{{intitule}} 
+							</a>
+						</div>
+						<div id="collapse2{{id}}" class="accordion-body collapse ">
+							<div class="accordion-inner">
+								<div class = "span4">
+									Entreprise : {{entreprise}}
+									<br/>
+									Option : {{option}}
+									<br/>
+									Adresse : {{adresse}}
+									<br/>
+									Pays : {{pays}}
+									<br/>
+									Salaire (à titre indicatif,par mois, en €): {{salaire}}
+									<br/>
+									Description : {{description}}
 								</div>
-								<div style = "height : 50px">
-									<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+								<div class="span4">
+									<div id="map-canvas{{id}}" style = "width : 100%; height : 200px">coucou</div>
+								</div>
+								<div class="span4">
+									<div style = "height : 150px">
+										<label class="radio">
+											<input type="radio" name="optionsRadios" id="pertinent" value="option1">
+											Pertinent
+										</label>
+										<label class="radio">
+											<input type="radio" name="optionsRadios" id="nonPertinent" value="option2">
+											Non-pertinent
+										</label>
+										NB : Par pertinence, nous voulons savoir si l'entreprise existe encore. Nous ne voulons en aucun point juger l'entreprise.
+									</div>
+									<div style = "height : 50px">
+										<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					{{/book2}}
 				</div>
-				{{/book2}}
 			</div>
 		</div>
 	</div>
-	<div class = "span1">
+	<!-- <div class = "span8" id ="stagesRecherche">
+		<div type="text/template">
+			<div class = "accordion" id = "accordion2">
+				{{#book2}}
+				<div class = "accordion-group">
+					<div class="accordion-heading">
+						<a id="toto2" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2{{id}}"
+						collapse-id="{{id}}" latitude="{{latitude}}" longitude="{{longitude}}">
+						{{intitule}} 
+					</a>
+				</div>
+				<div id="collapse2{{id}}" class="accordion-body collapse ">
+					<div class="accordion-inner">
+						<div class = "span3">
+							Entreprise : {{entreprise}}
+							<br/>
+							Option : {{option}}
+							<br/>
+							Adresse : {{adresse}}
+							<br/>
+							Pays : {{pays}}
+							<br/>
+							Salaire (à titre indicatif) : {{salaire}}
+							<br/>
+							Description : {{description}}
+						</div>
+						<div class="span3">
+							<div id="map-canvas2{{id}}" style = "width : 100%; height : 200px">coucou</div>
+						</div>
+						<div class="span3">
+							<div style = "height : 150px">
+							</div>
+							<div style = "height : 50px">
+								<button class="btn btn-info" id="stage-edit"><i class ="icon-edit"></i> Editer ce stage </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/book2}}
+		</div>
 	</div>
+</div> -->
+</div>
 </div>	
 
 <div id="add-stage" hidden = "true">
@@ -202,8 +256,7 @@
 					<select class="selectpicker" id="domaine">
 						<option>Informatique</option>
 						<option>SSG</option>
-						<option>Automatique</option>
-						<option>Productique</option>
+						<option>Automatique-Productique</option>
 						<option>Energie-Environnement</option>
 						<option>Nucléaire</option>
 					</select>
@@ -272,12 +325,8 @@
 	</div>
 </div>
 
-</div>
-</div>
-
 <script src = "js/jQuery.js"></script>
 <script src = "js/bootstrap/js/bootstrap.js"></script>
-<script src = "js/gMap.js"></script>
 <script src = "js/mustache.js"></script>
 <script src="js/json2.js"></script>
 <script src="js/underscore-min.js"></script>
