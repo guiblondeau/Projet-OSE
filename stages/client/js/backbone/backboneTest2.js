@@ -284,12 +284,12 @@
 
 		addStage : function(){
 			if (stageEnCours == -1){
-				// var geocoder = new google.maps.Geocoder();
-				// var address = $('#adresse').val();
-				// geocoder.geocode( { 'address': address}, function(results, status) {
-	  	// 			if (status == google.maps.GeocoderStatus.OK) {
-	   // 					var latitude = results[0].geometry.location.lat();
-	   //  				var longitude = results[0].geometry.location.lng();
+				var geocoder = new google.maps.Geocoder();
+				var address = $('#adresse').val();
+				geocoder.geocode( { 'address': address}, function(results, status) {
+	  				if (status == google.maps.GeocoderStatus.OK) {
+	   					var latitude = results[0].geometry.location.lat();
+	    				var longitude = results[0].geometry.location.lng();
 	    				var stage = new Stage({
 							intitule : $('#intitule').val(),
 							entreprise : $('#entreprise').val(),
@@ -301,8 +301,8 @@
 							salaire : $('#salaire').val(),
 							avantages : $('#avantages').val(),
 							langue : $('#langue').val(),
-							// latitude : ""+latitude,
-							// longitude : ""+longitude,
+							latitude : ""+latitude,
+							longitude : ""+longitude,
 						});
 						jQuery.ajax({
 	      					url: "http://localhost:8080/jaxrs-stage/stages",
@@ -332,8 +332,8 @@
 	      					}
 	    				});
 
-	  	// 			} 
-				// }); 
+	  				} 
+				}); 
 			}else {
 				var geocoder = new google.maps.Geocoder();
 				var address = $('#adresse').val();
