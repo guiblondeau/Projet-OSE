@@ -16,6 +16,11 @@
 			langue:"",
 			latitude : 0,
 			longitude : 0,
+			notesPertinence : {
+				pertinent : 0,
+				nonPertinent : 0,
+			},
+			rankingGrade : 0,
 		},
 	});
 
@@ -34,13 +39,123 @@
 			'click button#stage-edit': 'editStage',
 			'click button#b': 'b',
 			'click button#search-btn' : 'searchStage',
+			'click input#pertinent' : 'pertinent',
+			'click input#nonPertinent' : 'nonPertinent'
 		},
 
 		initialize: function(){
 			_.bindAll(this, 'render');
 			stageEnCours = -1;
+			$('#stagesRecherche').hide();
 			collection = new Stages();
           	this.render();
+		},
+
+		pertinent : function(){
+			var id = 0;
+			for (var mod in collection._byId){
+				console.log($('#collapse'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+            for (var mod in collection._byId){
+				console.log($('#collapse2'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse2'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+			var stage = new Stage({
+				intitule : collection.get(id).attributes.intitule,
+				entreprise : collection.get(id).attributes.entreprise,
+				pays : collection.get(id).attributes.pays,
+				domaine : collection.get(id).attributes.domaine,
+				option : collection.get(id).attributes.option,
+				description : collection.get(id).attributes.description,
+				adresse : collection.get(id).attributes.adresse,
+				salaire : collection.get(id).attributes.salaire,
+				avantages : collection.get(id).attributes.avantages,
+				langue : collection.get(id).attributes.langue,
+				latitude : collection.get(id).attributes.latitude,
+				longitude : collection.get(id).attributes.longitude,
+				notesPertinence : {
+					pertinent : collection.get(id).attributes.notesPertinence.pertinent+1,
+					nonPertinent : collection.get(id).attributes.notesPertinence.nonPertinent,
+				},
+				rankingGrade : collection.get(id).attributes.rankingGrade,
+			});
+			jQuery.ajax({
+				      		url: 'http://localhost:8080/jaxrs-stage/stages/'+id,
+				      		type: 'PUT',
+				      		data: JSON.stringify(stage.toJSON()),
+				      		dataType: 'json',
+				      		beforeSend: function(req) {
+				        		req.setRequestHeader('Content-Type', 'application/json');
+				      		},
+				      		success: function(data) {
+				      		},
+				      		error: function(jqXHR, textStatus, errorThrown) {
+				          		// TODO: trigger event error
+				          		console.log(textStatus);
+				          		console.log(errorThrown);
+				        		}
+						});
+		},
+
+
+		nonPertinent : function(){
+			var id = 0;
+			for (var mod in collection._byId){
+				console.log($('#collapse'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+            for (var mod in collection._byId){
+				console.log($('#collapse2'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse2'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
+			var stage = new Stage({
+				intitule : collection.get(id).attributes.intitule,
+				entreprise : collection.get(id).attributes.entreprise,
+				pays : collection.get(id).attributes.pays,
+				domaine : collection.get(id).attributes.domaine,
+				option : collection.get(id).attributes.option,
+				description : collection.get(id).attributes.description,
+				adresse : collection.get(id).attributes.adresse,
+				salaire : collection.get(id).attributes.salaire,
+				avantages : collection.get(id).attributes.avantages,
+				langue : collection.get(id).attributes.langue,
+				latitude : collection.get(id).attributes.latitude,
+				longitude : collection.get(id).attributes.longitude,
+				notesPertinence : {
+					pertinent : collection.get(id).attributes.notesPertinence.pertinent,
+					nonPertinent : collection.get(id).attributes.notesPertinence.nonPertinent+1,
+				},
+				rankingGrade : collection.get(id).attributes.rankingGrade,
+			});
+			jQuery.ajax({
+	      		url: 'http://localhost:8080/jaxrs-stage/stages/'+id,
+	      		type: 'PUT',
+	      		data: JSON.stringify(stage.toJSON()),
+	      		dataType: 'json',
+	      		beforeSend: function(req) {
+	        		req.setRequestHeader('Content-Type', 'application/json');
+	      		},
+	      		success: function(data) {
+	      		},
+	      		error: function(jqXHR, textStatus, errorThrown) {
+	          		// TODO: trigger event error
+	          		console.log(textStatus);
+	          		console.log(errorThrown);
+	        		}
+			});
 		},
 
 		b : function(){
@@ -60,23 +175,34 @@
 					console.log(mod);
 				}
             };
+            for (var mod in collection._byId){
+				console.log($('#collapse2'+mod).hasClass('accordion-body  in collapse'));
+				if ($('#collapse2'+mod).hasClass('accordion-body  in collapse')){
+					id = mod;
+					console.log(mod);
+				}
+            };
             stageEnCours = id;
             console.log(collection.get(stageEnCours));
 			addStage.editStage(id);
 		},
 
 		render : function(){
+			$('#stagesRecherche').hide();
+			$('#stagesGlobal').show();
       		stageEnCours = -1;
         	collection.fetch({
         		success : function(){
         			console.log(collection);
+        			// var stage  = collection.get();
+        			// console.log(stage);
         			$('#add-stage').slideUp();
 					$('#page-principale').slideDown();
        				$('#accordion').empty();
    					$('#accordion').append(accor);
    					var val= collection.toJSON();
        				$('#accordion').html(Mustache.render($('#accordion').html(),{book : val}));
-
+       				console.log(collection);
         		}
         	});
         	console.log(collection);
@@ -87,36 +213,24 @@
 			var domaine = $('#domaineR').val();
 			var option = $('#optionR').val();
 			var pays = $('#recherchePays').val();
+			var entreprise = $('#rechercheEntreprise').val();
+			var langue = $('#rechercheLangue').val();
+			var salaire = $('#rechercheSalaire').val();
 			if (domaine == "Aucun"){
-				if (option == "Aucun"){
-					var search = { "stage": 
-						{
-							"pays" : ""+pays,
-						}
-					};
-				}else{
-					var search = { "stage": 
-						{
-							"option" : ""+option,
-							"pays" : ""+pays,
-						}
-					};
+				domaine = "";
+			};
+			if (option == "Aucun"){
+				option = "";
+			};
+			var search = { "stage": 
+				{
+					"domaine" : ""+domaine,
+					"option" : ""+option,
+					"pays" : ""+pays,
+					"entreprise" : ""+entreprise,
+					"langue" : ""+langue,
+					"salaire" : ""+salaire,
 				}
-			}else if (option == "Aucun"){
-				var search = { "stage": 
-					{
-						"domaine" : ""+domaine,
-						"pays" : ""+pays,
-					}
-				};
-			}else{
-				var search = { "stage": 
-					{
-						"domaine" : ""+domaine,
-						"option" : ""+option,
-						"pays" : ""+pays,
-					}
-				};
 			};
 			var searchJSON = JSON.stringify(search);
 			console.log(searchJSON);
@@ -154,14 +268,15 @@
         				req.setRequestHeader('Content-Type', 'application/json');
       				},
       				success: function(data) {
+      					index.render();
       				},
       				error: function(jqXHR, textStatus, errorThrown) {
+      					index.render();
           				// TODO: trigger event error
           				//console.log(textStatus);
           				//console.log(errorThrown);
         			}
       			});
-				index.render();
 			}else{
 				index.render();
 			}
@@ -169,12 +284,12 @@
 
 		addStage : function(){
 			if (stageEnCours == -1){
-				var geocoder = new google.maps.Geocoder();
-				var address = $('#adresse').val();
-				geocoder.geocode( { 'address': address}, function(results, status) {
-	  				if (status == google.maps.GeocoderStatus.OK) {
-	   					var latitude = results[0].geometry.location.lat();
-	    				var longitude = results[0].geometry.location.lng();
+				// var geocoder = new google.maps.Geocoder();
+				// var address = $('#adresse').val();
+				// geocoder.geocode( { 'address': address}, function(results, status) {
+	  	// 			if (status == google.maps.GeocoderStatus.OK) {
+	   // 					var latitude = results[0].geometry.location.lat();
+	   //  				var longitude = results[0].geometry.location.lng();
 	    				var stage = new Stage({
 							intitule : $('#intitule').val(),
 							entreprise : $('#entreprise').val(),
@@ -186,8 +301,8 @@
 							salaire : $('#salaire').val(),
 							avantages : $('#avantages').val(),
 							langue : $('#langue').val(),
-							latitude : ""+latitude,
-							longitude : ""+longitude,
+							// latitude : ""+latitude,
+							// longitude : ""+longitude,
 						});
 						jQuery.ajax({
 	      					url: "http://localhost:8080/jaxrs-stage/stages",
@@ -205,6 +320,10 @@
 								$('#domaine').val("");
 								$('#option').val("");
 								$('#description').val("");
+								$("#adresse").val("");
+								$('#salaire').val("");
+								$('#avantages').val("");
+								$('#langue').val("");
 								index.render();
 	      					},
 	      					error: function(jqXHR, textStatus, errorThrown) {
@@ -213,16 +332,16 @@
 	      					}
 	    				});
 
-	  				} 
-				}); 
+	  	// 			} 
+				// }); 
 			}else {
-				console.log(stageEnCours);
 				var geocoder = new google.maps.Geocoder();
 				var address = $('#adresse').val();
 				geocoder.geocode( { 'address': address}, function(results, status) {
 	  				if (status == google.maps.GeocoderStatus.OK) {
 	   					var latitude = results[0].geometry.location.lat();
 	    				var longitude = results[0].geometry.location.lng();
+	    				console.log(collection.get(stageEnCours).attributes.notesPertinence);
 	    				var stage = new Stage({
 							intitule : $('#intitule').val(),
 							entreprise : $('#entreprise').val(),
@@ -236,7 +355,13 @@
 							langue : $('#langue').val(),
 							latitude : ""+latitude,
 							longitude : ""+longitude,
+							notesPertinence : {
+								pertinent : collection.get(stageEnCours).attributes.notesPertinence.pertinent,
+								nonPertinent : collection.get(stageEnCours).attributes.notesPertinence.nonPertinent,
+							},
+							rankingGrade : collection.get(stageEnCours).attributes.rankingGrade,
 						});
+						console.log(stage);
 						jQuery.ajax({
 				      		url: 'http://localhost:8080/jaxrs-stage/stages/'+stageEnCours,
 				      		type: 'PUT',
@@ -252,6 +377,10 @@
 								$('#domaine').val("");
 								$('#option').val("");
 								$('#description').val("");
+								$("#adresse").val("");
+								$('#salaire').val("");
+								$('#avantages').val("");
+								$('#langue').val("");
 								index.render();
 				      		},
 				      		error: function(jqXHR, textStatus, errorThrown) {
@@ -267,7 +396,6 @@
 
 		editStage : function(id){
 			stage = collection.get(id);
-			collection.remove(stage);
 			$('#page-principale').slideUp();
 			$('#add-stage').slideDown();
 			$('#intitule').val(stage.get("intitule"));
@@ -298,8 +426,8 @@
 					},
 					success: function(data) {
 						console.log(collection);
-        				$('#stagesGlobal').slideUp();
-						$('#stagesRecherche').slideDown();
+        				$('#stagesGlobal').hide();
+						$('#stagesRecherche').show();
        					$('#accordion2').empty();
    						$('#accordion2').append(accor2);
    						console.log(data);
