@@ -106,11 +106,11 @@
 									<div style = "height : 150px">
 										<label class="radio">
 											<input type="radio" name="optionsRadios" id="pertinent" value="option1">
-											Pertinent
+											Pertinent ({{#notesPertinence}}{{pertinent}}{{/notesPertinence}})
 										</label>
 										<label class="radio">
 											<input type="radio" name="optionsRadios" id="nonPertinent" value="option2">
-											Non-pertinent
+											Non-pertinent ({{#notesPertinence}}{{nonPertinent}}{{/notesPertinence}})
 										</label>
 										NB : Par pertinence, nous voulons savoir si l'entreprise existe encore. Nous ne voulons en aucun point juger l'entreprise.
 									</div>
@@ -147,18 +147,19 @@
 						<div id="collapse2{{id}}" class="accordion-body collapse ">
 							<div class="accordion-inner">
 								<div class = "span4">
-									Entreprise : {{entreprise}}
+									<em>Entreprise</em> : {{entreprise}}
 									<br/>
-									Option : {{option}}
+									<em>Option</em> : {{option}}
 									<br/>
-									Adresse : {{adresse}}
+									<em>Adresse</em> : {{adresse}}
 									<br/>
-									Pays : {{pays}}
+									<em>Pays</em> : {{pays}}
 									<br/>
-									Salaire (à titre indicatif,par mois, en €): {{salaire}}
+									<em>Salaire (à titre indicatif, par mois, en €)</em>: {{salaire}}
 									<br/>
-									Description : {{description}}
+									<em>Description</em> : {{description}}
 									<br/>
+									<em>Langue</em> : {{langue}}
 								</div>
 								<div class="span4">
 									<div id="map-canvas2{{id}}" style = "width : 100%; height : 200px">coucou</div>
@@ -167,11 +168,11 @@
 									<div style = "height : 150px">
 										<label class="radio">
 											<input type="radio" name="optionsRadios" id="pertinent" value="option1">
-											Pertinent
+											Pertinent ({{#notesPertinence}}{{pertinent}}{{/notesPertinence}})
 										</label>
 										<label class="radio">
 											<input type="radio" name="optionsRadios" id="nonPertinent" value="option2">
-											Non-pertinent
+											Non-pertinent ({{#notesPertinence}}{{nonPertinent}}{{/notesPertinence}})
 										</label>
 										NB : Par pertinence, nous voulons savoir si l'entreprise existe encore. Nous ne voulons en aucun point juger l'entreprise.
 									</div>
