@@ -26,6 +26,6 @@ public class LangueQuery extends StageQuery {
 
     @Override
     protected void setCriteria() {
-         this.criteria = this.fieldEnd.equal(this.getChamp());
+         this.criteria = this.fieldEnd.containsIgnoreCase(this.getChamp());
     }
 }
